@@ -9,7 +9,7 @@ using System.Security.Cryptography;
 using System.Globalization;
 using System.IO.Compression;
 
-namespace Volte.Data.JSONObject
+namespace Volte.Data.JsonObject
 {
 
     internal class Util {

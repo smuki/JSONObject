@@ -8,7 +8,7 @@ using System.IO;
 using System.Data;
 using System.Runtime.Serialization.Formatters.Binary;
 
-namespace Volte.Data.JSONObject
+namespace Volte.Data.JsonObject
 {
     [Serializable]
     public class JSONTable {

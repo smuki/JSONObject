@@ -2,7 +2,7 @@ using System;
 using System.Xml;
 using System.Text;
 
-namespace Volte.Data.JSONObject
+namespace Volte.Data.JsonObject
 {
     internal class Lexer {
         const  string ZFILE_NAME = "Lexer";

@@ -4,7 +4,7 @@ using System.Text;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
 
-namespace Volte.Data.JSONObject
+namespace Volte.Data.JsonObject
 {
     [Serializable]
     internal sealed class Cell {

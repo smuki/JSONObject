@@ -6,7 +6,7 @@ using System.Reflection;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Collections.Generic;
 
-namespace Volte.Data.JSONObject
+namespace Volte.Data.JsonObject
 {
 
     [Serializable]

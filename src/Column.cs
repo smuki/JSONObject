@@ -1,7 +1,7 @@
 using System;
 using System.Text;
 
-namespace Volte.Data.JSONObject
+namespace Volte.Data.JsonObject
 {
 
     [Serializable]

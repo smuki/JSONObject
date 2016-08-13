@@ -9,7 +9,7 @@ using System.IO;
 //using System.Web.UI;
 using System.Runtime.Serialization.Formatters.Binary;
 
-namespace Volte.Data.JSONObject
+namespace Volte.Data.JsonObject
 {
 
     [Serializable]

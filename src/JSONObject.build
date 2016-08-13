@@ -9,9 +9,9 @@
 
     <target name="JSONObject">
         <property name="unsafe" value="true" />
-        <delete file="..\dist\Volte.Data.JSONObject.dll" failonerror="false" />
-        <delete file="..\dist\Volte.Data.JSONObject.pdb" failonerror="false" />
-        <csc target="library" output="..\dist\Volte.Data.JSONObject.dll" debug="${debug}" unsafe="${unsafe}">
+        <delete file="..\dist\Volte.Data.JsonObject.dll" failonerror="false" />
+        <delete file="..\dist\Volte.Data.JsonObject.pdb" failonerror="false" />
+        <csc target="library" output="..\dist\Volte.Data.JsonObject.dll" debug="${debug}" unsafe="${unsafe}">
             <nowarn>
                 <!-- do not report deprecation warnings -->
                 <warning number = "0618" />
