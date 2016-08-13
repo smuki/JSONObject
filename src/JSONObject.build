@@ -1,0 +1,41 @@
+﻿<?xml version="1.0"?>
+<project name="Dapper" default="build">
+    <property name="build.dir" value="..\" />
+    <property name = "debug" value  = "true" />
+    <property name = "unsafe" value = "true" />
+
+    <target name="build" depends="JSONObject">
+    </target>
+
+    <target name="JSONObject">
+        <property name="unsafe" value="true" />
+        <delete file="..\dist\Volte.Data.JSONObject.dll" failonerror="false" />
+        <delete file="..\dist\Volte.Data.JSONObject.pdb" failonerror="false" />
+        <csc target="library" output="..\dist\Volte.Data.JSONObject.dll" debug="${debug}" unsafe="${unsafe}">
+            <nowarn>
+                <!-- do not report deprecation warnings -->
+                <warning number = "0618" />
+                <warning number = "0168" />
+                <warning number = "0108" />
+                <warning number = "0219" />
+                <warning number = "0252" />
+                <warning number = "0105" />
+            </nowarn>
+            <sources>
+                <include name = "AttributeMapping.cs" />
+                <include name = "Cell.cs" />
+                <include name = "Column.cs" />
+                <include name = "Columns.cs" />
+                <include name = "JSONObject.cs" />
+                <include name = "JSONObjectPair.cs" />
+                <include name = "JSONObjects.cs" />
+                <include name = "JSONTable.cs" />
+                <include name = "Lexer.cs" />
+                <include name = "Row.cs" />
+                <include name = "RowComparer.cs" />
+                <include name = "Util.cs" />
+            </sources>
+        </csc>
+
+    </target>
+</project>
