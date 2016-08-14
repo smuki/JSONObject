@@ -47,8 +47,17 @@ namespace Volte.Data.JsonObject
                         this.Type  = "l";
                         this.Value = _VContexts;
                     } else {
+
                         this.Name  = name;
-                        this.Value = _Lexer.ParseValue();
+                        if (char.IsDigit(_Lexer.Current) || _Lexer.Current == '-') {
+                            this.Type  = "decimal";
+                            this.Value = _Lexer.ParseValue();
+                        }else if (_Lexer.Current == 'f' || _Lexer.Current == 't') {
+                            this.Value = _Lexer.ParseValue();
+                            this.Type  = "boolean";
+                        }else{
+                            this.Value = _Lexer.ParseValue();
+                        }
                     }
 
                 } else {

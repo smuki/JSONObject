@@ -109,6 +109,11 @@ namespace Volte.Data.JsonObject
                 writer.AppendLine("");
             }
             writer.Append("\"Reference\":");
+
+            if (_NameValue==null){
+
+                _NameValue = new JSONObject();
+            }
             _NameValue.Write(writer);
 
             writer.AppendLine("");

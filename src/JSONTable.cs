@@ -17,15 +17,15 @@ namespace Volte.Data.JsonObject
 
         public JSONTable()
         {
-            _Columns    = new Columns();
-            _JSONObject = new JSONObject();
-            _Pointer    = -1;
+            _Columns  = new Columns();
+            _Variable = new JSONObject();
+            _Pointer  = -1;
         }
 
         internal void Read(Lexer _Lexer)
         {
-            _Columns    = new Columns();
-            _JSONObject = new JSONObject();
+            _Columns  = new Columns();
+            _Variable = new JSONObject();
 
             _Lexer.SkipWhiteSpace();
 
@@ -42,7 +42,7 @@ namespace Volte.Data.JsonObject
                     if (name == "columns") {
                         _Columns.Read(_Lexer);
                     } else if (name == "vars") {
-                        this.JSONObject.Read(_Lexer);
+                        _Variable.Read(_Lexer);
                     } else if (name == "rows") {
                         _Lexer.SkipWhiteSpace();
 
@@ -78,12 +78,17 @@ namespace Volte.Data.JsonObject
         {
             writer.AppendLine("{");
 
-            if (this.JSONObject != null) {
-                writer.AppendLine("\"vars\":");
-                this.JSONObject.Write(writer);
-                writer.AppendLine("");
-                writer.AppendLine(",");
+            if (_Variable == null) {
+
+                _Variable = new JSONObject();
             }
+
+            _Variable.SetValue("RecordCount" , this.RecordCount);
+
+            writer.AppendLine("\"vars\":");
+            _Variable.Write(writer);
+            writer.AppendLine("");
+            writer.AppendLine(",");
 
             if (_Columns != null) {
                 _Columns.Write(writer);
@@ -257,13 +262,13 @@ namespace Volte.Data.JsonObject
 
         public void Close()
         {
-            _rows       = null;
-            _Readed     = false;
-            _Draft      = false;
-            _Row        = null;
-            _Columns    = new Columns();
-            _JSONObject = new JSONObject();
-            _Pointer    = -1;
+            _rows     = null;
+            _Readed   = false;
+            _Draft    = false;
+            _Row      = null;
+            _Columns  = new Columns();
+            _Variable = new JSONObject();
+            _Pointer  = -1;
         }
 
         public object this[string name]
@@ -527,31 +532,6 @@ namespace Volte.Data.JsonObject
             _rows.Sort(_RowComparer.Compare);
         }
 
-        public void Variable(string name, object oValue)
-        {
-            _JSONObject.SetValue(name, oValue.ToString(), "nvarchar");
-        }
-
-        public void Variable(string name, string oValue)
-        {
-            _JSONObject.SetValue(name, oValue, "nvarchar");
-        }
-
-        public void Variable(string name, int oValue)
-        {
-            _JSONObject.SetValue(name, oValue.ToString(), "decimal");
-        }
-
-        public void Variable(string name, decimal oValue)
-        {
-            _JSONObject.SetValue(name, oValue.ToString(), "decimal");
-        }
-
-        public void Variable(string name, string oValue, string cType)
-        {
-            _JSONObject.SetValue(name, oValue, cType);
-        }
-
         public JSONObject Reference
         {
             get {
@@ -590,14 +570,14 @@ namespace Volte.Data.JsonObject
             }
         }
 
-        public bool BOF              { get { return _Pointer < 0;    }  }
-        public JSONObject JSONObject { get { return _JSONObject;     }  }
-        public JSONObject Index      { get { return _row_index;      }  }
-        public List<Column> Fields   { get { return _Columns.Fields; }  }
+        public bool BOF            { get { return _Pointer < 0;    }  }
+        public JSONObject Variable { get { return _Variable;       }  }
+        public JSONObject Index    { get { return _row_index;      }  }
+        public List<Column> Fields { get { return _Columns.Fields; }  }
 
         private Row _Row;
         private Columns _Columns;
-        private JSONObject _JSONObject    = new JSONObject();
+        private JSONObject _Variable      = new JSONObject();
         private JSONObject _row_index     = new JSONObject();
         private List<Row>  _rows          = new List<Row>();
         private readonly StringBuilder _s = new StringBuilder();

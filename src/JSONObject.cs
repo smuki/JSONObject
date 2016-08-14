@@ -110,11 +110,6 @@ namespace Volte.Data.JsonObject
 
         public override string ToString()
         {
-            return _ToString();
-        }
-
-        private string _ToString()
-        {
 
             s.Length = 0;
 
