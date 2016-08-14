@@ -116,17 +116,17 @@ namespace Volte.Data.JsonObject
 
                 } else if (_column_type == "decimal") {
 
-                    decimal d1 = decimal.Parse(r1[ndx].getValue);
-                    decimal d2 = decimal.Parse(r2[ndx].getValue);
+                    decimal d1 = decimal.Parse(r1[ndx].Text.ToString());
+                    decimal d2 = decimal.Parse(r2[ndx].Text.ToString());
 
                     _Compare = d1.CompareTo(d2);
 
                 } else {
 
-                    _Compare = string.Compare(r1[ndx].getValue, r2[ndx].getValue, true);
+                    _Compare = string.Compare(r1[ndx].Text.ToString(), r2[ndx].Text.ToString(), true);
                 }
             } else {
-                _Compare = string.Compare(r1[0].getValue, r2[0].getValue, true);
+                _Compare = string.Compare(r1[0].Text.ToString(), r2[0].Text.ToString(), true);
             }
 
             return _Compare;
@@ -186,9 +186,9 @@ namespace Volte.Data.JsonObject
 
             } else {
                 if (_direct1 == 0) {
-                    _Compare = string.Compare(r2[0].getValue, r1[0].getValue, true);
+                    _Compare = string.Compare(r2[0].Text.ToString(), r1[0].Text.ToString(), true);
                 } else {
-                    _Compare = string.Compare(r1[0].getValue, r2[0].getValue, true);
+                    _Compare = string.Compare(r1[0].Text.ToString(), r2[0].Text.ToString(), true);
                 }
             }
 

@@ -16,7 +16,7 @@ namespace Volte.Data.JsonObject
         private string _Caption      = "";
         private string _Status       = "";
         private string _enabledMode  = "";
-        private string _AlignName  = "";
+        private string _AlignName    = "";
         private string _Reference    = "";
         private string _AliasName    = "";
         private string _TypeChar     = "c";

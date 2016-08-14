@@ -7,72 +7,72 @@ namespace Volte.Data.JsonObject
     [Serializable]
         public class Column: AttributeMapping {
             const string ZFILE_NAME = "Column";
-            private JSONObject _NameValue;
+            private JSONObject _Property;
             // Methods
             public Column()
             {
-                this.Index = 0;
+                this.Index = -1;
             }
 
             internal void Read(Lexer _Lexer)
             {
 
-                _NameValue = new JSONObject();
-                _NameValue.Read(_Lexer);
+                _Property = new JSONObject();
+                _Property.Read(_Lexer);
 
-                if (_NameValue.ContainsKey("DataType")) {
+                if (_Property.ContainsKey("DataType")) {
 
-                    this.DataType = _NameValue.GetValue("DataType");
-
-                }
-                if (_NameValue.ContainsKey("Name")) {
-
-                    this.Name = _NameValue.GetValue("Name");
+                    this.DataType = _Property.GetValue("DataType");
 
                 }
-                if (_NameValue.ContainsKey("Caption")) {
+                if (_Property.ContainsKey("Name")) {
 
-                    this.Caption =  _NameValue.GetValue("Caption");
-
-                }
-                if (_NameValue.ContainsKey("ColumnName")) {
-
-                    this.ColumnName =  _NameValue.GetValue("ColumnName");
+                    this.Name = _Property.GetValue("Name");
 
                 }
-                if (_NameValue.ContainsKey("Index")) {
+                if (_Property.ContainsKey("Caption")) {
 
-                    this.Index =  _NameValue.GetInteger("Index");
-
-                }
-                if (_NameValue.ContainsKey("Width")) {
-
-                    this.Width =  _NameValue.GetInteger("Width");
+                    this.Caption =  _Property.GetValue("Caption");
 
                 }
-                if (_NameValue.ContainsKey("Scale")) {
+                if (_Property.ContainsKey("ColumnName")) {
 
-                    this.Scale =  _NameValue.GetInteger("Scale");
-
-                }
-                if (_NameValue.ContainsKey("Reference")) {
-
-                    this.Reference =  _NameValue.GetValue("Reference");
+                    this.ColumnName =  _Property.GetValue("ColumnName");
 
                 }
-                if (_NameValue.ContainsKey("EnableMode")) {
+                if (_Property.ContainsKey("Index")) {
 
-                    this.EnableMode =  _NameValue.GetValue("EnableMode");
-
-                }
-                if (_NameValue.ContainsKey("AlignName")) {
-
-                    this.AlignName =  _NameValue.GetValue("AlignName");
+                    this.Index =  _Property.GetInteger("Index");
 
                 }
-                if (_NameValue.ContainsKey("NonPrintable")) {
+                if (_Property.ContainsKey("Width")) {
 
-                    this.NonPrintable =  _NameValue.GetBoolean("NonPrintable");
+                    this.Width =  _Property.GetInteger("Width");
+
+                }
+                if (_Property.ContainsKey("Scale")) {
+
+                    this.Scale =  _Property.GetInteger("Scale");
+
+                }
+                if (_Property.ContainsKey("Reference")) {
+
+                    this.Reference =  _Property.GetValue("Reference");
+
+                }
+                if (_Property.ContainsKey("EnableMode")) {
+
+                    this.EnableMode =  _Property.GetValue("EnableMode");
+
+                }
+                if (_Property.ContainsKey("AlignName")) {
+
+                    this.AlignName =  _Property.GetValue("AlignName");
+
+                }
+                if (_Property.ContainsKey("NonPrintable")) {
+
+                    this.NonPrintable =  _Property.GetBoolean("NonPrintable");
 
                 }
 
@@ -81,29 +81,29 @@ namespace Volte.Data.JsonObject
 
             internal void Write(StringBuilder writer)
             {
-                _NameValue = new JSONObject();
+                _Property = new JSONObject();
 
-                _NameValue.SetValue("Name"     , this.Name);
-                _NameValue.SetValue("Caption"  , this.Caption);
-                _NameValue.SetValue("DataType" , this.DataType);
+                _Property.SetValue("Name"     , this.Name);
+                _Property.SetValue("Caption"  , this.Caption);
+                _Property.SetValue("DataType" , this.DataType);
+                _Property.SetInteger("Width"   , this.Width);
+                _Property.SetInteger("Scale"   , this.Scale);
                 if (this.EnableMode!=""){
-                    _NameValue.SetValue("EnableMode" , this.EnableMode);
+                    _Property.SetValue("EnableMode" , this.EnableMode);
                 }
                 if (this.ColumnName!=""){
-                    _NameValue.SetValue("ColumnName" , this.ColumnName);
+                    _Property.SetValue("ColumnName" , this.ColumnName);
                 }
-                _NameValue.SetInteger("Width"   , this.Width);
-                _NameValue.SetInteger("Scale"   , this.Scale);
                 if (this.Reference!=""){
-                    _NameValue.SetValue("Reference" , this.Reference);
+                    _Property.SetValue("Reference" , this.Reference);
                 }
                 if (this.AlignName!=""){
-                    _NameValue.SetValue("AlignName" , this.AlignName);
+                    _Property.SetValue("AlignName" , this.AlignName);
                 }
-                _NameValue.SetBoolean("NonPrintable" , this.NonPrintable);
-                _NameValue.SetInteger("Index"        , this.Index);
+                _Property.SetBoolean("NonPrintable" , this.NonPrintable);
+                _Property.SetInteger("Index"        , this.Index);
 
-                _NameValue.Write(writer);
+                _Property.Write(writer);
 
             }
         }

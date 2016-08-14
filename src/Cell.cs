@@ -64,18 +64,6 @@ namespace Volte.Data.JsonObject
         }
 
         // Properties
-        public string getValue
-        {
-            get {
-                if (_text == null) {
-                    return "";
-                } else {
-                    return _text.ToString();
-                }
-            }
-        }
-
-        // Properties
         public object Text
         {
             get {
