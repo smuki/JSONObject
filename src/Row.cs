@@ -2,7 +2,7 @@ using System;
 using System.Text;
 using System.Collections.Generic;
 
-namespace Volte.Data.JsonObject
+namespace Volte.Data.Json
 {
 
     [Serializable]
