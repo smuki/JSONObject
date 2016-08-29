@@ -69,8 +69,8 @@ namespace Volte.Data.Json
 
                 if (name == "Reference") {
 
-                    _NameValue = new JSONObject();
-                    _NameValue.Read(_Lexer);
+                    _Reference = new JSONObject();
+                    _Reference.Read(_Lexer);
 
                     _Lexer.SkipWhiteSpace();
                 }
@@ -106,11 +106,11 @@ namespace Volte.Data.Json
             }
             writer.Append("\"Reference\":");
 
-            if (_NameValue==null){
+            if (_Reference==null){
 
-                _NameValue = new JSONObject();
+                _Reference = new JSONObject();
             }
-            _NameValue.Write(writer);
+            _Reference.Write(writer);
 
             writer.AppendLine("");
             writer.AppendLine("}");
@@ -179,13 +179,13 @@ namespace Volte.Data.Json
         }
 
         public int    Index         { get { return _Index;     } set { _Index     = value; }  }
-        public JSONObject Reference { get { return _NameValue; } set { _NameValue = value;  }  }
+        public JSONObject Reference { get { return _Reference; } set { _Reference = value;  }  }
 
         // Fields
         private int _Index;
         private int _size;
 
         private List<Cell> _cells;
-        private JSONObject _NameValue;
+        private JSONObject _Reference = new JSONObject();
     }
 }
