@@ -42,9 +42,9 @@ namespace Volte.Data.Json
 
                                 if (_Lexer.Current == '{') {
 
-                                    JSONObjects _JSONObjects = new JSONObjects();
-                                    _JSONObjects.Read(_Lexer);
-                                    this.JSONTable.Add(new Cell(_JSONObjects));
+                                    JSONArray _JSONArray = new JSONArray();
+                                    _JSONArray.Read(_Lexer);
+                                    this.JSONTable.Add(new Cell(_JSONArray));
 
                                 } else {
 
