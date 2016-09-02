@@ -7,87 +7,51 @@ using System.Runtime.Serialization.Formatters.Binary;
 namespace Volte.Data.Json
 {
     [Serializable]
-    internal sealed class Cell {
-        // Methods
-        public Cell()
-        {
-            _index = 0;
-        }
-
-        public Cell(object text)
-        {
-            _index = 0;
-            this.Text = text;
-        }
-
-        internal void Read(Lexer element)
-        {
-        }
-
-        internal void Write(StringBuilder  writer)
-        {
-            writer.Append("\"");
-
-            if (this.Text != null) {
-                string ctemp = "";
-
-                if (this.Text is DateTime) {
-                    if ((DateTime) this.Text <= Util.DateTime_MinValue) {
-                        ctemp = "";
-                    } else {
-                        ctemp = ((DateTime) this.Text).ToString("yyyyMMddhhmmss");
-                    }
-                } else if (this.Text is bool) {
-                    if ((bool) this.Text) {
-                        ctemp = "Y";
-                    } else {
-                        ctemp = "N";
-                    }
-                } else if (this.Text is JSONObjects) {
-
-                    ((JSONObjects)this.Text).Write(writer);
-
-                } else {
-                    ctemp = Convert.ToString(this.Text);
-                }
-
-                if (string.IsNullOrEmpty(ctemp)) {
-                    writer.Append("");
-                } else {
-                    Util.EscapeString(writer, ctemp);
-                }
-            } else {
-                writer.Append("");
+        internal sealed class Cell {
+            // Methods
+            public Cell()
+            {
+                _index = 0;
             }
 
-            writer.Append("\"");
-        }
+            public Cell(object text)
+            {
+                _index    = 0;
+                _Data     = new JSONObject();
+                this.Text = text;
+            }
 
-        // Properties
-        public object Text
-        {
-            get {
-                if (_text == null) {
-                    return "";
-                } else {
-                    return _text;
+            internal void Read(Lexer element)
+            {
+                _Data.Read(element);
+            }
+
+            internal void Write(StringBuilder  writer)
+            {
+                _Data.Write(writer);
+            }
+
+            // Properties
+            public object Text
+            {
+                get {
+                    return _Data["value"];
+                } set {
+                    _Data["value"] = value;
                 }
-            } set {
-                _text = value;
             }
-        }
 
-        // Fields
+            // Fields
 
-        public int Index
-        {
-            get {
-                return _index;
-            } set {
-                _index = value;
+            public int Index
+            {
+                get {
+                    return _index;
+                } set {
+                    _index = value;
+                }
             }
+            private JSONObject _Data = new JSONObject();
+            private int   _index;
         }
-        private object _text;
-        private int   _index;
-    }
 }

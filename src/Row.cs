@@ -30,7 +30,7 @@ namespace Volte.Data.Json
 
                     int c = 0;
 
-                    if (name == "d") {
+                    if (name == "cells") {
 
                         _Lexer.SkipWhiteSpace();
 
@@ -88,13 +88,13 @@ namespace Volte.Data.Json
                 writer.AppendLine("{");
 
                 if (_cells != null) {
-                    writer.Append("\"d\":");
+                    writer.Append("\"cells\":");
                     writer.Append("[");
                     bool first = true;
 
                     foreach (Cell _Cell in _cells) {
                         if (!first) {
-                            writer.Append(",");
+                            writer.AppendLine(",");
                         } else {
                             first = false;
                         }
