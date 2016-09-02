@@ -8,7 +8,7 @@ using System.IO;
 //using System.Web;
 //using System.Web.UI;
 
-namespace Volte.Data.JsonObject
+namespace Volte.Data.Json
 {
     internal class RowComparer : IComparer<Row> {
         private int     _column_ndx1 = -1;

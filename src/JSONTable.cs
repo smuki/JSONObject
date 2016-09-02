@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Data;
 
-namespace Volte.Data.JsonObject
+namespace Volte.Data.Json
 {
     [Serializable]
     public class JSONTable {

@@ -9,7 +9,7 @@ using System.Security.Cryptography;
 using System.Globalization;
 using System.IO.Compression;
 
-namespace Volte.Data.JsonObject
+namespace Volte.Data.Json
 {
 
     internal class Util {
@@ -19,14 +19,14 @@ namespace Volte.Data.JsonObject
         {
 
         }
-        
+
         internal static DateTime DateTime_MinValue
         {
             get {
                 return DateTime.MinValue;
             }
         }
-     
+
         internal static bool IsNumeric(object str)
         {
             decimal d;
@@ -60,51 +60,51 @@ namespace Volte.Data.JsonObject
         {
             foreach (char ch in text) {
                 switch (ch) {
-                case '"':
-                    ss.Append("\\\"");
-                    break;
+                    case '"':
+                        ss.Append("\\\"");
+                        break;
 
-                case '\\':
-                    ss.Append(@"\\");
-                    break;
+                    case '\\':
+                        ss.Append(@"\\");
+                        break;
 
-                case '\b':
-                    ss.Append(@"\b");
-                    break;
+                    case '\b':
+                        ss.Append(@"\b");
+                        break;
 
-                case '\f':
-                    ss.Append(@"\f");
-                    break;
+                    case '\f':
+                        ss.Append(@"\f");
+                        break;
 
-                case '\n':
-                    ss.Append(@"\n");
-                    break;
+                    case '\n':
+                        ss.Append(@"\n");
+                        break;
 
-                case '\r':
-                    ss.Append(@"\r");
-                    break;
+                    case '\r':
+                        ss.Append(@"\r");
+                        break;
 
-                case '\t':
-                    ss.Append(@"\t");
-                    break;
+                    case '\t':
+                        ss.Append(@"\t");
+                        break;
 
-                default:
-                    if (char.IsLetterOrDigit(ch)) {
-                        ss.Append(ch);
-                    } else if (char.IsPunctuation(ch)) {
-                        ss.Append(ch);
-                    } else if (char.IsSeparator(ch)) {
-                        ss.Append(ch);
-                    } else if (char.IsWhiteSpace(ch)) {
-                        ss.Append(ch);
-                    } else if (char.IsSymbol(ch)) {
-                        ss.Append(ch);
-                    } else {
-                        ss.Append("\\u");
-                        ss.Append(((int) ch).ToString("X4", NumberFormatInfo.InvariantInfo));
-                    }
+                    default:
+                        if (char.IsLetterOrDigit(ch)) {
+                            ss.Append(ch);
+                        } else if (char.IsPunctuation(ch)) {
+                            ss.Append(ch);
+                        } else if (char.IsSeparator(ch)) {
+                            ss.Append(ch);
+                        } else if (char.IsWhiteSpace(ch)) {
+                            ss.Append(ch);
+                        } else if (char.IsSymbol(ch)) {
+                            ss.Append(ch);
+                        } else {
+                            ss.Append("\\u");
+                            ss.Append(((int) ch).ToString("X4", NumberFormatInfo.InvariantInfo));
+                        }
 
-                    break;
+                        break;
                 }
             }
         }
