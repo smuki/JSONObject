@@ -36,7 +36,7 @@ namespace Volte.Data.JsonObject
                         this.Value = _VContexts;
 
                     } else if (_Lexer.Current == '[') {
-                        JSONObjects _VContexts = new JSONObjects();
+                        JSONArray _VContexts = new JSONArray();
                         _VContexts.Read(_Lexer);
 
                         this.Name  = name;
@@ -74,7 +74,7 @@ namespace Volte.Data.JsonObject
                         ((JSONObject)this.Value).Write(writer);
                     } else if (this.Type == "l") {
                         writer.AppendLine();
-                        ((JSONObjects)this.Value).Write(writer);
+                        ((JSONArray)this.Value).Write(writer);
                     } else if (this.Type == "t") {
                         //  this.Value.Write(writer);
                     } else {

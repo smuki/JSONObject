@@ -43,9 +43,9 @@ namespace Volte.Data.JsonObject
                     } else {
                         ctemp = "N";
                     }
-                } else if (this.Text is JSONObjects) {
+                } else if (this.Text is JSONArray) {
 
-                    ((JSONObjects)this.Text).Write(writer);
+                    ((JSONArray)this.Text).Write(writer);
 
                 } else {
                     ctemp = Convert.ToString(this.Text);

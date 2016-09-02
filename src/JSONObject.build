@@ -28,7 +28,7 @@
                 <include name = "Columns.cs" />
                 <include name = "JSONObject.cs" />
                 <include name = "JSONObjectPair.cs" />
-                <include name = "JSONObjects.cs" />
+                <include name = "JSONArray.cs" />
                 <include name = "JSONTable.cs" />
                 <include name = "Lexer.cs" />
                 <include name = "Row.cs" />

@@ -7,19 +7,19 @@ namespace Volte.Data.JsonObject
 {
 
     [Serializable]
-        public class JSONObjects {
-            const string ZFILE_NAME = "JSONObjects";
+        public class JSONArray {
+            const string ZFILE_NAME = "JSONArray";
 
             // Methods
-            public JSONObjects()
+            public JSONArray()
             {
                 _Dictionary = new List<JSONObject>();
             }
 
-            public JSONObjects(string cData)
+            public JSONArray(string cData)
             {
                 _Dictionary  = new List<JSONObject>();
-                _Dictionary2 = new List<JSONObjects>();
+                _Dictionary2 = new List<JSONArray>();
 
                 if (!string.IsNullOrEmpty(cData)) {
                     Parser(cData);
@@ -35,7 +35,7 @@ namespace Volte.Data.JsonObject
 
                     for (;;) {
                         if (_Lexer.Current == '[') {
-                            JSONObjects variable2 = new JSONObjects();
+                            JSONArray variable2 = new JSONArray();
                             variable2.Read(_Lexer);
                             this.Add(variable2);
                         } else {
@@ -80,7 +80,7 @@ namespace Volte.Data.JsonObject
                 }
 
                 if (_Dictionary2.Count > 0) {
-                    foreach (JSONObjects name in _Dictionary2) {
+                    foreach (JSONArray name in _Dictionary2) {
                         if (i > 0) {
                             writer.Append(",");
 
@@ -121,11 +121,11 @@ namespace Volte.Data.JsonObject
                 return s.ToString();
             }
 
-            public void Add(JSONObjects value)
+            public void Add(JSONArray value)
             {
                 _Dictionary2.Add(value);
             }
-            public void Remove(JSONObjects value)
+            public void Remove(JSONArray value)
             {
                 _Dictionary2.Remove(value);
             }
@@ -142,10 +142,10 @@ namespace Volte.Data.JsonObject
             public void Clear()
             {
                 _Dictionary  = new List<JSONObject>();
-                _Dictionary2 = new List<JSONObjects>();
+                _Dictionary2 = new List<JSONArray>();
             }
 
-            public List<JSONObjects> ListValues
+            public List<JSONArray> ListValues
             {
                 get {
                     return _Dictionary2;
@@ -166,11 +166,11 @@ namespace Volte.Data.JsonObject
                 }
             }
 
-            // JSONObjects
+            // JSONArray
             private readonly StringBuilder s = new StringBuilder();
 
             private List<JSONObject> _Dictionary = new List<JSONObject>();
-            private List<JSONObjects> _Dictionary2 = new List<JSONObjects>();
+            private List<JSONArray> _Dictionary2 = new List<JSONArray>();
 
         }
 }
