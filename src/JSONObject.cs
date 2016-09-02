@@ -195,7 +195,7 @@ namespace Volte.Data.Json
             return this.GetType(name) == "v";
         }
 
-        public bool IsJSONObjects(string name)
+        public bool IsJSONArray(string name)
         {
             return this.GetType(name) == "l";
         }
@@ -213,17 +213,17 @@ namespace Volte.Data.Json
             return _JSONObject;
         }
 
-        public JSONObjects GetJSONObjects(string Name)
+        public JSONArray GetJSONArray(string Name)
         {
-            JSONObjects _JSONObjects = new JSONObjects();
+            JSONArray _JSONArray = new JSONArray();
 
             if (this.GetType(Name) == "l") {
                 if (_Dictionary.ContainsKey(Name)) {
-                    _JSONObjects = (JSONObjects)_Dictionary[Name].Value;
+                    _JSONArray = (JSONArray)_Dictionary[Name].Value;
                 }
             }
 
-            return _JSONObjects;
+            return _JSONArray;
         }
 
         public string GetValue(string name)
@@ -246,7 +246,7 @@ namespace Volte.Data.Json
             }
         }
 
-        public void SetValue(string name, JSONObjects value)
+        public void SetValue(string name, JSONArray value)
         {
             JSONObjectPair variable1 = new JSONObjectPair();
             variable1.Name          = name;
