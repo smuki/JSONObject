@@ -117,19 +117,6 @@ namespace Volte.Data.Json
                 writer.AppendLine("}");
             }
 
-            public List<Cell> Cells
-            {
-                get {
-                    if (_cells == null) {
-                        _cells = new List<Cell>();
-                    }
-
-                    return _cells;
-                } set {
-                    _cells = value;
-                }
-            }
-
             public DateTime getDateTime(int i)
             {
                 object _obj = this[i];
