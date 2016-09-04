@@ -7,99 +7,99 @@ namespace Volte.Data.Json
 {
 
     [Serializable]
-    internal class Columns {
+        internal class Columns {
 
-        // Methods
-        internal Columns()
-        {
-        }
-
-        public void Add(Column column)
-        {
-            if (column == null) {
-                throw new ArgumentNullException("column");
+            // Methods
+            internal Columns()
+            {
             }
 
-            _Data.Add(column);
-        }
+            public void Add(Column column)
+            {
+                if (column == null) {
+                    throw new ArgumentNullException("column");
+                }
 
-        internal void Read(Lexer _Lexer)
-        {
-            _Lexer.SkipWhiteSpace();
+                _Data.Add(column);
+            }
 
-            if (_Lexer.Current == '[') {
-                _Lexer.NextToken();
+            internal void Read(Lexer _Lexer)
+            {
+                _Lexer.SkipWhiteSpace();
 
-                for (;;) {
-                    Column column1 = new Column();
+                if (_Lexer.Current == '[') {
+                    _Lexer.NextToken();
 
-                    column1.Read(_Lexer);
-                    _Data.Add(column1);
-                    _Lexer.SkipWhiteSpace();
+                    for (;;) {
+                        Column column1 = new Column();
 
-                    if (_Lexer.Current == ',') {
-                        _Lexer.NextToken();
-                    } else {
-                        break;
+                        column1.Read(_Lexer);
+                        _Data.Add(column1);
+                        _Lexer.SkipWhiteSpace();
+
+                        if (_Lexer.Current == ',') {
+                            _Lexer.NextToken();
+                        } else {
+                            break;
+                        }
+                    }
+
+                    _Lexer.NextToken();
+                }
+            }
+
+            internal void Write(StringBuilder writer)
+            {
+                writer.AppendLine("\"columns\":");
+                writer.AppendLine("[");
+
+                for (int num1 = 0; num1 < _Data.Count; num1++) {
+                    if (num1 > 0) {
+                        writer.AppendLine(",");
+                    }
+
+                    _Data[num1].Write(writer);
+                }
+
+                writer.AppendLine("]");
+
+            }
+
+            public bool ContainsKey(string name)
+            {
+                if (FieldDict == null) {
+                    FieldDict = new Dictionary<string, int>();
+
+                    for (int j = 0; j < _Data.Count; j++) {
+                        FieldDict[_Data[j].Name.ToLower()] = j;
                     }
                 }
 
-                _Lexer.NextToken();
+                return FieldDict.ContainsKey(name.ToLower());
             }
-        }
 
-        internal void Write(StringBuilder writer)
-        {
-            writer.AppendLine("\"columns\":");
-            writer.AppendLine("[");
-
-            for (int num1 = 0; num1 < _Data.Count; num1++) {
-                if (num1 > 0) {
-                    writer.AppendLine(",");
+            public int Ordinal(string name)
+            {
+                if (string.IsNullOrEmpty(name)) {
+                    return -1;
                 }
 
-                _Data[num1].Write(writer);
-            }
+                name = name.Replace(".", "_");
 
-            writer.AppendLine("]");
-
-        }
-
-        public bool ContainsKey(string name)
-        {
-            if (FieldDict == null) {
-                FieldDict = new Dictionary<string, int>();
-
-                for (int j = 0; j < _Data.Count; j++) {
-                    FieldDict[_Data[j].Name.ToLower()] = j;
+                if (ContainsKey(name.ToLower())) {
+                    return FieldDict[name.ToLower()];
+                } else {
+                    return -1;
                 }
             }
 
-            return FieldDict.ContainsKey(name.ToLower());
+            // Properties
+            public int Count              { get { return  _Data.Count;  }  }
+            public Column this[int index] { get { return  _Data[index]; }  }
+            public List<Column> Fields    { get { return  _Data;        }  }
+
+            // Columns
+            private Dictionary<string, int> FieldDict;
+            private List<Column> _Data = new List<Column>();
         }
-
-        public int Ordinal(string name)
-        {
-            if (string.IsNullOrEmpty(name)) {
-                return -1;
-            }
-
-            name = name.Replace(".", "_");
-
-            if (ContainsKey(name.ToLower())) {
-                return FieldDict[name.ToLower()];
-            } else {
-                return -1;
-            }
-        }
-
-        // Properties
-        public int Count              { get { return  _Data.Count;  }  }
-        public Column this[int index] { get { return  _Data[index]; }  }
-        public List<Column> Fields    { get { return  _Data;        }  }
-
-        // Columns
-        private Dictionary<string, int> FieldDict;
-        private List<Column> _Data = new List<Column>();
-    }
 }

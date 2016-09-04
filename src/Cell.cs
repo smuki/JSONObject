@@ -11,12 +11,10 @@ namespace Volte.Data.Json
             // Methods
             public Cell()
             {
-                _index = 0;
             }
 
             public Cell(object text)
             {
-                _index    = 0;
                 _Data     = new JSONObject();
                 this.Text = text;
             }
@@ -32,26 +30,8 @@ namespace Volte.Data.Json
             }
 
             // Properties
-            public object Text
-            {
-                get {
-                    return _Data["value"];
-                } set {
-                    _Data["value"] = value;
-                }
-            }
+            public object Text { get { return _Data["value"]; } set { _Data["value"] = value; }  }
 
-            // Fields
-
-            public int Index
-            {
-                get {
-                    return _index;
-                } set {
-                    _index = value;
-                }
-            }
             private JSONObject _Data = new JSONObject();
-            private int   _index;
         }
 }

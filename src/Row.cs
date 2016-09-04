@@ -11,7 +11,7 @@ namespace Volte.Data.Json
             // Methods
             public Row()
             {
-                _cells = new List<Cell>();
+                _cells     = new List<Cell>();
                 _Reference = new JSONObject();
             }
 
@@ -78,7 +78,6 @@ namespace Volte.Data.Json
                     }
 
                     _Lexer.NextToken();
-                } else {
 
                 }
             }
@@ -118,7 +117,7 @@ namespace Volte.Data.Json
                 writer.AppendLine("}");
             }
 
-            public List<Cell> JSONTable
+            public List<Cell> Cells
             {
                 get {
                     if (_cells == null) {
@@ -184,8 +183,8 @@ namespace Volte.Data.Json
             public JSONObject Reference { get { return _Reference; } set { _Reference = value;  }  }
 
             // Fields
-            private int _Index;
-            private int _size;
+            private int _Index = -1;
+            private int _size  = 0;
 
             private List<Cell> _cells;
             private JSONObject _Reference = new JSONObject();
