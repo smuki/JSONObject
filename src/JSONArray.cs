@@ -14,13 +14,13 @@ namespace Volte.Data.Json
             public JSONArray()
             {
                 _JSONObjects = new List<JSONObject>();
-                _JSONArray = new List<JSONArray>();
+                _JSONArrays  = new List<JSONArray>();
             }
 
             public JSONArray(string cData)
             {
-                _JSONObjects  = new List<JSONObject>();
-                _JSONArray = new List<JSONArray>();
+                _JSONObjects = new List<JSONObject>();
+                _JSONArrays  = new List<JSONArray>();
 
                 if (!string.IsNullOrEmpty(cData)) {
                     Parser(cData);
