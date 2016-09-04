@@ -44,11 +44,11 @@ namespace Volte.Data.Json
 
                                     JSONArray _JSONArray = new JSONArray();
                                     _JSONArray.Read(_Lexer);
-                                    this.JSONTable.Add(new Cell(_JSONArray));
+                                    _cells.Add(new Cell(_JSONArray));
 
                                 } else {
 
-                                    this.JSONTable.Add(new Cell(_Lexer.ParseValue()));
+                                    _cells.Add(new Cell(_Lexer.ParseValue()));
 
                                 }
 
