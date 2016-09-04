@@ -13,13 +13,14 @@ namespace Volte.Data.Json
             // Methods
             public JSONArray()
             {
-                _Dictionary = new List<JSONObject>();
+                _JSONObjects = new List<JSONObject>();
+                _JSONArray = new List<JSONArray>();
             }
 
             public JSONArray(string cData)
             {
-                _Dictionary  = new List<JSONObject>();
-                _Dictionary2 = new List<JSONArray>();
+                _JSONObjects  = new List<JSONObject>();
+                _JSONArray = new List<JSONArray>();
 
                 if (!string.IsNullOrEmpty(cData)) {
                     Parser(cData);
@@ -65,9 +66,9 @@ namespace Volte.Data.Json
 
                 int i = 0;
 
-                if (_Dictionary.Count > 0) {
+                if (_JSONObjects.Count > 0) {
 
-                    foreach (JSONObject name in _Dictionary) {
+                    foreach (JSONObject name in _JSONObjects) {
                         if (i > 0) {
                             writer.Append(",");
 
@@ -79,8 +80,8 @@ namespace Volte.Data.Json
                     }
                 }
 
-                if (_Dictionary2.Count > 0) {
-                    foreach (JSONArray name in _Dictionary2) {
+                if (_JSONArrays.Count > 0) {
+                    foreach (JSONArray name in _JSONArrays) {
                         if (i > 0) {
                             writer.Append(",");
 
@@ -123,54 +124,54 @@ namespace Volte.Data.Json
 
             public void Add(JSONArray value)
             {
-                _Dictionary2.Add(value);
+                _JSONArrays.Add(value);
             }
             public void Remove(JSONArray value)
             {
-                _Dictionary2.Remove(value);
+                _JSONArrays.Remove(value);
             }
             public void Add(JSONObject value)
             {
-                _Dictionary.Add(value);
+                _JSONObjects.Add(value);
             }
 
             public void Remove(JSONObject value)
             {
-                _Dictionary.Remove(value);
+                _JSONObjects.Remove(value);
             }
 
             public void Clear()
             {
-                _Dictionary  = new List<JSONObject>();
-                _Dictionary2 = new List<JSONArray>();
+                _JSONObjects  = new List<JSONObject>();
+                _JSONArrays = new List<JSONArray>();
             }
 
-            public List<JSONArray> ListValues
+            public List<JSONArray> JSONArrays
             {
                 get {
-                    return _Dictionary2;
+                    return _JSONArrays;
                 }
             }
 
-            public List<JSONObject> Values
+            public List<JSONObject> JSONObjects
             {
                 get {
-                    return _Dictionary;
+                    return _JSONObjects;
                 }
             }
 
             public int Count
             {
                 get {
-                    return _Dictionary.Count + _Dictionary2.Count;
+                    return _JSONObjects.Count + _JSONArrays.Count;
                 }
             }
 
             // JSONArray
             private readonly StringBuilder s = new StringBuilder();
 
-            private List<JSONObject> _Dictionary = new List<JSONObject>();
-            private List<JSONArray> _Dictionary2 = new List<JSONArray>();
+            private List<JSONObject> _JSONObjects = new List<JSONObject>();
+            private List<JSONArray> _JSONArrays   = new List<JSONArray>();
 
         }
 }
