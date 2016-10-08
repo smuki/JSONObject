@@ -119,19 +119,7 @@ namespace Volte.Data.Json
 
             public DateTime getDateTime(int i)
             {
-                object _obj = this[i];
-
-                if (_obj is DateTime) {
-                    return (DateTime) _obj;
-                } else if (_obj.ToString() == "") {
-                    return Util.DateTime_MinValue;
-                } else if (Util.IsNumeric(_obj) && _obj.ToString().Length == 8) {
-                    return DateTime.ParseExact(_obj.ToString(), "yyyyMMdd", null);
-                } else if (Util.IsNumeric(_obj)) {
-                    return DateTime.ParseExact(_obj.ToString(), "yyyyMMddhhmmss", null);
-                } else {
-                    return Convert.ToDateTime(_obj);
-                }
+                return Util.ToDateTime(this[i]);
             }
 
             public Cell this[int i]
@@ -173,7 +161,7 @@ namespace Volte.Data.Json
             private int _Index = -1;
             private int _size  = 0;
 
-            private List<Cell> _cells;
+            private List<Cell> _cells     = new List<Cell>();
             private JSONObject _Reference = new JSONObject();
         }
 }

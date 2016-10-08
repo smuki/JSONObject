@@ -56,6 +56,38 @@ namespace Volte.Data.Json
             return int.TryParse(oValue.ToString(), out d) ? d : 0;
         }
 
+        internal static DateTime ToDateTime(object oValue)
+        {
+
+            if (oValue is DateTime) {
+                return (DateTime) oValue;
+            } else if (oValue.ToString() == "") {
+                return Util.DateTime_MinValue;
+            } else if (Util.IsNumeric(oValue) && oValue.ToString().Length == 8) {
+                return DateTime.ParseExact(oValue.ToString(), "yyyyMMdd", null);
+            } else if (Util.IsNumeric(oValue)) {
+                return DateTime.ParseExact(oValue.ToString(), "yyyyMMddhhmmss", null);
+            } else {
+                return Convert.ToDateTime(oValue);
+            }
+        }
+
+        internal static DateTime? ToDateTime2(object oValue)
+        {
+
+            if (oValue is DateTime) {
+                return (DateTime) oValue;
+            } else if (oValue.ToString() == "") {
+                return null;
+            } else if (Util.IsNumeric(oValue) && oValue.ToString().Length == 8) {
+                return DateTime.ParseExact(oValue.ToString(), "yyyyMMdd", null);
+            } else if (Util.IsNumeric(oValue)) {
+                return DateTime.ParseExact(oValue.ToString(), "yyyyMMddhhmmss", null);
+            } else {
+                return Convert.ToDateTime(oValue);
+            }
+        }
+
         internal static void EscapeString(StringBuilder ss, string text)
         {
             foreach (char ch in text) {

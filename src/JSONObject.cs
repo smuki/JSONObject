@@ -340,7 +340,13 @@ namespace Volte.Data.Json
 
                     variable1.Name  = name;
                     variable1.Value = value;
-                    variable1.Type  = "nvarchar";
+                    if (value is DateTime) {
+                        variable1.Type  = "datetime";
+                    }else if (value is decimal) {
+                        variable1.Type  = "decimal";
+                    }else{
+                        variable1.Type  = "nvarchar";
+                    }
 
                     _Dictionary[name] = variable1;
                 }

@@ -13,10 +13,10 @@ namespace Volte.Data.Json
             {
             }
 
-            public Cell(object text)
+            public Cell(object oValue)
             {
-                _Data     = new JSONObject();
-                this.Text = text;
+                _Data          = new JSONObject();
+                _Data["value"] = oValue;
             }
 
             internal void Read(Lexer element)
