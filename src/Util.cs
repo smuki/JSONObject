@@ -52,8 +52,17 @@ namespace Volte.Data.Json
 
         internal static int ToInt32(object oValue)
         {
+            if (oValue==null){
+                return 0;
+            }
             int d;
             return int.TryParse(oValue.ToString(), out d) ? d : 0;
+        }
+
+        internal static long ToLong(object oValue)
+        {
+            long d;
+            return long.TryParse(oValue.ToString(), out d) ? d : 0;
         }
 
         internal static DateTime ToDateTime(object oValue)

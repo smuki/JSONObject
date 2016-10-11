@@ -177,12 +177,15 @@ namespace Volte.Data.Json
                         } else {
                             _dataRow[i + 1] = this[i];
                         }
+                        xZZLogger.Debug(ZFILE_NAME , i + " = "+ this[i]);
                     }
 
+    xZZLogger.Debug(ZFILE_NAME , ndx + " = ");
                     dt.Rows.Add(_dataRow);
                     ndx++;
                     this.MoveNext();
                 }
+    xZZLogger.Debug(ZFILE_NAME , " to table data ");
 
                 return dt;
             }

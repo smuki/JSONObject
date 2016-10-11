@@ -79,6 +79,21 @@ namespace Volte.Data.Json
 
                 int i = 0;
 
+                if (_Object.Count > 0) {
+                    foreach (object sValue in _Object) {
+                        if (i > 0) {
+                            writer.Append(",");
+
+                            writer.AppendLine("");
+                        }
+
+                        writer.Append("\"");
+                        writer.Append(sValue.ToString());
+                        writer.AppendLine("\"");
+                        i++;
+                    }
+                }
+
                 if (_JSONObjects.Count > 0) {
 
                     foreach (JSONObject name in _JSONObjects) {
@@ -186,7 +201,7 @@ namespace Volte.Data.Json
             public int Count
             {
                 get {
-                    return _JSONObjects.Count + _JSONArrays.Count;
+                    return _JSONObjects.Count + _JSONArrays.Count + _Object.Count;
                 }
             }
 
