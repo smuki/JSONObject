@@ -137,7 +137,7 @@ namespace Volte.Data.Json
                     column2 = new DataColumn(_AttributeMapping.Name.Replace(".", "_")) {
                         Caption = _AttributeMapping.Caption
                     };
-                    string type = _AttributeMapping["TP_CODE"].ToString();
+                    string type = _AttributeMapping.DataType;
                     type        = type.Replace("System.", "");
                     type        = type.ToLower();
 
@@ -164,7 +164,7 @@ namespace Volte.Data.Json
                     _dataRow[0] = ndx;
 
                     for (int i = 0; i < this.Fields.Count; i++) {
-                        string type = this.Fields[i]["TP_CODE"].ToString().ToLower();
+                        string type = this.Fields[i].DataType.ToLower();
 
                         if (type == "decimal") {
                             _dataRow[i + 1] = this.GetDecimal(i);
@@ -180,12 +180,12 @@ namespace Volte.Data.Json
                         xZZLogger.Debug(ZFILE_NAME , i + " = "+ this[i]);
                     }
 
-    xZZLogger.Debug(ZFILE_NAME , ndx + " = ");
+                    xZZLogger.Debug(ZFILE_NAME , ndx + " = ");
                     dt.Rows.Add(_dataRow);
                     ndx++;
                     this.MoveNext();
                 }
-    xZZLogger.Debug(ZFILE_NAME , " to table data ");
+                xZZLogger.Debug(ZFILE_NAME , " to table data ");
 
                 return dt;
             }
@@ -276,7 +276,8 @@ namespace Volte.Data.Json
                     int _Ordinal = _Columns.Ordinal(name);
 
                     if (_Ordinal == -1) {
-                        throw new ArgumentException("Invalid column name", name);
+
+                        throw new ArgumentException("Invalid column name" , name+" Ordinal = "+_Ordinal.ToString());
                     }
 
                     if (!_Readed) {
@@ -290,7 +291,8 @@ namespace Volte.Data.Json
                         int _Ordinal = _Columns.Ordinal(name);
 
                         if (_Ordinal == -1) {
-                            throw new ArgumentException("Invalid column name", name);
+
+                            throw new ArgumentException("Invalid column name" , "["+name+"] Ordinal = "+_Ordinal.ToString());
                         }
 
                         _Row[_Ordinal] = new Cell(value);
@@ -342,7 +344,7 @@ namespace Volte.Data.Json
             {
                 object cValue = this[Index];
 
-                if (string.IsNullOrEmpty(cValue.ToString())) {
+                if (cValue==null || string.IsNullOrEmpty(cValue.ToString())) {
                     return 0;
                 }
 
