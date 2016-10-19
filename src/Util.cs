@@ -70,7 +70,7 @@ namespace Volte.Data.Json
 
             if (oValue is DateTime) {
                 return (DateTime) oValue;
-            } else if (oValue.ToString() == "") {
+            } else if (oValue == null || oValue.ToString() == "") {
                 return Util.DateTime_MinValue;
             } else if (Util.IsNumeric(oValue) && oValue.ToString().Length == 8) {
                 return DateTime.ParseExact(oValue.ToString(), "yyyyMMdd", null);

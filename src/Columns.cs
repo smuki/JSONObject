@@ -67,12 +67,8 @@ namespace Volte.Data.Json
 
             public bool ContainsKey(string name)
             {
-                if (FieldDict == null) {
-                    FieldDict = new Dictionary<string, int>();
-
-                    for (int j = 0; j < _Data.Count; j++) {
-                        FieldDict[_Data[j].Name.ToLower()] = j;
-                    }
+                for (int j = 0; j < _Data.Count; j++) {
+                    FieldDict[_Data[j].Name.ToLower()] = j;
                 }
 
                 return FieldDict.ContainsKey(name.ToLower());
@@ -99,7 +95,7 @@ namespace Volte.Data.Json
             public List<Column> Fields    { get { return  _Data;        }  }
 
             // Columns
-            private Dictionary<string, int> FieldDict;
+            private Dictionary<string, int> FieldDict = new Dictionary<string, int>();
             private List<Column> _Data = new List<Column>();
         }
 }
