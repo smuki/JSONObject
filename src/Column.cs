@@ -100,7 +100,10 @@ namespace Volte.Data.Json
                     _Property.SetValue("AlignName" , this.AlignName);
                 }
                 _Property.SetBoolean("NonPrintable" , this.NonPrintable);
-                _Property.SetInteger("Index"        , this.Index);
+
+                if (this.Index>=0){
+                    _Property.SetInteger("Index"        , this.Index);
+                }
 
                 _Property.Write(writer);
 

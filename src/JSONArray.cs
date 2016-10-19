@@ -39,12 +39,25 @@ namespace Volte.Data.Json
                             JSONArray variable2 = new JSONArray();
                             variable2.Read(_Lexer);
                             this.Add(variable2);
-                        } else {
+                        } else if (_Lexer.Current == '{') {
                             JSONObject variable1 = new JSONObject();
 
                             variable1.Read(_Lexer);
 
                             this.Add(variable1);
+                        }else{
+
+                            string _s="";
+                            if (char.IsDigit(_Lexer.Current) || _Lexer.Current == '-') {
+                                _s= _Lexer.ParseValue();
+                            }else if (_Lexer.Current == 'f' || _Lexer.Current == 't') {
+                                _s= _Lexer.ParseValue();
+                            }else{
+                                _s= _Lexer.ParseValue();
+                            }
+
+                            this.Add(_s);
+
                         }
 
                         _Lexer.SkipWhiteSpace();
@@ -65,6 +78,21 @@ namespace Volte.Data.Json
                 writer.AppendLine("[");
 
                 int i = 0;
+
+                if (_Object.Count > 0) {
+                    foreach (object sValue in _Object) {
+                        if (i > 0) {
+                            writer.Append(",");
+
+                            writer.AppendLine("");
+                        }
+
+                        writer.Append("\"");
+                        writer.Append(sValue.ToString());
+                        writer.AppendLine("\"");
+                        i++;
+                    }
+                }
 
                 if (_JSONObjects.Count > 0) {
 
@@ -135,9 +163,19 @@ namespace Volte.Data.Json
                 _JSONObjects.Add(value);
             }
 
+            public void Add(object value)
+            {
+                _Object.Add(value);
+            }
+
             public void Remove(JSONObject value)
             {
                 _JSONObjects.Remove(value);
+            }
+
+            public void Remove(object value)
+            {
+                _Object.Remove(value);
             }
 
             public void Clear()
@@ -163,7 +201,7 @@ namespace Volte.Data.Json
             public int Count
             {
                 get {
-                    return _JSONObjects.Count + _JSONArrays.Count;
+                    return _JSONObjects.Count + _JSONArrays.Count + _Object.Count;
                 }
             }
 
@@ -171,7 +209,8 @@ namespace Volte.Data.Json
             private readonly StringBuilder s = new StringBuilder();
 
             private List<JSONObject> _JSONObjects = new List<JSONObject>();
-            private List<JSONArray> _JSONArrays   = new List<JSONArray>();
+            private List<JSONArray>  _JSONArrays  = new List<JSONArray>();
+            private List<object>     _Object      = new List<object>();
 
         }
 }

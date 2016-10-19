@@ -177,12 +177,15 @@ namespace Volte.Data.Json
                         } else {
                             _dataRow[i + 1] = this[i];
                         }
+                        xZZLogger.Debug(ZFILE_NAME , i + " = "+ this[i]);
                     }
 
+    xZZLogger.Debug(ZFILE_NAME , ndx + " = ");
                     dt.Rows.Add(_dataRow);
                     ndx++;
                     this.MoveNext();
                 }
+    xZZLogger.Debug(ZFILE_NAME , " to table data ");
 
                 return dt;
             }
@@ -409,36 +412,12 @@ namespace Volte.Data.Json
 
             public DateTime GetDateTime(int i)
             {
-                object _obj = this[i];
-
-                if (_obj is DateTime) {
-                    return (DateTime) _obj;
-                } else if (_obj.ToString() == "") {
-                    return Util.DateTime_MinValue;
-                } else if (Util.IsNumeric(_obj) && _obj.ToString().Length == 8) {
-                    return DateTime.ParseExact(_obj.ToString(), "yyyyMMdd", null);
-                } else if (Util.IsNumeric(_obj)) {
-                    return DateTime.ParseExact(_obj.ToString(), "yyyyMMddhhmmss", null);
-                } else {
-                    return Convert.ToDateTime(_obj);
-                }
+                return Util.ToDateTime(this[i]);
             }
 
             public DateTime? GetDateTime2(int i)
             {
-                object _obj = this[i];
-
-                if (_obj is DateTime) {
-                    return (DateTime) _obj;
-                } else if (_obj.ToString() == "") {
-                    return null;
-                } else if (Util.IsNumeric(_obj) && _obj.ToString().Length == 8) {
-                    return DateTime.ParseExact(_obj.ToString(), "yyyyMMdd", null);
-                } else if (Util.IsNumeric(_obj)) {
-                    return DateTime.ParseExact(_obj.ToString(), "yyyyMMddhhmmss", null);
-                } else {
-                    return Convert.ToDateTime(_obj);
-                }
+                return Util.ToDateTime(this[i]);
             }
 
             public void SetValue(string Name, object value)

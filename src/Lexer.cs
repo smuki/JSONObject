@@ -61,7 +61,7 @@ namespace Volte.Data.Json
 
             int deb = _position;
 
-            for (; !" ,]}".Contains("" + _Data[_position]); ++_position);
+            for (; !" ,]}\n\r".Contains("" + _Data[_position]); ++_position);
 
             return _Data.Substring(deb, _position - deb);
         }
@@ -70,7 +70,7 @@ namespace Volte.Data.Json
         {
             int deb = _position;
 
-            for (; !",]}".Contains("" + _Data[_position]); ++_position);
+            for (; !",]}\n\r".Contains("" + _Data[_position]); ++_position);
 
             return _Data.Substring(deb, _position - deb);
         }

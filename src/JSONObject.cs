@@ -146,6 +146,12 @@ namespace Volte.Data.Json
                 return Util.ToInt32(o);
             }
 
+            public long GetLong(string Name)
+            {
+                object o = GetValue(Name);
+                return Util.ToLong(o);
+            }
+
             public decimal GetDecimal(string Name)
             {
                 return Util.ToDecimal(GetValue(Name));
@@ -206,7 +212,11 @@ namespace Volte.Data.Json
             {
                 if (_Dictionary.ContainsKey(name)) {
                     JSONObjectPair variable1 = _Dictionary[name];
-                    return variable1.Value.ToString();
+                    if (variable1.Value==null){
+                        return "";
+                    }else{
+                        return variable1.Value.ToString();
+                    }
                 } else {
                     return "";
                 }
@@ -252,6 +262,11 @@ namespace Volte.Data.Json
                 this.SetInteger(name, value);
             }
 
+            public void SetValue(string name, long value)
+            {
+                this.SetLong(name, value);
+            }
+
             public void SetBoolean(string name, bool value)
             {
                 JSONObjectPair variable1 = new JSONObjectPair();
@@ -260,6 +275,16 @@ namespace Volte.Data.Json
                 variable1.Value   = value;
                 variable1.Type    = "boolean";
                 _Dictionary[name] = variable1;
+            }
+
+            public void SetLong(string Name, long value)
+            {
+                JSONObjectPair variable1 = new JSONObjectPair();
+
+                variable1.Name    = Name;
+                variable1.Value   = value;
+                variable1.Type    = "integer";
+                _Dictionary[Name] = variable1;
             }
 
             public void SetInteger(string Name, int value)
@@ -340,7 +365,13 @@ namespace Volte.Data.Json
 
                     variable1.Name  = name;
                     variable1.Value = value;
-                    variable1.Type  = "nvarchar";
+                    if (value is DateTime) {
+                        variable1.Type  = "datetime";
+                    }else if (value is decimal) {
+                        variable1.Type  = "decimal";
+                    }else{
+                        variable1.Type  = "nvarchar";
+                    }
 
                     _Dictionary[name] = variable1;
                 }
