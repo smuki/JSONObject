@@ -99,11 +99,13 @@ namespace Volte.Data.Json
                 if (this.AlignName!=""){
                     _Property.SetValue("AlignName" , this.AlignName);
                 }
+                _Property.SetValue("ClassName"      , this.ClassName);
                 _Property.SetBoolean("NonPrintable" , this.NonPrintable);
 
                 if (this.Index>=0){
                     _Property.SetInteger("Index"        , this.Index);
                 }
+
 
                 _Property.Write(writer);
 

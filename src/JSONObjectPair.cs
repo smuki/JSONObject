@@ -81,6 +81,7 @@ namespace Volte.Data.Json
                                 Util.EscapeString(writer, this.Value.ToString());
                             } else if (this.Type == "datetime") {
                                 writer.Append("\"");
+
                                 Util.EscapeString(writer ,((DateTime)this.Value).ToString("yyyyMMddhhmmss"));
                                 writer.Append("\"");
                             } else if (this.Type == "boolean") {
