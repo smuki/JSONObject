@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using System.Text;
 using System.Data;
 
+using Volte.Utils;
+
 namespace Volte.Data.Json
 {
     [Serializable]
