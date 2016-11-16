@@ -101,10 +101,7 @@ namespace Volte.Data.Json
                 }
                 _Property.SetValue("ClassName"      , this.ClassName);
                 _Property.SetBoolean("NonPrintable" , this.NonPrintable);
-
-                if (this.Index>=0){
-                    _Property.SetInteger("Index"        , this.Index);
-                }
+                _Property.SetInteger("Index"        , this.Index);
 
 
                 _Property.Write(writer);

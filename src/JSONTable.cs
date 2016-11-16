@@ -79,7 +79,19 @@ namespace Volte.Data.Json
                     _Variable = new JSONObject();
                 }
 
-                _Variable.SetValue("RecordCount" , this.RecordCount);
+                int _AbsolutePage = 0;
+                int _PageSize     = 0;
+                int _RecordCount  = this.RecordCount;
+
+                if (_Variable.ContainsKey("ZZAbsolutePage")){
+                    _AbsolutePage = _Variable.GetInteger("ZZAbsolutePage");
+                }
+
+                if (_Variable.ContainsKey("ZZPageSize")){
+                    _PageSize = _Variable.GetInteger("ZZPageSize");
+                }
+
+                _Variable.SetValue("RecordCount" , _RecordCount);
 
                 writer.AppendLine("\"vars\":");
                 _Variable.Write(writer);
@@ -94,20 +106,48 @@ namespace Volte.Data.Json
                 if (this._rows != null) {
                     writer.AppendLine("\"rows\":");
                     writer.AppendLine("[");
-                    int rec = 0;
 
                     if (!_StructureOnly) {
-                        foreach (Row _row in _rows) {
-                            if (rec > 0) {
+                        int _rec = 0;
+                        int _loc = 0;
+
+                        if (this.Paging){
+
+                            int _TotalPages = 1;
+                            if (_PageSize <= 0) {
+                                _PageSize = _RecordCount;
+                            } else {
+                                _TotalPages = _RecordCount / _PageSize;
+                                if (_RecordCount > (_RecordCount / _PageSize) * _PageSize) {
+                                    _TotalPages = _TotalPages + 1;
+                                }
+                                if (_AbsolutePage<=0){
+                                    _AbsolutePage=1;
+                                }
+                                if (_AbsolutePage>_TotalPages){
+                                    _AbsolutePage=_TotalPages;
+                                }
+                                if (_AbsolutePage > 1) {
+                                    _loc = (_AbsolutePage - 1) * _PageSize;
+                                }
+                            }
+                        }else{
+                            _PageSize = _RecordCount;
+                        }
+
+                        xZZLogger.Debug(ZFILE_NAME,"_RecordCount  = "+_RecordCount);
+                        xZZLogger.Debug(ZFILE_NAME,"_PageSize     = "+_PageSize);
+                        xZZLogger.Debug(ZFILE_NAME,"_AbsolutePage = "+_AbsolutePage);
+                        xZZLogger.Debug(ZFILE_NAME,"_loc          = "+_loc);
+                        xZZLogger.Debug(ZFILE_NAME,"_rec          = "+_rec);
+
+                        while ((_loc+_rec)<_RecordCount && _rec < _PageSize) {
+                            if (_rec > 0) {
                                 writer.AppendLine(",");
                             }
-
-                            if (rec % 100 == 0) {
-                                _row_index[rec.ToString()] = writer.Length;
-                            }
-
+                            Row _row= _rows[_loc+_rec];
                             _row.Write(writer);
-                            rec++;
+                            _rec++;
                         }
                     }
 
@@ -214,7 +254,6 @@ namespace Volte.Data.Json
             public string IndexString()
             {
                 _s.Length    = 0;
-                _row_index.Write(_s);
                 return _s.ToString();
             }
 
@@ -553,18 +592,20 @@ namespace Volte.Data.Json
 
             public bool BOF            { get { return _Pointer < 0;    }  }
             public JSONObject Variable { get { return _Variable;       }  }
-            public JSONObject Index    { get { return _row_index;      }  }
             public List<Column> Fields { get { return _Columns.Fields; }  }
+
+            public bool Paging { get { return _Paging; } set { _Paging = value; }  }
 
             private Row _Row;
             private Columns _Columns;
-            private JSONObject _Variable      = new JSONObject();
-            private JSONObject _row_index     = new JSONObject();
-            private List<Row>  _rows          = new List<Row>();
             private readonly StringBuilder _s = new StringBuilder();
-            private bool _Draft               = false;
-            private bool _Readed              = false;
-            private bool _StructureOnly       = false;
-            private int _Pointer              = -1;
+
+            private JSONObject _Variable  = new JSONObject();
+            private List<Row>  _rows      = new List<Row>();
+            private bool _Draft           = false;
+            private bool _Readed          = false;
+            private bool _StructureOnly   = false;
+            private bool _Paging          = false;
+            private int  _Pointer         = -1;
         }
 }

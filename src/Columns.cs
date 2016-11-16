@@ -58,6 +58,7 @@ namespace Volte.Data.Json
                         writer.AppendLine(",");
                     }
 
+                    _Data[num1].Index=num1;
                     _Data[num1].Write(writer);
                 }
 

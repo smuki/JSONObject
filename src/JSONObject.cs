@@ -25,6 +25,15 @@ namespace Volte.Data.Json
                 }
             }
 
+            public JSONObject(string Name,string Value)
+            {
+
+                _Dictionary = new Dictionary<string, JSONObjectPair> (StringComparer.InvariantCultureIgnoreCase);
+
+                this.SetValue(Name,Value);
+
+            }
+
             internal void Read(Lexer _Lexer)
             {
                 _Lexer.SkipWhiteSpace();
