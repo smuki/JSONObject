@@ -20,6 +20,9 @@ namespace Volte.Data.Json
 
                     _VContexts.Read(_Lexer);
                     this.Value = _VContexts;
+
+             
+
                 } else {
                     _Lexer.SkipWhiteSpace();
 
@@ -37,7 +40,9 @@ namespace Volte.Data.Json
 
                         } else if (_Lexer.Current == '[') {
                             JSONArray _VContexts = new JSONArray();
-                            _VContexts.Read(_Lexer);
+                           // if (_Lexer.NextChar!=']'){
+                                _VContexts.Read(_Lexer);
+                           // }
 
                             this.Name  = name;
                             this.Type  = "l";

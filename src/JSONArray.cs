@@ -31,8 +31,12 @@ namespace Volte.Data.Json
             {
                 _Lexer.SkipWhiteSpace();
 
-                if (_Lexer.Current == '[' && _Lexer.NextChar != ']') {
+                if (_Lexer.Current == '[') {
                     _Lexer.NextToken();
+                    if (_Lexer.NextChar == ']')
+                    {
+                        return;
+                    }
 
                     for (;;) {
                         if (_Lexer.Current == '[') {
