@@ -532,7 +532,7 @@ namespace Volte.Data.Json
 
             public void DeclareStart()
             {
-
+                _Columns = new Columns();
             }
 
             public int Ordinal(string name)
