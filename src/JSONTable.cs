@@ -419,6 +419,19 @@ namespace Volte.Data.Json
                 return GetValue(i);
             }
 
+            public object GetValue(int row , string name)
+            {
+                int i = _Columns.Ordinal(name);
+                Row _tRow = _rows[row];
+                return _tRow[i].Text;
+            }
+
+            public object GetValue(int row , int i)
+            {
+                Row _tRow = _rows[row];
+                return _tRow[i].Text;
+            }
+
             public string GetValue(int i)
             {
                 object _obj = this[i];
@@ -466,6 +479,10 @@ namespace Volte.Data.Json
             public void SetValue(string Name, object value)
             {
                 this[Name] = value;
+            }
+            public void SetValue(int ndx, object value)
+            {
+                this[ndx] = value;
             }
 
             public void MoveFirst()
