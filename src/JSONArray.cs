@@ -91,9 +91,13 @@ namespace Volte.Data.Json
                             writer.AppendLine("");
                         }
 
-                        writer.Append("\"");
-                        writer.Append(sValue.ToString());
-                        writer.AppendLine("\"");
+                        if (sValue is decimal){
+                            writer.Append(sValue.ToString());
+                        }else{
+                            writer.Append("\"");
+                            writer.Append(sValue.ToString());
+                            writer.AppendLine("\"");
+                        }
                         i++;
                     }
                 }
