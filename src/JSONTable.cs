@@ -93,12 +93,6 @@ namespace Volte.Data.Json
                     _PageSize = _Variable.GetInteger("ZZPageSize");
                 }
 
-                _Variable.SetValue("RecordCount" , _RecordCount);
-
-                writer.AppendLine("\"vars\":");
-                _Variable.Write(writer);
-                writer.AppendLine("");
-                writer.AppendLine(",");
 
                 if (_Columns != null) {
                     _Columns.Write(writer);
@@ -157,6 +151,12 @@ namespace Volte.Data.Json
 
                     writer.AppendLine("]");
                 }
+                _Variable.SetValue("RecordCount" , _RecordCount);
+
+                writer.AppendLine(",");
+                writer.AppendLine("\"vars\":");
+                _Variable.Write(writer);
+                writer.AppendLine("");
 
                 writer.AppendLine("}");
             }

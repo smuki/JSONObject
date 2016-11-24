@@ -134,7 +134,7 @@ namespace Volte.Data.Json
                 object o = GetValue(Name);
 
                 try {
-                    return Convert.ToDateTime(o);
+                    return Util.ToDateTime(o);
                 } catch {
                     return Util.DateTime_MinValue;
                 }
