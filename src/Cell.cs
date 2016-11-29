@@ -19,6 +19,10 @@ namespace Volte.Data.Json
                 _Data["value"] = oValue;
             }
 
+            public Cell(JSONObject oValue)
+            {
+                _Data["value"] = oValue["value"];
+            }
             internal void Read(Lexer element)
             {
                 _Data.Read(element);

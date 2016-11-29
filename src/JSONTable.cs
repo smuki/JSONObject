@@ -46,6 +46,9 @@ namespace Volte.Data.Json
 
                             if (_Lexer.Current == '[') {
                                 _Lexer.NextToken();
+                                _Lexer.SkipWhiteSpace();
+                                if (_Lexer.Current != ']')
+                                {
 
                                 for (;;) {
                                     Row row1 = new Row(_Columns.Count);
@@ -59,6 +62,11 @@ namespace Volte.Data.Json
                                     } else {
                                         break;
                                     }
+                                }
+                                }
+                                if (_Lexer.Current == ']')
+                                {
+                                    _Lexer.NextToken();
                                 }
                             }
                         }

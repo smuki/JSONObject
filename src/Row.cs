@@ -38,21 +38,14 @@ namespace Volte.Data.Json
 
                         if (_Lexer.Current == '[') {
                             _Lexer.NextToken();
+                            _Lexer.SkipWhiteSpace();
 
                             for (;;) {
                                 c++;
 
-                                if (_Lexer.Current == '{') {
-
-                                    JSONArray _JSONArray = new JSONArray();
-                                    _JSONArray.Read(_Lexer);
-                                    _cells.Add(new Cell(_JSONArray));
-
-                                } else {
-
-                                    _cells.Add(new Cell(_Lexer.ParseValue()));
-
-                                }
+                                JSONObject _JSONObject = new JSONObject();
+                                _JSONObject.Read(_Lexer);
+                                _cells.Add(new Cell(_JSONObject));
 
                                 if (_Lexer.Current == ',') {
                                     _Lexer.NextToken();
