@@ -82,14 +82,12 @@ namespace Volte.Data.Json
             {
                 _Property = new JSONObject();
 
-                _Property.SetValue("Name"     , this.Name);
-                _Property.SetValue("Caption"  , this.Caption);
-                _Property.SetValue("DataType" , this.DataType);
-                _Property.SetInteger("Width"  , this.Width);
-                _Property.SetInteger("Scale"  , this.Scale);
-                if (this.EnableMode!=""){
-                    _Property.SetValue("EnableMode" , this.EnableMode);
-                }
+                _Property.SetValue("Name"       , this.Name);
+                _Property.SetValue("Caption"    , this.Caption);
+                _Property.SetValue("DataType"   , this.DataType);
+                _Property.SetInteger("Width"    , this.Width);
+                _Property.SetInteger("Scale"    , this.Scale);
+                _Property.SetValue("EnableMode" , this.EnableMode);
                 if (this.ColumnName!=""){
                     _Property.SetValue("ColumnName" , this.ColumnName);
                 }

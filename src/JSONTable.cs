@@ -319,6 +319,41 @@ namespace Volte.Data.Json
                 _Pointer  = -1;
             }
 
+            public object GetAttribute(string name,string att)
+            {
+                    int _Ordinal = _Columns.Ordinal(name);
+
+                    if (_Ordinal == -1) {
+
+                        throw new ArgumentException("Invalid column name" , name+" Ordinal = "+_Ordinal.ToString());
+                    }
+
+                    if (!_Readed) {
+                        _Readed = true;
+                        _Row    = _rows[_Pointer];
+                    }
+
+                    return _Row[_Ordinal].Data.GetValue(att);
+            }
+
+            public void SetAttribute(string name , string att , string oValue)
+            {
+                int _Ordinal = _Columns.Ordinal(name);
+
+                if (_Ordinal == -1) {
+
+                    throw new ArgumentException("Invalid column name" , "["+name+"] Ordinal = "+_Ordinal.ToString());
+                }
+
+                if (!_Readed) {
+                    _Readed = true;
+                    _Row    = _rows[_Pointer];
+                }
+                Cell _Cell = _Row[_Ordinal];
+                _Cell.Data.SetValue(att , oValue);
+                _Row[_Ordinal] = _Cell;
+            }
+
             public object this[string name]
             {
                 get {

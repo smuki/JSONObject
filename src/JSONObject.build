@@ -23,6 +23,7 @@
             </nowarn>
             <sources>
                 <include name = "AttributeMapping.cs" />
+                <include name = "AttributeType.cs" />
                 <include name = "Cell.cs" />
                 <include name = "Column.cs" />
                 <include name = "Columns.cs" />

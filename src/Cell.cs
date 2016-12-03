@@ -15,13 +15,13 @@ namespace Volte.Data.Json
 
             public Cell(object oValue)
             {
-                _Data          = new JSONObject();
-                _Data["value"] = oValue;
+                _Data      = new JSONObject();
+                _Data["v"] = oValue;
             }
 
             public Cell(JSONObject oValue)
             {
-                _Data["value"] = oValue["value"];
+                _Data["v"] = oValue["v"];
             }
             internal void Read(Lexer element)
             {
@@ -34,7 +34,8 @@ namespace Volte.Data.Json
             }
 
             // Properties
-            public object Text { get { return _Data["value"]; } set { _Data["value"] = value; }  }
+            public object Text     { get { return _Data["v"]; } set { _Data["v"] = value; }  }
+            public JSONObject Data { get { return _Data;      } set { _Data      = value; }  }
 
             private JSONObject _Data = new JSONObject();
         }
