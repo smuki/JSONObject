@@ -139,12 +139,6 @@ namespace Volte.Data.Json
                             _PageSize = _RecordCount;
                         }
 
-                        xZZLogger.Debug(ZFILE_NAME,"_RecordCount  = "+_RecordCount);
-                        xZZLogger.Debug(ZFILE_NAME,"_PageSize     = "+_PageSize);
-                        xZZLogger.Debug(ZFILE_NAME,"_AbsolutePage = "+_AbsolutePage);
-                        xZZLogger.Debug(ZFILE_NAME,"_loc          = "+_loc);
-                        xZZLogger.Debug(ZFILE_NAME,"_rec          = "+_rec);
-
                         while ((_loc+_rec)<_RecordCount && _rec < _PageSize) {
                             if (_rec > 0) {
                                 writer.AppendLine(",");
@@ -227,15 +221,12 @@ namespace Volte.Data.Json
                         } else {
                             _dataRow[i + 1] = this[i];
                         }
-                        xZZLogger.Debug(ZFILE_NAME , i + " = "+ this[i]);
                     }
 
-                    xZZLogger.Debug(ZFILE_NAME , ndx + " = ");
                     dt.Rows.Add(_dataRow);
                     ndx++;
                     this.MoveNext();
                 }
-                xZZLogger.Debug(ZFILE_NAME , " to table data ");
 
                 return dt;
             }
@@ -319,7 +310,7 @@ namespace Volte.Data.Json
                 _Pointer  = -1;
             }
 
-            public object GetAttribute(string name , string att)
+            public string GetAttribute(string name , string att)
             {
                 int _Ordinal = _Columns.Ordinal(name);
 
@@ -334,9 +325,13 @@ namespace Volte.Data.Json
                 }
 
                 if (att.ToLower()=="scode"){
-                    return _Row[_Ordinal].Data.GetValue(att);
+                    if (_Row[_Ordinal].Data.ContainsKey("c")){
+                        return _Row[_Ordinal].Data.GetValue("c");
+                    }else{
+                        return null;
+                    }
                 }else{
-                    return "";
+                    return null;
                 }
             }
 
@@ -385,7 +380,10 @@ namespace Volte.Data.Json
                             throw new ArgumentException("Invalid column name" , "["+name+"] Ordinal = "+_Ordinal.ToString());
                         }
 
-                        _Row[_Ordinal] = new Cell(value);
+                        Cell _Cell = _Row[_Ordinal];
+                        _Cell.Text = value;
+
+                        _Row[_Ordinal] = _Cell;
                     }
                 }
             }
@@ -405,7 +403,10 @@ namespace Volte.Data.Json
                         throw new ArgumentException("Invalid column index + _Columns=" + _Columns.Count, i.ToString());
                     }
 
-                    _Row[i] = new Cell(value);
+                    Cell _Cell = _Row[i];
+                    _Cell.Text = value;
+
+                    _Row[i] = _Cell;
                 }
             }
 

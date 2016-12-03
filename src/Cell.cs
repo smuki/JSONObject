@@ -15,7 +15,6 @@ namespace Volte.Data.Json
 
             public Cell(object oValue)
             {
-                _Data      = new JSONObject();
                 _Data["v"] = oValue;
             }
 
