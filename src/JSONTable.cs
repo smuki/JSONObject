@@ -319,21 +319,25 @@ namespace Volte.Data.Json
                 _Pointer  = -1;
             }
 
-            public object GetAttribute(string name,string att)
+            public object GetAttribute(string name , string att)
             {
-                    int _Ordinal = _Columns.Ordinal(name);
+                int _Ordinal = _Columns.Ordinal(name);
 
-                    if (_Ordinal == -1) {
+                if (_Ordinal == -1) {
 
-                        throw new ArgumentException("Invalid column name" , name+" Ordinal = "+_Ordinal.ToString());
-                    }
+                    throw new ArgumentException("Invalid column name" , name+" Ordinal = "+_Ordinal.ToString());
+                }
 
-                    if (!_Readed) {
-                        _Readed = true;
-                        _Row    = _rows[_Pointer];
-                    }
+                if (!_Readed) {
+                    _Readed = true;
+                    _Row    = _rows[_Pointer];
+                }
 
+                if (att.ToLower()=="scode"){
                     return _Row[_Ordinal].Data.GetValue(att);
+                }else{
+                    return "";
+                }
             }
 
             public void SetAttribute(string name , string att , string oValue)
@@ -350,7 +354,9 @@ namespace Volte.Data.Json
                     _Row    = _rows[_Pointer];
                 }
                 Cell _Cell = _Row[_Ordinal];
-                _Cell.Data.SetValue(att , oValue);
+                if (att.ToLower()=="scode"){
+                    _Cell.Data.SetValue("c" , oValue);
+                }
                 _Row[_Ordinal] = _Cell;
             }
 
@@ -412,8 +418,9 @@ namespace Volte.Data.Json
             {
                 object cValue = this[Index];
 
-
-                if (cValue is bool) {
+                if (cValue==null || string.IsNullOrEmpty(cValue.ToString())) {
+                    return false;
+                }else if (cValue is bool) {
                     return (bool) cValue;
                 } else if (cValue.Equals("Y") || cValue.Equals("y")) {
                     return true;
