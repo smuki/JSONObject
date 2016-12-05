@@ -574,7 +574,6 @@ namespace Volte.Data.Json
                 _Column.DataType  = type;
                 _Column.Scale     = scale;
                 _Column.Width     = width;
-                _Column.CellWidth = width * 12;
                 _Columns.Add(_Column);
             }
 
@@ -585,7 +584,6 @@ namespace Volte.Data.Json
                 _Column.Caption      = _DataField.Caption;
                 _Column.Scale        = _DataField.Scale;
                 _Column.Width        = _DataField.Width;
-                _Column.CellWidth    = _DataField.CellWidth;
                 _Column.Status       = _DataField.Status;
                 _Column.EnableMode   = _DataField.EnableMode;
                 _Column.Reference    = _DataField.Reference;

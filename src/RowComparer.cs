@@ -105,7 +105,7 @@ namespace Volte.Data.Json
             int _Compare = 0;
 
             if (ndx >= 0) {
-                string _column_type = _Columns[ndx]["TP_CODE"];
+                string _column_type = _Columns[ndx].DataType;
 
                 if (_column_type == "datetime") {
 

@@ -33,7 +33,6 @@ namespace Volte.Data.Json
         private bool   _NonPrintable = false;
         private int    _Scale        = 0;
         private int    _Width        = 0;
-        private int    _CellWidth    = 0;
         private int    _MinWidth     = 0;
         private int    _MaxWidth     = 0;
         private int    _Index        = -1;
@@ -86,7 +85,6 @@ namespace Volte.Data.Json
         public bool Ignore       { get { return _Ignore;                     } set { _Ignore       = value; }  }
         public bool AutoIdentity { get { return _AutoIdentity;               } set { _AutoIdentity = value; }  }
         public int Scale         { get { return _Scale;                      } set { _Scale        = value; }  }
-        public int CellWidth     { get { return _CellWidth;                  } set { _CellWidth    = value; }  }
         public int Width         { get { return _Width;                      } set { _Width        = value; }  }
         public int MinWidth      { get { return _MinWidth;                   } set { _MinWidth     = value; }  }
         public int MaxWidth      { get { return _MaxWidth;                   } set { _MaxWidth     = value; }  }

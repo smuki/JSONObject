@@ -15,12 +15,14 @@ namespace Volte.Data.Json
             {
                 _cells     = new List<Cell>();
                 _Reference = new JSONObject();
+                _Reference.SetBoolean("a" , false);
             }
 
             public Row(int i)
             {
                 _cells     = new List<Cell> (i);
                 _Reference = new JSONObject();
+                _Reference.SetBoolean("a" , false);
             }
 
             internal void Read(Lexer _Lexer)
@@ -67,6 +69,7 @@ namespace Volte.Data.Json
                     if (name == "Reference") {
 
                         _Reference = new JSONObject();
+                        _Reference.SetBoolean("a" , false);
                         _Reference.Read(_Lexer);
 
                         _Lexer.SkipWhiteSpace();
@@ -105,6 +108,7 @@ namespace Volte.Data.Json
                 if (_Reference==null){
 
                     _Reference = new JSONObject();
+                    _Reference.SetBoolean("a" , false);
                 }
                 _Reference.Write(writer);
 

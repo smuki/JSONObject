@@ -323,6 +323,19 @@ namespace Volte.Data.Json
                 _Dictionary.Remove(key.ToString());
             }
 
+            public void SetValue(string name, object value)
+            {
+                if (_Dictionary == null) {
+                    _Dictionary = new Dictionary<string, JSONObjectPair> (StringComparer.InvariantCultureIgnoreCase);
+                }
+
+                JSONObjectPair variable1 = new JSONObjectPair();
+
+                variable1.Name    = name;
+                variable1.Value   = value;
+                _Dictionary[name] = variable1;
+            }
+
             public void SetValue(string name, object value, string cType)
             {
                 if (_Dictionary == null) {
@@ -397,7 +410,7 @@ namespace Volte.Data.Json
 
             private readonly StringBuilder s = new StringBuilder();
 
-            private Dictionary<string, JSONObjectPair> _Dictionary = new Dictionary<string, JSONObjectPair> (StringComparer.InvariantCultureIgnoreCase);
+            private Dictionary<string , JSONObjectPair> _Dictionary = new Dictionary<string , JSONObjectPair> (StringComparer.InvariantCultureIgnoreCase);
 
         }
 }
