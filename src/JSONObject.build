@@ -34,6 +34,7 @@
                 <include name = "Row.cs" />
                 <include name = "RowComparer.cs" />
                 <include name = "JSONUtil.cs" />
+                <include name = "PivotTable.cs" />
                 <include name = "ZZLogger.cs" />
             </sources>
             <references>

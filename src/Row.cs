@@ -47,7 +47,16 @@ namespace Volte.Data.Json
 
                                 JSONObject _JSONObject = new JSONObject();
                                 _JSONObject.Read(_Lexer);
-                                _cells.Add(new Cell(_JSONObject));
+                                Cell _cell;
+
+                                if (_JSONObject.ContainsKey("c")){
+                                    _cell.sCode = _JSONObject.GetValue("c");
+                                }else{
+                                    _cell.sCode=null;
+                                }
+                                _cell.Value = _JSONObject.GetValue("v");
+
+                                _cells.Add(_cell);
 
                                 if (_Lexer.Current == ',') {
                                     _Lexer.NextToken();
@@ -129,7 +138,7 @@ namespace Volte.Data.Json
                         }
 
                         writer.Append("{");
-                        this.Write(writer , "v" , _Cell.Text);
+                        this.Write(writer , "v" , _Cell.Value);
 
                         if (_Cell.sCode!=string.Empty){
                             writer.Append(",");

@@ -5,8 +5,6 @@ using System.Reflection;
 using System.Text;
 using System.Xml;
 using System.IO;
-//using System.Web;
-//using System.Web.UI;
 
 namespace Volte.Data.Json
 {
@@ -116,17 +114,17 @@ namespace Volte.Data.Json
 
                 } else if (_column_type == "decimal") {
 
-                    decimal d1 = decimal.Parse(r1[ndx].Text.ToString());
-                    decimal d2 = decimal.Parse(r2[ndx].Text.ToString());
+                    decimal d1 = decimal.Parse(r1[ndx].Value.ToString());
+                    decimal d2 = decimal.Parse(r2[ndx].Value.ToString());
 
                     _Compare = d1.CompareTo(d2);
 
                 } else {
 
-                    _Compare = string.Compare(r1[ndx].Text.ToString(), r2[ndx].Text.ToString(), true);
+                    _Compare = string.Compare(r1[ndx].Value.ToString(), r2[ndx].Value.ToString(), true);
                 }
             } else {
-                _Compare = string.Compare(r1[0].Text.ToString(), r2[0].Text.ToString(), true);
+                _Compare = string.Compare(r1[0].Value.ToString(), r2[0].Value.ToString(), true);
             }
 
             return _Compare;
@@ -186,9 +184,9 @@ namespace Volte.Data.Json
 
             } else {
                 if (_direct1 == 0) {
-                    _Compare = string.Compare(r2[0].Text.ToString(), r1[0].Text.ToString(), true);
+                    _Compare = string.Compare(r2[0].Value.ToString(), r1[0].Value.ToString(), true);
                 } else {
-                    _Compare = string.Compare(r1[0].Text.ToString(), r2[0].Text.ToString(), true);
+                    _Compare = string.Compare(r1[0].Value.ToString(), r2[0].Value.ToString(), true);
                 }
             }
 

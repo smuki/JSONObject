@@ -316,7 +316,7 @@ namespace Volte.Data.Json
                         _Row    = _rows[_Pointer];
                     }
 
-                    return _Row[_Ordinal].Text;
+                    return _Row[_Ordinal].Value;
                 } set {
                     if (!object.Equals(value, null)) {
                         int _Ordinal = _Columns.Ordinal(name);
@@ -327,7 +327,7 @@ namespace Volte.Data.Json
                         }
 
                         Cell _Cell = _Row[_Ordinal];
-                        _Cell.Text = value;
+                        _Cell.Value = value;
 
                         _Row[_Ordinal] = _Cell;
                     }
@@ -343,14 +343,14 @@ namespace Volte.Data.Json
                         _Row    = _rows[_Pointer];
                     }
 
-                    return _Row[i].Text;
+                    return _Row[i].Value;
                 } set {
                     if (i < 0 || i >= _Columns.Count) {
                         throw new ArgumentException("Invalid column index + _Columns=" + _Columns.Count, i.ToString());
                     }
 
                     Cell _Cell = _Row[i];
-                    _Cell.Text = value;
+                    _Cell.Value = value;
 
                     _Row[i] = _Cell;
                 }
@@ -420,13 +420,13 @@ namespace Volte.Data.Json
             {
                 int i = _Columns.Ordinal(name);
                 Row _tRow = _rows[row];
-                return _tRow[i].Text;
+                return _tRow[i].Value;
             }
 
             public object GetValue(int row , int i)
             {
                 Row _tRow = _rows[row];
-                return _tRow[i].Text;
+                return _tRow[i].Value;
             }
 
             public string GetValue(int i)

@@ -13,7 +13,7 @@ namespace Volte.Data.Json
 {
 
     public class JSONUtil {
-        const string ZFILE_NAME = "Util";
+        const string ZFILE_NAME = "JSONUtil";
 
         public JSONUtil()
         {
