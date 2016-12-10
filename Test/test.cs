@@ -142,7 +142,7 @@
                 oOWXF3.Declare (_AttributeMapping);
             }
 
-            foreach (string cName in oOWXF.Variable.getArrayList()) {
+            foreach (string cName in oOWXF.Variable.Names) {
 
                 oOWXF3.Variable[cName] = oOWXF.Variable[cName];
             }
