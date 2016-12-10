@@ -33,7 +33,7 @@
                 <include name = "Lexer.cs" />
                 <include name = "Row.cs" />
                 <include name = "RowComparer.cs" />
-                <include name = "xxUtil.cs" />
+                <include name = "JSONUtil.cs" />
                 <include name = "ZZLogger.cs" />
             </sources>
             <references>

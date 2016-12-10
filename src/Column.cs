@@ -57,22 +57,27 @@ namespace Volte.Data.Json
                 }
                 if (_Property.ContainsKey("Reference")) {
 
-                    this.Reference =  _Property.GetValue("Reference");
+                    this.Reference = _Property.GetValue("Reference");
 
                 }
                 if (_Property.ContainsKey("EnableMode")) {
 
-                    this.EnableMode =  _Property.GetValue("EnableMode");
+                    this.EnableMode = _Property.GetValue("EnableMode");
 
                 }
                 if (_Property.ContainsKey("AlignName")) {
 
-                    this.AlignName =  _Property.GetValue("AlignName");
+                    this.AlignName = _Property.GetValue("AlignName");
+
+                }
+                if (_Property.ContainsKey("Options")) {
+
+                    this.Options = _Property.GetValue("Options");
 
                 }
                 if (_Property.ContainsKey("NonPrintable")) {
 
-                    this.NonPrintable =  _Property.GetBoolean("NonPrintable");
+                    this.NonPrintable = _Property.GetBoolean("NonPrintable");
 
                 }
 
@@ -88,6 +93,7 @@ namespace Volte.Data.Json
                 _Property.SetInteger("Width"    , this.Width);
                 _Property.SetInteger("Scale"    , this.Scale);
                 _Property.SetValue("EnableMode" , this.EnableMode);
+                _Property.SetValue("Options"    , this.Options);
                 if (this.ColumnName!=""){
                     _Property.SetValue("ColumnName" , this.ColumnName);
                 }

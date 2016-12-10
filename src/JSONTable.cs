@@ -163,74 +163,6 @@ namespace Volte.Data.Json
                 writer.AppendLine("}");
             }
 
-            public DataTable GetDataTable()
-            {
-                return GetDataTable("");
-            }
-
-            public DataTable GetDataTable(string name)
-            {
-
-                DataTable dt = new DataTable(name);
-
-                DataColumn column2 = new DataColumn("nRecNo") ;
-                column2.DataType = typeof(int);
-                dt.Columns.Add(column2);
-
-                foreach (AttributeMapping _AttributeMapping in this.Fields) {
-                    column2 = new DataColumn(_AttributeMapping.Name.Replace(".", "_")) {
-                        Caption = _AttributeMapping.Caption
-                    };
-                    string type = _AttributeMapping.DataType;
-                    type        = type.Replace("System.", "");
-                    type        = type.ToLower();
-
-                    if (type == "decimal") {
-                        column2.DataType = System.Type.GetType("System.Decimal");
-                    } else if (type == "datetime") {
-                        column2.DataType = typeof(DateTime);
-                    } else if (type == "int32" || type == "integer") {
-                        column2.DataType = typeof(int);
-                    } else {
-                        column2.DataType = System.Type.GetType("System.String");
-                    }
-
-                    dt.Columns.Add(column2);
-                }
-
-                this.Open();
-                int ndx = 1;
-
-                while (!this.EOF) {
-
-                    DataRow _dataRow = dt.NewRow();
-
-                    _dataRow[0] = ndx;
-
-                    for (int i = 0; i < this.Fields.Count; i++) {
-                        string type = this.Fields[i].DataType.ToLower();
-
-                        if (type == "decimal") {
-                            _dataRow[i + 1] = this.GetDecimal(i);
-                        } else if (type == "datetime") {
-                            if (this.GetDateTime2(i) == null) {
-                                _dataRow[i + 1] = DBNull.Value;
-                            } else {
-                                _dataRow[i + 1] = this.GetDateTime2(i);
-                            }
-                        } else {
-                            _dataRow[i + 1] = this[i];
-                        }
-                    }
-
-                    dt.Rows.Add(_dataRow);
-                    ndx++;
-                    this.MoveNext();
-                }
-
-                return dt;
-            }
-
             public void Parser(string _string)
             {
                 Lexer oLexer = new Lexer(_string);
@@ -310,6 +242,25 @@ namespace Volte.Data.Json
                 _Pointer  = -1;
             }
 
+            public string GetAttribute(int ndx , string att)
+            {
+
+                if (!_Readed) {
+                    _Readed = true;
+                    _Row    = _rows[_Pointer];
+                }
+
+                if (att.ToLower()=="scode"){
+                    if (!string.IsNullOrEmpty(_Columns.Fields[ndx].Options)){
+                        return _Row[ndx].sCode;
+                    }else{
+                        return null;
+                    }
+                }else{
+                    return null;
+                }
+            }
+
             public string GetAttribute(string name , string att)
             {
                 int _Ordinal = _Columns.Ordinal(name);
@@ -319,21 +270,25 @@ namespace Volte.Data.Json
                     throw new ArgumentException("Invalid column name" , name+" Ordinal = "+_Ordinal.ToString());
                 }
 
+                return GetAttribute(_Ordinal , att);
+            }
+
+            public void SetAttribute(int ndx , string att , string oValue)
+            {
+
                 if (!_Readed) {
                     _Readed = true;
                     _Row    = _rows[_Pointer];
                 }
-
+                Cell _Cell = _Row[ndx];
                 if (att.ToLower()=="scode"){
-                    if (_Row[_Ordinal].sCode!=string.Empty){
-                        return _Row[_Ordinal].sCode;
-                    }else{
-                        return null;
+                    if (!string.IsNullOrEmpty(_Columns.Fields[ndx].Options)){
+                        _Cell.sCode = oValue;
                     }
-                }else{
-                    return null;
                 }
+                _Row[ndx] = _Cell;
             }
+
 
             public void SetAttribute(string name , string att , string oValue)
             {
@@ -343,17 +298,7 @@ namespace Volte.Data.Json
 
                     throw new ArgumentException("Invalid column name" , "["+name+"] Ordinal = "+_Ordinal.ToString());
                 }
-
-                if (!_Readed) {
-                    _Readed = true;
-                    _Row    = _rows[_Pointer];
-                }
-                Cell _Cell = _Row[_Ordinal];
-                if (att.ToLower()=="scode"){
-
-                    _Cell.sCode = oValue;
-                }
-                _Row[_Ordinal] = _Cell;
+                SetAttribute(_Ordinal,att,oValue);
             }
 
             public object this[string name]
@@ -594,6 +539,7 @@ namespace Volte.Data.Json
                 _Column.DataType     = _DataField.DataType;
                 _Column.DataBand     = _DataField.DataBand;
                 _Column.AlignName    = _DataField.AlignName;
+                _Column.Options      = _DataField.Options;
                 _Columns.Add(_Column);
             }
 
