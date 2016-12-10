@@ -80,6 +80,38 @@ namespace Volte.Data.Json
                 }
             }
 
+            private void Write(StringBuilder  writer , string sName , object o)
+            {
+
+                writer.Append("\"" + sName + "\":");
+
+                if (o is DateTime) {
+                    if ((DateTime)o<= Util.DateTime_MinValue) {
+                        writer.Append("\"");
+                        writer.Append("\"");
+                    } else {
+                        writer.Append("\"");
+                        Util.EscapeString(writer ,((DateTime)o).ToString("yyyyMMddhhmmss"));
+                        writer.Append("\"");
+                    }
+                }else if (o is decimal || o is int) {
+
+                    Util.EscapeString(writer, o.ToString());
+
+                } else if (o is bool) {
+
+                    Util.EscapeString(writer, o.ToString().ToLower());
+
+                } else {
+
+                    writer.Append("\"");
+                    if (o!=null){
+                        Util.EscapeString(writer, o.ToString());
+                    }
+                    writer.Append("\"");
+                }
+            }
+
             internal void Write(StringBuilder writer)
             {
                 writer.AppendLine("{");
@@ -96,7 +128,17 @@ namespace Volte.Data.Json
                             first = false;
                         }
 
-                        _Cell.Write(writer);
+                        writer.Append("{");
+                        this.Write(writer , "v" , _Cell.Text);
+
+                        if (_Cell.sCode!=string.Empty){
+                            writer.Append(",");
+
+                            this.Write(writer , "c" , _Cell.sCode);
+                        }
+                        writer.Append("}");
+
+                        //_Cell.Write(writer);
                     }
 
                     writer.Append("]");

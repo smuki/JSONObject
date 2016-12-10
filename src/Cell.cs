@@ -3,6 +3,7 @@ using System.Xml;
 using System.Text;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
+using Volte.Utils;
 
 namespace Volte.Data.Json
 {
@@ -15,27 +16,24 @@ namespace Volte.Data.Json
 
             public Cell(object oValue)
             {
-                _Data["v"] = oValue;
+                _Value = oValue;
             }
 
             public Cell(JSONObject oValue)
             {
-                _Data["v"] = oValue["v"];
-            }
-            internal void Read(Lexer element)
-            {
-                _Data.Read(element);
+                _Value = oValue["v"];
+
+                if (oValue.ContainsKey("c")){
+                    _sCode = oValue.GetValue("c");
+                }
             }
 
-            internal void Write(StringBuilder  writer)
-            {
-                _Data.Write(writer);
-            }
 
             // Properties
-            public object Text     { get { return _Data["v"]; } set { _Data["v"] = value; }  }
-            public JSONObject Data { get { return _Data;      } set { _Data      = value; }  }
+            public object Text  { get { return _Value; } set { _Value = value; }  }
+            public string sCode { get { return _sCode; } set { _sCode = value; }  }
 
-            private JSONObject _Data = new JSONObject();
+            private string _sCode = string.Empty;
+            private object _Value = new object();
         }
 }

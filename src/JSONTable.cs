@@ -325,8 +325,8 @@ namespace Volte.Data.Json
                 }
 
                 if (att.ToLower()=="scode"){
-                    if (_Row[_Ordinal].Data.ContainsKey("c")){
-                        return _Row[_Ordinal].Data.GetValue("c");
+                    if (_Row[_Ordinal].sCode!=string.Empty){
+                        return _Row[_Ordinal].sCode;
                     }else{
                         return null;
                     }
@@ -350,7 +350,8 @@ namespace Volte.Data.Json
                 }
                 Cell _Cell = _Row[_Ordinal];
                 if (att.ToLower()=="scode"){
-                    _Cell.Data.SetValue("c" , oValue);
+
+                    _Cell.sCode = oValue;
                 }
                 _Row[_Ordinal] = _Cell;
             }

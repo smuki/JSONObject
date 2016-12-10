@@ -26,6 +26,7 @@ namespace Volte.Data.Json
                     _Lexer.SkipWhiteSpace();
 
                     if (_Lexer.Current != '}') {
+             						xZZLogger.Debug(ZFILE_NAME, "Position="+_Lexer.Position);
                         string name = _Lexer.ParseName();
                         _Lexer.SkipWhiteSpace();
 
@@ -96,7 +97,7 @@ namespace Volte.Data.Json
 	                                }
                               	}else{
 		                                writer.Append("\"");
-		
+
 		                                Util.EscapeString(writer ,Util.ToDateTime(this.Value).ToString("yyyyMMddhhmmss"));
 		                                writer.Append("\"");
                               	}
