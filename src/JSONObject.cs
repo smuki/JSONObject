@@ -99,8 +99,7 @@ namespace Volte.Data.Json
 
             public override string ToString()
             {
-
-                s.Length = 0;
+                StringBuilder s = new StringBuilder();
                 this.Write(s);
                 return s.ToString();
             }
@@ -408,9 +407,8 @@ namespace Volte.Data.Json
                 }
             }
 
-            private readonly StringBuilder s = new StringBuilder();
 
-            private Dictionary<string , JSONObjectPair> _Dictionary = new Dictionary<string , JSONObjectPair> (StringComparer.InvariantCultureIgnoreCase);
+            private Dictionary<string , JSONObjectPair> _Dictionary = new Dictionary<string , JSONObjectPair>(StringComparer.InvariantCultureIgnoreCase);
 
         }
 }

@@ -9,6 +9,8 @@ using System.Globalization;
 using System.Security.Cryptography;
 using System.IO.Compression;
 
+using Volte.Utils;
+
 namespace Volte.Data.Json
 {
 
@@ -81,6 +83,67 @@ namespace Volte.Data.Json
             }
 
             return dt;
+        }
+
+        public static void ToObjects(StringBuilder writer , JSONTable _JSONTable)
+        {
+
+            writer.AppendLine("[");
+
+            _JSONTable.MoveFirst();
+            int rec=0;
+
+            while (!_JSONTable.EOF) {
+                if (rec > 0) {
+                    writer.Append(",");
+
+                    writer.AppendLine("");
+                }
+                writer.AppendLine("{");
+
+                for (int i = 0; i < _JSONTable.Fields.Count; i++) {
+
+                    string _Name = _JSONTable.Fields[i].Name;
+                    string type  = _JSONTable.Fields[i].DataType.ToLower();
+
+                    if (i > 0) {
+                        writer.Append(",");
+                        writer.AppendLine("");
+                    }
+
+                    writer.Append("\"" + _Name + "\":");
+
+                    if (type== "decimal" || type== "integer") {
+                        Util.EscapeString(writer, _JSONTable.GetDecimal(i).ToString());
+                    } else if (type == "datetime") {
+
+                        if (_JSONTable.GetDateTime(i) <= Util.DateTime_MinValue) {
+                            writer.Append("\"\"");
+                        } else {
+                            writer.Append("\"");
+                            Util.EscapeString(writer ,_JSONTable.GetDateTime(i).ToString("yyyyMMddhhmmss"));
+                            writer.Append("\"");
+                        }
+
+                    } else if (type == "boolean") {
+                        Util.EscapeString(writer, _JSONTable.GetValue(i).ToLower());
+                    } else {
+                        writer.Append("\"");
+                        Util.EscapeString(writer, _JSONTable.GetValue(i));
+                        writer.Append("\"");
+                    }
+
+                }
+                writer.AppendLine("}");
+
+                rec++;
+                _JSONTable.MoveNext();
+            }
+
+            writer.AppendLine("");
+            writer.Append("]");
+
+            return ;
         }
 
         public static JSONArray ToJSONObject(string name , JSONTable _JSONTable)

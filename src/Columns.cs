@@ -68,11 +68,14 @@ namespace Volte.Data.Json
 
             public bool ContainsKey(string name)
             {
+                if (FieldDict.ContainsKey(name)){
+                    return FieldDict.ContainsKey(name);
+                }
                 for (int j = 0; j < _Data.Count; j++) {
-                    FieldDict[_Data[j].Name.ToLower()] = j;
+                    FieldDict[_Data[j].Name] = j;
                 }
 
-                return FieldDict.ContainsKey(name.ToLower());
+                return FieldDict.ContainsKey(name);
             }
 
             public int Ordinal(string name)
@@ -81,10 +84,8 @@ namespace Volte.Data.Json
                     return -1;
                 }
 
-                name = name.Replace(".", "_");
-
-                if (ContainsKey(name.ToLower())) {
-                    return FieldDict[name.ToLower()];
+                if (ContainsKey(name)) {
+                    return FieldDict[name];
                 } else {
                     return -1;
                 }
@@ -96,7 +97,7 @@ namespace Volte.Data.Json
             public List<Column> Fields    { get { return  _Data;        }  }
 
             // Columns
-            private Dictionary<string, int> FieldDict = new Dictionary<string, int>();
+            private Dictionary<string, int> FieldDict = new Dictionary<string, int>(StringComparer.OrdinalIgnoreCase);
             private List<Column> _Data = new List<Column>();
         }
 }
