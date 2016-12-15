@@ -26,7 +26,6 @@ namespace Volte.Data.Json
                     _Lexer.SkipWhiteSpace();
 
                     if (_Lexer.Current != '}') {
-             						xZZLogger.Debug(ZFILE_NAME, "Position="+_Lexer.Position);
                         string name = _Lexer.ParseName();
                         _Lexer.SkipWhiteSpace();
 
@@ -84,7 +83,6 @@ namespace Volte.Data.Json
                                 Util.EscapeString(writer, this.Value.ToString());
                             } else if (this.Type == "datetime") {
 
-                        				xZZLogger.Debug(ZFILE_NAME,"this.Value  = "+this.Value);
 
                             		if (this.Value is DateTime) {
 	                                if ((DateTime)this.Value <= Util.DateTime_MinValue) {

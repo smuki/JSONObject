@@ -134,6 +134,11 @@ namespace Volte.Data.Json
                     }
 
                 }
+                writer.Append(",");
+                writer.Append("\"k\":");
+                writer.Append("\"");
+                Util.EscapeString(writer, _JSONTable.Reference.GetValue("k"));
+                writer.Append("\"");
                 writer.AppendLine("}");
 
                 rec++;

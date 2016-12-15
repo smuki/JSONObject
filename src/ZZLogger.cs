@@ -11,11 +11,11 @@ using System.Diagnostics;
 namespace Volte.Data.Json
 {
 
-    public class xZZLogger {
+    public class ZZLogger {
         const string ZFILE_NAME = "ZZLogger";
 
         private readonly StringBuilder sb = new StringBuilder();
-        private static xZZLogger _Logger;
+        private static ZZLogger _Logger;
         private static Queue<JSONObject> _que;
         private static object _PENDING       = new object();
         public static bool DebugEnabled      = true;
@@ -29,18 +29,18 @@ namespace Volte.Data.Json
         private string rootPath  = "";
         private string separator = "";
 
-        public static xZZLogger getInstance()
+        public static ZZLogger getInstance()
         {
             if (_Logger == null) {
                 _que = new Queue<JSONObject>();
 
-                _Logger = new xZZLogger();
+                _Logger = new ZZLogger();
             }
 
             return _Logger;
         }
 
-        internal xZZLogger()
+        internal ZZLogger()
         {
             _worker = new Thread(new ThreadStart(_Do_Worker));
             _worker.IsBackground = true;
@@ -130,7 +130,7 @@ namespace Volte.Data.Json
             rootPath         = rootPath.Replace("/", separator);
             string sPathName = rootPath + "temp" + separator + "log" + separator + FileName;
 
-            xZZLogger.Debug(ZFILE_NAME, sPathName);
+            ZZLogger.Debug(ZFILE_NAME, sPathName);
 
             StreamWriter swer = new StreamWriter(sPathName, false);
             swer.Write(Data);
@@ -145,7 +145,7 @@ namespace Volte.Data.Json
             }
 
             if (_Logger == null) {
-                xZZLogger.getInstance();
+                ZZLogger.getInstance();
             }
 
             _Logger.WriteLog("SQL", cModules_Name, "" + msg, objs);
@@ -158,7 +158,7 @@ namespace Volte.Data.Json
             }
 
             if (_Logger == null) {
-                xZZLogger.getInstance();
+                ZZLogger.getInstance();
             }
 
             _Logger.WriteLog("INFO", cModules_Name, "" + msg, objs);
@@ -167,7 +167,7 @@ namespace Volte.Data.Json
         public static void Warn(string cModules_Name, object msg, params object[] objs)
         {
             if (_Logger == null) {
-                xZZLogger.getInstance();
+                ZZLogger.getInstance();
             }
 
             _Logger.WriteLog("WARN", cModules_Name, "" + msg, objs);
@@ -176,7 +176,7 @@ namespace Volte.Data.Json
         public static void Fatal(string cModules_Name, object msg, params object[] objs)
         {
             if (_Logger == null) {
-                xZZLogger.getInstance();
+                ZZLogger.getInstance();
             }
 
             _Logger.WriteLog("FATAL", cModules_Name, "" + msg, objs);
@@ -185,7 +185,7 @@ namespace Volte.Data.Json
         public static void Trace(string cModules_Name, object msg, params object[] objs)
         {
             if (_Logger == null) {
-                xZZLogger.getInstance();
+                ZZLogger.getInstance();
             }
 
             _Logger.WriteLog("TRACE", cModules_Name, "" + msg, objs);
@@ -198,7 +198,7 @@ namespace Volte.Data.Json
             }
 
             if (_Logger == null) {
-                xZZLogger.getInstance();
+                ZZLogger.getInstance();
             }
 
             _Logger.WriteLog("DEBUG", cModules_Name, "" + msg, objs);
@@ -207,7 +207,7 @@ namespace Volte.Data.Json
         public static void Error(string sMsg)
         {
             if (_Logger == null) {
-                xZZLogger.getInstance();
+                ZZLogger.getInstance();
             }
 
             _Logger.WriteLog("ERROR", "", "" + sMsg);
@@ -215,7 +215,7 @@ namespace Volte.Data.Json
         public static void Error(string cModules_Name, Exception sErrMsg, params object[] objs)
         {
             if (_Logger == null) {
-                xZZLogger.getInstance();
+                ZZLogger.getInstance();
             }
 
             string cMessage = "Message=[" + sErrMsg.Message + "]" + "\nSource=[" + sErrMsg.Source + "]\nStackTrace=[" + sErrMsg.StackTrace + "]\nTargetSite=[" + sErrMsg.TargetSite + "]";
@@ -226,7 +226,7 @@ namespace Volte.Data.Json
         public static void Error(string cModules_Name, object msg, params object[] objs)
         {
             if (_Logger == null) {
-                xZZLogger.getInstance();
+                ZZLogger.getInstance();
             }
 
             _Logger.WriteLog("ERROR", cModules_Name, "" + msg, objs);
