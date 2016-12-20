@@ -9,6 +9,7 @@ using System.IO;
 namespace Volte.Data.Json
 {
     internal class RowComparer : IComparer<Row> {
+        const string ZFILE_NAME = "RowComparer";
         private int     _column_ndx1 = -1;
         private int     _column_ndx2 = -1;
         private int     _column_ndx3 = -1;
@@ -25,99 +26,120 @@ namespace Volte.Data.Json
 
         public RowComparer(Columns cColumns, string Name)
         {
-            string[] aName = Name.Split(',');
+            string s=Name+",";
+            string[] aName = s.Split(',');
             _Columns = cColumns;
             string _Name = "";
 
             if (aName.Length >= 1) {
                 _Name = aName[0].Trim();
+                if (_Name!=""){
 
-                if (_Name.IndexOf("^") >= 0) {
-                    _direct1 = 1;
-                    _Name.Replace("^", "");
+                    if (_Name.IndexOf("^") >= 0) {
+
+                        _direct1 = 1;
+                        _Name    = _Name.Replace("^", "");
+                    }
+
+                    _column_ndx1 = _Columns.Ordinal(_Name);
                 }
-
-                _column_ndx1 = _Columns.Ordinal(_Name);
             }
 
             if (aName.Length >= 2) {
 
                 _Name = aName[1].Trim();
+                if (_Name!=""){
 
-                if (_Name.IndexOf("^") >= 0) {
-                    _direct2 = 1;
-                    _Name.Replace("^", "");
+                    if (_Name.IndexOf("^") >= 0) {
+                        _direct2 = 1;
+                        _Name    = _Name.Replace("^", "");
+                    }
+
+                    _column_ndx2 = _Columns.Ordinal(_Name);
                 }
-
-                _column_ndx2 = _Columns.Ordinal(_Name);
             }
 
             if (aName.Length >= 3) {
 
                 _Name = aName[2].Trim();
+                if (_Name!=""){
 
-                if (_Name.IndexOf("^") >= 0) {
-                    _direct3 = 1;
-                    _Name.Replace("^", "");
+                    if (_Name.IndexOf("^") >= 0) {
+                        _direct3 = 1;
+                        _Name    = _Name.Replace("^", "");
+                    }
+
+                    _column_ndx3 = _Columns.Ordinal(_Name);
                 }
-
-                _column_ndx3 = _Columns.Ordinal(_Name);
             }
 
             if (aName.Length >= 4) {
                 _Name = aName[3].Trim();
+                if (_Name!=""){
 
-                if (_Name.IndexOf("^") >= 0) {
-                    _direct4 = 1;
-                    _Name.Replace("^", "");
+                    if (_Name.IndexOf("^") >= 0) {
+                        _direct4 = 1;
+                        _Name    = _Name.Replace("^", "");
+                    }
+
+                    _column_ndx4 = _Columns.Ordinal(_Name);
                 }
-
-                _column_ndx4 = _Columns.Ordinal(_Name);
             }
 
             if (aName.Length >= 5) {
                 _Name = aName[4].Trim();
+                if (_Name!=""){
 
-                if (_Name.IndexOf("^") >= 0) {
-                    _direct5 = 1;
-                    _Name.Replace("^", "");
+                    if (_Name.IndexOf("^") >= 0) {
+                        _direct5 = 1;
+                        _Name    = _Name.Replace("^", "");
+                    }
+
+                    _column_ndx5 = _Columns.Ordinal(_Name);
                 }
-
-                _column_ndx5 = _Columns.Ordinal(_Name);
             }
 
             if (aName.Length >= 6) {
                 _Name = aName[5].Trim();
+                if (_Name!=""){
 
-                if (_Name.IndexOf("^") >= 0) {
-                    _direct6 = 1;
-                    _Name.Replace("^", "");
+                    if (_Name.IndexOf("^") >= 0) {
+                        _direct6 = 1;
+                        _Name    = _Name.Replace("^", "");
+                    }
+
+                    _column_ndx6 = _Columns.Ordinal(_Name);
                 }
-
-                _column_ndx6 = _Columns.Ordinal(_Name);
             }
         }
 
-        private int CompareIt(int ndx, Row r1, Row r2)
+        private int CompareIt(int ndx , Row r1 , Row r2)
         {
             int _Compare = 0;
 
             if (ndx >= 0) {
                 string _column_type = _Columns[ndx].DataType;
 
+                    ZZLogger.Debug(ZFILE_NAME , ndx);
+
                 if (_column_type == "datetime") {
 
-                    DateTime d1 = r1.getDateTime(ndx);
-                    DateTime d2 = r2.getDateTime(ndx);
+                    DateTime d1 = r1.GetDateTime(ndx);
+                    DateTime d2 = r2.GetDateTime(ndx);
 
                     _Compare = d1.CompareTo(d2);
 
                 } else if (_column_type == "decimal") {
 
-                    decimal d1 = decimal.Parse(r1[ndx].Value.ToString());
-                    decimal d2 = decimal.Parse(r2[ndx].Value.ToString());
+                    decimal d1 = r1.GetDecimal(ndx);
+                    decimal d2 = r2.GetDecimal(ndx);
+
+                    ZZLogger.Debug(ZFILE_NAME , d1);
+                    ZZLogger.Debug(ZFILE_NAME , d2);
 
                     _Compare = d1.CompareTo(d2);
+
+                    ZZLogger.Debug(ZFILE_NAME , _Compare);
 
                 } else {
 
@@ -137,9 +159,9 @@ namespace Volte.Data.Json
             if (_column_ndx1 >= 0) {
 
                 if (_direct1 == 0) {
-                    _Compare = CompareIt(_column_ndx1, r1, r2);
+                    _Compare = CompareIt(_column_ndx1 , r1 , r2);
                 } else {
-                    _Compare = CompareIt(_column_ndx1, r2, r1);
+                    _Compare = CompareIt(_column_ndx1 , r2 , r1);
                 }
 
                 if (_Compare == 0 && _column_ndx2 >= 0) {

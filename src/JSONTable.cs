@@ -251,11 +251,7 @@ namespace Volte.Data.Json
                 }
 
                 if (att.ToLower()=="scode"){
-                    if (!string.IsNullOrEmpty(_Columns.Fields[ndx].Options)){
                         return _Row[ndx].sCode;
-                    }else{
-                        return null;
-                    }
                 }else{
                     return null;
                 }

@@ -167,9 +167,14 @@ namespace Volte.Data.Json
                 writer.AppendLine("}");
             }
 
-            public DateTime getDateTime(int i)
+            public decimal GetDecimal(int i)
             {
-                return Util.ToDateTime(this[i]);
+                return Util.ToDecimal(this[i].Value);
+            }
+
+            public DateTime GetDateTime(int i)
+            {
+                return Util.ToDateTime(this[i].Value);
             }
 
             public Cell this[int i]
