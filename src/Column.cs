@@ -30,6 +30,11 @@ namespace Volte.Data.Json
                     this.Name = _Property.GetValue("Name");
 
                 }
+                if (!string.IsNullOrEmpty(this.Name)) {
+
+                    this.Hash = this.Name.Replace("." , "_");
+
+                }
                 if (_Property.ContainsKey("Caption")) {
 
                     this.Caption =  _Property.GetValue("Caption");

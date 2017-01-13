@@ -72,7 +72,7 @@ namespace Volte.Data.Json
                     return FieldDict.ContainsKey(name);
                 }
                 for (int j = 0; j < _Data.Count; j++) {
-                    FieldDict[_Data[j].Name] = j;
+                    FieldDict[_Data[j].Hash] = j;
                 }
 
                 return FieldDict.ContainsKey(name);

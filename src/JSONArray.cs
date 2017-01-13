@@ -149,6 +149,15 @@ namespace Volte.Data.Json
                 return _ToString();
             }
 
+            public JSONObject Lookup(string name , string value)
+            {
+                foreach (JSONObject _record in _JSONObjects) {
+                    if (_record.GetValue(name).IndexOf(value)>=0){
+                        return _record;
+                    }
+                }
+                return new JSONObject();
+            }
             private string _ToString()
             {
 

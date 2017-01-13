@@ -510,19 +510,21 @@ namespace Volte.Data.Json
 
             public void Declare(string name, string caption, string type, int width = 12, int scale = 2)
             {
-                Column _Column    = new Column();
-                _Column.Name      = name;
-                _Column.Caption   = caption;
-                _Column.DataType  = type;
-                _Column.Scale     = scale;
-                _Column.Width     = width;
+                Column _Column   = new Column();
+                _Column.Name     = name;
+                _Column.Hash     = name.Replace("." , "_");
+                _Column.Caption  = caption;
+                _Column.DataType = type;
+                _Column.Scale    = scale;
+                _Column.Width    = width;
                 _Columns.Add(_Column);
             }
 
             public void Declare(AttributeMapping _DataField)
             {
                 Column _Column       = new Column();
-                _Column.Name         = _DataField.Name.Replace(".", "_");
+                _Column.Name         = _DataField.Name;
+                _Column.Hash         = _DataField.Name.Replace(".", "_");
                 _Column.Caption      = _DataField.Caption;
                 _Column.Scale        = _DataField.Scale;
                 _Column.Width        = _DataField.Width;

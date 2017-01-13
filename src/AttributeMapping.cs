@@ -32,6 +32,7 @@ namespace Volte.Data.Json
         private string _DataBand     = "";
         private string _DataType     = "";
         private string _Name         = "";
+        private string _Hash         = "";
         private string _Options      = "";
         private string _Reference    = "";
         private string _Status       = "";
@@ -64,6 +65,7 @@ namespace Volte.Data.Json
         public string DataType   { get { return _DataType;     } set { _DataType     = value; }  }
         public string EnableMode { get { return _enabledMode;  } set { _enabledMode  = value; }  }
         public string Name       { get { return _Name;         } set { _Name         = value; }  }
+        public string Hash       { get { return _Hash;         } set { _Hash         = value; }  }
         public string Options    { get { return _Options;      } set { _Options      = value; }  }
         public string Reference  { get { return _Reference;    } set { _Reference    = value; }  }
         public string Status     { get { return _Status;       } set { _Status       = value; }  }
