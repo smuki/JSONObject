@@ -73,6 +73,7 @@ namespace Volte.Data.Json
                 }
                 for (int j = 0; j < _Data.Count; j++) {
                     FieldDict[_Data[j].Hash] = j;
+                    FieldDict[_Data[j].Name] = j;
                 }
 
                 return FieldDict.ContainsKey(name);
