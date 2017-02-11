@@ -11,7 +11,7 @@ namespace Volte.Data.Json
     [Serializable]
         public class JSONTable {
             const string ZFILE_NAME = "JSONTable";
-            private readonly StringBuilder _Fields    = new StringBuilder();
+            private readonly StringBuilder _Fields = new StringBuilder();
 
             public JSONTable()
             {
@@ -50,19 +50,19 @@ namespace Volte.Data.Json
                                 if (_Lexer.Current != ']')
                                 {
 
-                                for (;;) {
-                                    Row row1 = new Row(_Columns.Count);
-                                    row1.Read(_Lexer);
-                                    _rows.Add(row1);
+                                    for (;;) {
+                                        Row row1 = new Row(_Columns.Count);
+                                        row1.Read(_Lexer);
+                                        _rows.Add(row1);
 
-                                    _Lexer.SkipWhiteSpace();
+                                        _Lexer.SkipWhiteSpace();
 
-                                    if (_Lexer.Current == ',') {
-                                        _Lexer.NextToken();
-                                    } else {
-                                        break;
+                                        if (_Lexer.Current == ',') {
+                                            _Lexer.NextToken();
+                                        } else {
+                                            break;
+                                        }
                                     }
-                                }
                                 }
                                 if (_Lexer.Current == ']')
                                 {
@@ -604,6 +604,7 @@ namespace Volte.Data.Json
             public bool BOF            { get { return _Pointer < 0;    }  }
             public JSONObject Variable { get { return _Variable;       }  }
             public List<Column> Fields { get { return _Columns.Fields; }  }
+            public List<Row> Rows      { get { return _rows;           }  }
 
             public bool Paging { get { return _Paging; } set { _Paging = value; }  }
 

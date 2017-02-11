@@ -8,7 +8,7 @@ namespace Volte.Data.Json
 {
 
     [Serializable]
-        internal class Row {
+        public class Row {
             const string ZFILE_NAME = "Row";
             // Methods
             public Row()
