@@ -52,7 +52,7 @@ namespace Volte.Data.Json
                                 if (_JSONObject.ContainsKey("c")){
                                     _cell.sCode = _JSONObject.GetValue("c");
                                 }else{
-                                    _cell.sCode=null;
+                                    _cell.sCode="";
                                 }
                                 _cell.Value = _JSONObject.GetValue("v");
 
@@ -147,7 +147,6 @@ namespace Volte.Data.Json
                         }
                         writer.Append("}");
 
-                        //_Cell.Write(writer);
                     }
 
                     writer.Append("]");

@@ -251,7 +251,7 @@ namespace Volte.Data.Json
                 }
 
                 if (att.ToLower()=="scode"){
-                        return _Row[ndx].sCode;
+                    return _Row[ndx].sCode;
                 }else{
                     return null;
                 }
@@ -278,9 +278,7 @@ namespace Volte.Data.Json
                 }
                 Cell _Cell = _Row[ndx];
                 if (att.ToLower()=="scode"){
-                    if (!string.IsNullOrEmpty(_Columns.Fields[ndx].Options)){
-                        _Cell.sCode = oValue;
-                    }
+                    _Cell.sCode = oValue;
                 }
                 _Row[ndx] = _Cell;
             }
