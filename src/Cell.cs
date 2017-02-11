@@ -7,6 +7,7 @@ using Volte.Utils;
 
 namespace Volte.Data.Json
 {
+    [Serializable]
     public struct Cell
     {
         public string sCode;

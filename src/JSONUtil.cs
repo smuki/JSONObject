@@ -32,7 +32,7 @@ namespace Volte.Data.Json
             dt.Columns.Add(column2);
 
             foreach (AttributeMapping _AttributeMapping in _JSONTable.Fields) {
-                column2 = new DataColumn(_AttributeMapping.Name.Replace(".", "_")) {
+                column2 = new DataColumn(_AttributeMapping.Hash) {
                     Caption = _AttributeMapping.Caption
                 };
                 string type = _AttributeMapping.DataType;
@@ -103,7 +103,7 @@ namespace Volte.Data.Json
 
                 for (int i = 0; i < _JSONTable.Fields.Count; i++) {
 
-                    string _Name = _JSONTable.Fields[i].Name;
+                    string _Name = _JSONTable.Fields[i].Hash;
                     string type  = _JSONTable.Fields[i].DataType.ToLower();
 
                     if (i > 0) {
@@ -164,7 +164,7 @@ namespace Volte.Data.Json
 
                 for (int i = 0; i < _JSONTable.Fields.Count; i++) {
 
-                    string _Name = _JSONTable.Fields[i].Name;
+                    string _Name = _JSONTable.Fields[i].Hash;
                     string type  = _JSONTable.Fields[i].DataType.ToLower();
 
                     if (type == "decimal") {
