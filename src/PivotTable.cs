@@ -56,42 +56,75 @@ namespace Volte.Data.Json
             JSONArray _datasets = new JSONArray();
 
             int i=0;
-            foreach (AttributeMapping Fields in _Data.Fields){
-                if (i>0){
-                    _label.Add(Fields.Caption);
-                }
-                i++;
-            }
-            _json.SetValue("labels" , _label);
             _json.SetValue("xAxes" , parameters.GetValue("xAxes"));
             _json.SetValue("yAxes" , parameters.GetValue("yAxes"));
 
             _Data.MoveFirst();
             int rec=1;
-            while (!_Data.EOF) {
-
+            if (parameters.GetValue("yAxes")==""){
                 JSONObject _record = new JSONObject();
-                _record.SetValue("label" , _Data.GetValue(0));
 
-                JSONArray _data = new JSONArray();
-
-                i=0;
-
+                JSONArray _data  = new JSONArray();
+                JSONArray _color = new JSONArray();
                 foreach (AttributeMapping Fields in _Data.Fields){
-                    if (i>0){
-                        _data.Add(_Data.GetDecimal(i));
+                    if (i==0){
+                        _record.SetValue("label" , "");
                     }
                     i++;
                 }
+
+                while (!_Data.EOF) {
+                    _label.Add(_Data.GetValue(0));
+                    _data.Add(_Data.GetDecimal(1));
+                    _color.Add(parameters.GetValue("backgroundColor_"+rec));
+                    rec++;
+
+                    _Data.MoveNext();
+                }
                 _record.SetValue("data"            , _data);
                 _record.SetValue("fill"            , parameters.GetBoolean("fill"));
-                _record.SetValue("backgroundColor" , parameters.GetValue("backgroundColor_"+rec));
+                _record.SetValue("backgroundColor" , _color);
                 _record.SetValue("borderColor"     , parameters.GetValue("backgroundColor_"+rec));
+                //_record.SetValue("labels" , _label);
 
+                _json.SetValue("labels" , _label);
                 _datasets.Add(_record);
-                rec++;
 
-                _Data.MoveNext();
+            }else{
+
+                foreach (AttributeMapping Fields in _Data.Fields){
+                    if (i>0){
+                        _label.Add(Fields.Caption);
+                    }
+                    i++;
+                }
+                _json.SetValue("labels" , _label);
+
+                while (!_Data.EOF) {
+
+                    JSONObject _record = new JSONObject();
+                    _record.SetValue("label" , _Data.GetValue(0));
+
+                    JSONArray _data = new JSONArray();
+
+                    i=0;
+
+                    foreach (AttributeMapping Fields in _Data.Fields){
+                        if (i>0){
+                            _data.Add(_Data.GetDecimal(i));
+                        }
+                        i++;
+                    }
+                    _record.SetValue("data"            , _data);
+                    _record.SetValue("fill"            , parameters.GetBoolean("fill"));
+                    _record.SetValue("backgroundColor" , parameters.GetValue("backgroundColor_"+rec));
+                    _record.SetValue("borderColor"     , parameters.GetValue("backgroundColor_"+rec));
+
+                    _datasets.Add(_record);
+                    rec++;
+
+                    _Data.MoveNext();
+                }
             }
 
             _json.SetValue("datasets" , _datasets);
