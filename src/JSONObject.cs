@@ -218,6 +218,29 @@ namespace Volte.Data.Json
                 return _JSONArray;
             }
 
+            public string Concat(string names , string split)
+            {
+                string[] aValue = names.Split((new char[1] {','}));
+
+                string sReturn="";
+
+                int i=1;
+                foreach (string sName in aValue) {
+                    if (sName != "") {
+                        string s=this.GetValue(sName);
+                        if (s!=""){
+
+                            sReturn = sReturn+s;
+                            if (i<aValue.Length){
+                                sReturn = sReturn+split;
+                            }
+                        }
+                    }
+                    i++;
+                }
+                return sReturn;
+            }
+
             public string GetValue(string name)
             {
                 if (_Dictionary.ContainsKey(name)) {
