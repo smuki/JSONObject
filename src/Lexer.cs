@@ -63,7 +63,11 @@ namespace Volte.Data.Json
 
             for (; !" ,]}\n\r".Contains("" + _Data[_position]); ++_position);
 
-            return _Data.Substring(deb, _position - deb);
+            string s= _Data.Substring(deb, _position - deb);
+            if (s=="null"){
+                s="";
+            }
+            return s;
         }
 
         private string ParseNumericValue()
