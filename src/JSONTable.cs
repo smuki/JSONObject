@@ -524,6 +524,7 @@ namespace Volte.Data.Json
                 _Column.Name         = _DataField.Name;
                 _Column.Hash         = _DataField.Name.Replace(".", "_");
                 _Column.Caption      = _DataField.Caption;
+                _Column.Description  = _DataField.Description;
                 _Column.Scale        = _DataField.Scale;
                 _Column.Width        = _DataField.Width;
                 _Column.Status       = _DataField.Status;

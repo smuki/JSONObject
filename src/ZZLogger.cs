@@ -19,7 +19,6 @@ namespace Volte.Data.Json
         private static Queue<JSONObject> _que;
         private static object _PENDING       = new object();
         public static bool DebugEnabled      = true;
-        public static bool SQLEnabled        = true;
         public static bool MethodInfoEnabled = false;
 
         private bool _Running                = false;
@@ -136,19 +135,6 @@ namespace Volte.Data.Json
             swer.Write(Data);
             swer.Flush();
             swer.Close();
-        }
-
-        public static void Sql(string cModules_Name, object msg, params object[] objs)
-        {
-            if (!SQLEnabled) {
-                return;
-            }
-
-            if (_Logger == null) {
-                ZZLogger.getInstance();
-            }
-
-            _Logger.WriteLog("SQL", cModules_Name, "" + msg, objs);
         }
 
         public static void Info(string cModules_Name, object msg, params object[] objs)

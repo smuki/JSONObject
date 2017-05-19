@@ -163,7 +163,7 @@ namespace Volte.Data.Json
             public JSONObject Lookup(string name , string value)
             {
                 foreach (JSONObject _record in _JSONObjects) {
-                    if (_record.GetValue(name).IndexOf(value)>=0){
+                    if (_record.GetValue(name)==value){
                         return _record;
                     }
                 }
