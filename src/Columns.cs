@@ -92,6 +92,19 @@ namespace Volte.Data.Json
                 }
             }
 
+            public string GetType(string name)
+            {
+                if (string.IsNullOrEmpty(name)) {
+                    return "nvarchar";
+                }
+
+                int _o=Ordinal(name);
+                if (_o>=0){
+                    return _Data[_o].DataType;
+                }else{
+                    return "nvarchar";
+                }
+            }
             // Properties
             public int Count              { get { return  _Data.Count;  }  }
             public Column this[int index] { get { return  _Data[index]; }  }
