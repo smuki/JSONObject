@@ -37,12 +37,17 @@ namespace Volte.Data.Json
                 }
                 if (_Property.ContainsKey("Caption")) {
 
-                    this.Caption =  _Property.GetValue("Caption");
+                    this.Caption = _Property.GetValue("Caption");
+
+                }
+                if (_Property.ContainsKey("Description")) {
+
+                    this.Description = _Property.GetValue("Description");
 
                 }
                 if (_Property.ContainsKey("ColumnName")) {
 
-                    this.ColumnName =  _Property.GetValue("ColumnName");
+                    this.ColumnName = _Property.GetValue("ColumnName");
 
                 }
                 if (_Property.ContainsKey("Index")) {
@@ -92,13 +97,16 @@ namespace Volte.Data.Json
             {
                 _Property = new JSONObject();
 
-                _Property.SetValue("Name"       , this.Name);
-                _Property.SetValue("Caption"    , this.Caption);
-                _Property.SetValue("DataType"   , this.DataType);
-                _Property.SetInteger("Width"    , this.Width);
-                _Property.SetInteger("Scale"    , this.Scale);
-                _Property.SetValue("EnableMode" , this.EnableMode);
-                _Property.SetValue("Options"    , this.Options);
+                _Property.SetValue("Name"        , this.Name);
+                _Property.SetValue("Caption"     , this.Caption);
+                _Property.SetValue("DataType"    , this.DataType);
+                _Property.SetInteger("Width"     , this.Width);
+                _Property.SetInteger("Scale"     , this.Scale);
+                _Property.SetValue("EnableMode"  , this.EnableMode);
+                _Property.SetValue("Options"     , this.Options);
+                if (this.Description!=""){
+                    _Property.SetValue("Description" , this.Description);
+                }
                 if (this.ColumnName!=""){
                     _Property.SetValue("ColumnName" , this.ColumnName);
                 }
@@ -111,7 +119,6 @@ namespace Volte.Data.Json
                 _Property.SetValue("ClassName"      , this.ClassName);
                 _Property.SetBoolean("NonPrintable" , this.NonPrintable);
                 _Property.SetInteger("Index"        , this.Index);
-
 
                 _Property.Write(writer);
 
