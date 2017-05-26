@@ -92,7 +92,9 @@ namespace Volte.Data.Json
             private void Write(StringBuilder  writer , string sName , object o)
             {
 
-                writer.Append("\"" + sName + "\":");
+                if (!_Flattening){
+                    writer.Append("\"" + sName + "\":");
+                }
 
                 if (o is DateTime) {
                     if ((DateTime)o<= Util.DateTime_MinValue) {
@@ -123,47 +125,66 @@ namespace Volte.Data.Json
 
             internal void Write(StringBuilder writer)
             {
-                writer.AppendLine("{");
+                if (_Flattening){
 
-                if (_cells != null) {
-                    writer.Append("\"cells\":");
-                    writer.Append("[");
-                    bool first = true;
+                    writer.AppendLine("[");
+                    if (_cells != null) {
+                        bool first = true;
 
-                    foreach (Cell _Cell in _cells) {
-                        if (!first) {
-                            writer.AppendLine(",");
-                        } else {
-                            first = false;
+                        foreach (Cell _Cell in _cells) {
+                            if (!first) {
+                                writer.AppendLine(",");
+                            } else {
+                                first = false;
+                            }
+                            this.Write(writer , "v" , _Cell.Value);
                         }
-
-                        writer.Append("{");
-                        this.Write(writer , "v" , _Cell.Value);
-
-                        if (_Cell.sCode!=string.Empty){
-                            writer.Append(",");
-
-                            this.Write(writer , "c" , _Cell.sCode);
-                        }
-                        writer.Append("}");
-
                     }
-
                     writer.Append("]");
-                    writer.AppendLine(",");
+
+                }else{
+
+                    writer.AppendLine("{");
+                    if (_cells != null) {
+                        writer.Append("\"cells\":");
+                        writer.Append("[");
+                        bool first = true;
+
+                        foreach (Cell _Cell in _cells) {
+                            if (!first) {
+                                writer.AppendLine(",");
+                            } else {
+                                first = false;
+                            }
+
+                            writer.Append("{");
+                            this.Write(writer , "v" , _Cell.Value);
+
+                            if (_Cell.sCode!=string.Empty){
+                                writer.Append(",");
+
+                                this.Write(writer , "c" , _Cell.sCode);
+                            }
+                            writer.Append("}");
+
+                        }
+
+                        writer.Append("]");
+                        writer.AppendLine(",");
+                        writer.AppendLine("");
+                    }
+                    writer.Append("\"Reference\":");
+
+                    if (_Reference==null){
+
+                        _Reference = new JSONObject();
+                        _Reference.SetBoolean("a" , false);
+                    }
+                    _Reference.Write(writer);
+
                     writer.AppendLine("");
+                    writer.AppendLine("}");
                 }
-                writer.Append("\"Reference\":");
-
-                if (_Reference==null){
-
-                    _Reference = new JSONObject();
-                    _Reference.SetBoolean("a" , false);
-                }
-                _Reference.Write(writer);
-
-                writer.AppendLine("");
-                writer.AppendLine("}");
             }
 
             public decimal GetDecimal(int i)
@@ -208,12 +229,14 @@ namespace Volte.Data.Json
                 }
             }
 
-            public int    Index         { get { return _Index;     } set { _Index     = value; }  }
-            public JSONObject Reference { get { return _Reference; } set { _Reference = value;  }  }
+            public int    Index         { get { return _Index;      } set { _Index      = value; }  }
+            public JSONObject Reference { get { return _Reference;  } set { _Reference  = value; }  }
+            public bool Flattening      { get { return _Flattening; } set { _Flattening = value; }  }
 
             // Fields
-            private int _Index = -1;
-            private int _size  = 0;
+            private int _Index       = -1;
+            private int _size        = 0;
+            private bool _Flattening = false;
 
             private List<Cell> _cells     = new List<Cell>();
             private JSONObject _Reference = new JSONObject();

@@ -143,7 +143,8 @@ namespace Volte.Data.Json
                             if (_rec > 0) {
                                 writer.AppendLine(",");
                             }
-                            Row _row= _rows[_loc+_rec];
+                            Row _row        = _rows[_loc+_rec];
+                            _row.Flattening = _Flattening;
                             _row.Write(writer);
                             _rec++;
                         }
@@ -550,6 +551,10 @@ namespace Volte.Data.Json
                 return _Columns.Ordinal(name);
             }
 
+            public string GetType(string name)
+            {
+                return _Columns.GetType(name);
+            }
             public void DeclareFinal()
             {
             }
@@ -607,18 +612,20 @@ namespace Volte.Data.Json
             public List<Column> Fields { get { return _Columns.Fields; }  }
             public List<Row> Rows      { get { return _rows;           }  }
 
-            public bool Paging { get { return _Paging; } set { _Paging = value; }  }
+            public bool Paging     { get { return _Paging;     } set { _Paging     = value; }  }
+            public bool Flattening { get { return _Flattening; } set { _Flattening = value; }  }
 
             private Row _Row;
             private Columns _Columns;
             private readonly StringBuilder _s = new StringBuilder();
 
-            private JSONObject _Variable  = new JSONObject();
-            private List<Row>  _rows      = new List<Row>();
-            private bool _Draft           = false;
-            private bool _Readed          = false;
-            private bool _StructureOnly   = false;
-            private bool _Paging          = false;
-            private int  _Pointer         = -1;
+            private JSONObject _Variable = new JSONObject();
+            private List<Row>  _rows     = new List<Row>();
+            private bool _Draft          = false;
+            private bool _Flattening     = false;
+            private bool _Readed         = false;
+            private bool _StructureOnly  = false;
+            private bool _Paging         = false;
+            private int  _Pointer        = -1;
         }
 }
