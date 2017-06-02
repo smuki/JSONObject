@@ -24,9 +24,17 @@
             int gc1 = GC.CollectionCount (1);
             int gc2 = GC.CollectionCount (2);
 
-            StreamReader objReader = new StreamReader ("vdata.js");
+            StreamReader objReader = new StreamReader ("JSONObject1.js");
 
             str = objReader.ReadToEnd();
+
+           JSONObject _JSONObject = new JSONObject(str);
+
+            StreamWriter swer31 = new StreamWriter ("JSONObject2.js", false);
+            swer31.Write(_JSONObject.ToString());
+            swer31.Flush();
+            swer31.Close();
+
 
             System.Diagnostics.Stopwatch stopwatch = new System.Diagnostics.Stopwatch();
             stopwatch.Start();
