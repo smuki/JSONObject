@@ -40,8 +40,13 @@ namespace Volte.Data.Json
             {
                 _Lexer.SkipWhiteSpace();
 
-                if (_Lexer.Current == '{' && _Lexer.NextChar != '}') {
+                if (_Lexer.Current == '{') {
                     _Lexer.NextToken();
+                     if (_Lexer.Current == '}')
+                     {
+                         _Lexer.NextToken();
+                         return;
+                     }
 
                     for (;;) {
                         JSONObjectPair variable1 = new JSONObjectPair();

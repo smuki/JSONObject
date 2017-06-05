@@ -33,16 +33,17 @@ namespace Volte.Data.Json
 
                 if (_Lexer.Current == '[') {
                     _Lexer.NextToken();
-                    if (_Lexer.NextChar == ']')
+                    if (_Lexer.Current == ']')
                     {
+                        _Lexer.NextToken();
                         return;
                     }
 
                     for (;;) {
                         if (_Lexer.Current == '[') {
                             JSONArray variable2 = new JSONArray();
-                            variable2.Read(_Lexer);
-                            this.Add(variable2);
+                                variable2.Read(_Lexer);
+                                this.Add(variable2);
                         } else if (_Lexer.Current == '{') {
                             JSONObject variable1 = new JSONObject();
 
