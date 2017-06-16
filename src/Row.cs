@@ -92,7 +92,12 @@ namespace Volte.Data.Json
             private void Write(StringBuilder  writer , string sName , object o)
             {
 
-                if (!_Flattening){
+
+                if (_Flatten==Flatten.Value){
+
+                }else if (_Flatten==Flatten.NameValue){
+                    writer.Append("\"" + sName + "\":");
+                }else{
                     writer.Append("\"" + sName + "\":");
                 }
 
@@ -123,9 +128,9 @@ namespace Volte.Data.Json
                 }
             }
 
-            internal void Write(StringBuilder writer)
+            internal void Write(StringBuilder writer , Columns _columns)
             {
-                if (_Flattening){
+                if (_Flatten==Flatten.Value){
 
                     writer.AppendLine("[");
                     if (_cells != null) {
@@ -142,6 +147,24 @@ namespace Volte.Data.Json
                     }
                     writer.Append("]");
 
+                }else if (_Flatten==Flatten.NameValue){
+
+                    writer.AppendLine("{");
+                    if (_cells != null) {
+                        bool first = true;
+
+                        int i=0;
+                        foreach (Cell _Cell in _cells) {
+                            if (!first) {
+                                writer.AppendLine(",");
+                            } else {
+                                first = false;
+                            }
+                            this.Write(writer , _columns.Fields[i].Name , _Cell.Value);
+                            i++;
+                        }
+                    }
+                    writer.Append("}");
                 }else{
 
                     writer.AppendLine("{");
@@ -231,12 +254,12 @@ namespace Volte.Data.Json
 
             public int    Index         { get { return _Index;      } set { _Index      = value; }  }
             public JSONObject Reference { get { return _Reference;  } set { _Reference  = value; }  }
-            public bool Flattening      { get { return _Flattening; } set { _Flattening = value; }  }
+            public Flatten Flatten      { get { return _Flatten;    } set { _Flatten    = value; }  }
 
             // Fields
             private int _Index       = -1;
             private int _size        = 0;
-            private bool _Flattening = false;
+            private Flatten _Flatten = Flatten.Complex;
 
             private List<Cell> _cells     = new List<Cell>();
             private JSONObject _Reference = new JSONObject();

@@ -144,8 +144,8 @@ namespace Volte.Data.Json
                                 writer.AppendLine(",");
                             }
                             Row _row        = _rows[_loc+_rec];
-                            _row.Flattening = _Flattening;
-                            _row.Write(writer);
+                            _row.Flatten    = _Flatten;
+                            _row.Write(writer , _Columns);
                             _rec++;
                         }
                     }
@@ -612,8 +612,8 @@ namespace Volte.Data.Json
             public List<Column> Fields { get { return _Columns.Fields; }  }
             public List<Row> Rows      { get { return _rows;           }  }
 
-            public bool Paging     { get { return _Paging;     } set { _Paging     = value; }  }
-            public bool Flattening { get { return _Flattening; } set { _Flattening = value; }  }
+            public bool Paging      { get { return _Paging;     } set { _Paging     = value; }  }
+            public Flatten  Flatten { get { return _Flatten;    } set { _Flatten    = value; }  }
 
             private Row _Row;
             private Columns _Columns;
@@ -622,10 +622,18 @@ namespace Volte.Data.Json
             private JSONObject _Variable = new JSONObject();
             private List<Row>  _rows     = new List<Row>();
             private bool _Draft          = false;
-            private bool _Flattening     = false;
+            private Flatten  _Flatten    = Flatten.Complex;
             private bool _Readed         = false;
             private bool _StructureOnly  = false;
             private bool _Paging         = false;
             private int  _Pointer        = -1;
         }
+
+    [Serializable]
+    public enum Flatten
+    {
+        Complex,
+        NameValue,
+        Value
+    }
 }
