@@ -90,6 +90,11 @@ namespace Volte.Data.Json
                     this.NonPrintable = _Property.GetBoolean("NonPrintable");
 
                 }
+                if (_Property.ContainsKey("Axis")) {
+
+                    this.Axis = _Property.GetValue("Axis");
+
+                }
 
             }
 
@@ -116,7 +121,11 @@ namespace Volte.Data.Json
                 if (this.AlignName!=""){
                     _Property.SetValue("AlignName" , this.AlignName);
                 }
-                _Property.SetValue("ClassName"      , this.ClassName);
+                _Property.SetValue("ClassName" , this.ClassName);
+
+                if (this.Axis!=""){
+                    _Property.SetValue("Axis" , this.Axis);
+                }
                 _Property.SetBoolean("NonPrintable" , this.NonPrintable);
                 _Property.SetInteger("Index"        , this.Index);
 
