@@ -538,6 +538,7 @@ namespace Volte.Data.Json
                 _Column.DataBand     = _DataField.DataBand;
                 _Column.AlignName    = _DataField.AlignName;
                 _Column.Options      = _DataField.Options;
+                _Column.Axis         = _DataField.Axis;
                 _Columns.Add(_Column);
             }
 
