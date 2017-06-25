@@ -1,4 +1,5 @@
-nuget install -ExcludeVersion -SolutionDirectory .
+nuget install -ExcludeVersion -SolutionDirectory . -Source http://localhost/nuget/api/v2/package
+
 
 mkdir %~dp0temp
 nuget pack %~dp0src\JSONObject.csproj -build -Symbols -Prop Configuration=Release -OutputDirectory %~dp0temp
