@@ -161,6 +161,17 @@ namespace Volte.Data.Json
 
             }
 
+            public JSONArray Lookups(string name , string value)
+            {
+                JSONArray _JSONArray = new JSONArray();
+
+                foreach (JSONObject _record in _JSONObjects) {
+                    if (_record.GetValue(name)==value){
+                       _JSONArray.Add(_record);
+                    }
+                }
+                return _JSONArray;
+            }
             public JSONObject Lookup(string name , string value)
             {
                 foreach (JSONObject _record in _JSONObjects) {
