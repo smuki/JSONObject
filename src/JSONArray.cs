@@ -161,7 +161,7 @@ namespace Volte.Data.Json
 
             }
 
-            public JSONArray Lookups(string name , string value)
+            public JSONArray Select(string name , string value)
             {
                 JSONArray _JSONArray = new JSONArray();
 
