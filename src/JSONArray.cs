@@ -231,6 +231,13 @@ namespace Volte.Data.Json
                 }
             }
 
+            public List<object> Names
+            {
+                get {
+                    return _Object;
+                }
+            }
+
             public List<JSONObject> JSONObjects
             {
                 get {
