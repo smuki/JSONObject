@@ -22,14 +22,18 @@ namespace Volte.Data.Json
 
         }
 
-        public static DataTable ToDataTable(string name , JSONTable _JSONTable)
+        public static DataTable ToDataTable(string name , JSONTable _JSONTable , string SortBy="")
         {
 
+            bool bRec    = _JSONTable.Variable.GetBoolean("bIgnoreRec");
             DataTable dt = new DataTable(name);
 
             DataColumn column2 = new DataColumn("nRecNo") ;
             column2.DataType = typeof(int);
-            dt.Columns.Add(column2);
+            if (bRec){
+                dt.Columns.Add(column2);
+            }
+            string sSortBy="";
 
             foreach (AttributeMapping _AttributeMapping in _JSONTable.Fields) {
                 column2 = new DataColumn(_AttributeMapping.Hash) {
@@ -38,6 +42,9 @@ namespace Volte.Data.Json
                 string type = _AttributeMapping.DataType;
                 type        = type.Replace("System.", "");
                 type        = type.ToLower();
+                if (SortBy==_AttributeMapping.Name){
+                    sSortBy=_AttributeMapping.Name;
+                }
 
                 if (type == "decimal") {
                     column2.DataType = System.Type.GetType("System.Decimal");
@@ -54,26 +61,30 @@ namespace Volte.Data.Json
 
             _JSONTable.Open();
             int ndx = 1;
+            int offset = 0;
 
             while (!_JSONTable.EOF) {
 
                 DataRow _dataRow = dt.NewRow();
+                if (bRec){
+                    _dataRow[0] = ndx;
+                    offset = 1;
 
-                _dataRow[0] = ndx;
+                }
 
                 for (int i = 0; i < _JSONTable.Fields.Count; i++) {
                     string type = _JSONTable.Fields[i].DataType.ToLower();
 
                     if (type == "decimal") {
-                        _dataRow[i + 1] = _JSONTable.GetDecimal(i);
+                        _dataRow[i + offset] = _JSONTable.GetDecimal(i);
                     } else if (type == "datetime") {
                         if (_JSONTable.GetDateTime2(i) == null) {
-                            _dataRow[i + 1] = DBNull.Value;
+                            _dataRow[i + offset] = DBNull.Value;
                         } else {
-                            _dataRow[i + 1] = _JSONTable.GetDateTime2(i);
+                            _dataRow[i + offset] = _JSONTable.GetDateTime2(i);
                         }
                     } else {
-                        _dataRow[i + 1] = _JSONTable[i];
+                        _dataRow[i + offset] = _JSONTable[i];
                     }
                 }
 
@@ -81,8 +92,13 @@ namespace Volte.Data.Json
                 ndx++;
                 _JSONTable.MoveNext();
             }
-
-            return dt;
+            if (sSortBy!=""){
+                DataView dv = dt.DefaultView;
+                dv.Sort = sSortBy;
+                return dv.ToTable();
+            }else{
+                return dt;
+            }
         }
 
         public static void ToObjects(StringBuilder writer , JSONTable _JSONTable)
