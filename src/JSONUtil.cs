@@ -78,7 +78,7 @@ namespace Volte.Data.Json
                     if (type == "decimal") {
                         _dataRow[i + offset] = _JSONTable.GetDecimal(i);
                     } else if (type == "datetime") {
-                        if (_JSONTable.GetDateTime2(i) == null) {
+                        if (_JSONTable.GetDateTime2(i) == null || _JSONTable.GetDateTime(i)<= Util.DateTime_MinValue) {
                             _dataRow[i + offset] = DBNull.Value;
                         } else {
                             _dataRow[i + offset] = _JSONTable.GetDateTime2(i);
