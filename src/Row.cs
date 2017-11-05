@@ -107,7 +107,7 @@ namespace Volte.Data.Json
                         writer.Append("\"");
                     } else {
                         writer.Append("\"");
-                        Util.EscapeString(writer ,((DateTime)o).ToString("yyyyMMddhhmmss"));
+                        Util.EscapeString(writer ,Util.DateTimeToMilliSecond((DateTime)o).ToString());
                         writer.Append("\"");
                     }
                 }else if (o is decimal || o is int) {

@@ -160,6 +160,11 @@ namespace Volte.Data.Json
                 writer.AppendLine("\"vars\":");
                 _Variable.Write(writer);
                 writer.AppendLine("");
+                if (this._summary != null) {
+                    writer.AppendLine("\"summary\":");
+                    _summary.Write(writer);
+                    writer.AppendLine("");
+                }
 
                 writer.AppendLine("}");
             }
@@ -575,7 +580,6 @@ namespace Volte.Data.Json
                         _Row    = _rows[_Pointer];
                     }
 
-
                     if (_Row.Reference==null){
                         _Row.Reference = new JSONObject();
                     }
@@ -612,15 +616,17 @@ namespace Volte.Data.Json
             public JSONObject Variable { get { return _Variable;       }  }
             public List<Column> Fields { get { return _Columns.Fields; }  }
             public List<Row> Rows      { get { return _rows;           }  }
+            public JSONArray Summary   { get { return _summary;        }  }
 
-            public bool Paging      { get { return _Paging;     } set { _Paging     = value; }  }
-            public Flatten  Flatten { get { return _Flatten;    } set { _Flatten    = value; }  }
+            public bool Paging      { get { return _Paging;  } set { _Paging  = value; }  }
+            public Flatten  Flatten { get { return _Flatten; } set { _Flatten = value; }  }
 
             private Row _Row;
             private Columns _Columns;
             private readonly StringBuilder _s = new StringBuilder();
 
             private JSONObject _Variable = new JSONObject();
+            private JSONArray _summary   = new JSONArray();
             private List<Row>  _rows     = new List<Row>();
             private bool _Draft          = false;
             private Flatten  _Flatten    = Flatten.Complex;

@@ -43,88 +43,95 @@
             oOWXF.Parser (str);
             oOWXF.Open();
 
-            Console.WriteLine("Rows  :"+oOWXF.RecordCount);
-            Console.WriteLine("Fields:"+oOWXF.Fields.Count);
+            JSONObject x1=new JSONObject();
+            x1.SetValue("x1",234);
+            x1.SetValue("x2",456);
 
-            StreamWriter swer3 = new StreamWriter ("vdata1.js", false);
-            swer3.Write(oOWXF.ToString());
-            swer3.Flush();
-            swer3.Close();
+            oOWXF.Footer.Add(x1);
 
-            Console.WriteLine ("");
-            Console.WriteLine ("LoadJson: " + stopwatch.ElapsedMilliseconds + "ms");
-            Console.WriteLine ("GC 0:" + (GC.CollectionCount (0) - gc0).ToString());
-            Console.WriteLine ("GC 1:" + (GC.CollectionCount (1) - gc1).ToString());
-            Console.WriteLine ("GC 2:" + (GC.CollectionCount (2) - gc2).ToString());
-
+            
+                Console.WriteLine("Rows  :"+oOWXF.RecordCount);
+                Console.WriteLine("Fields:"+oOWXF.Fields.Count);
+                
+                StreamWriter swer3 = new StreamWriter ("vdata1.js", false);
+                swer3.Write(oOWXF.ToString());
+                swer3.Flush();
+                swer3.Close();
+                
+                Console.WriteLine ("");
+                Console.WriteLine ("LoadJson: " + stopwatch.ElapsedMilliseconds + "ms");
+                Console.WriteLine ("GC 0:" + (GC.CollectionCount (0) - gc0).ToString());
+                Console.WriteLine ("GC 1:" + (GC.CollectionCount (1) - gc1).ToString());
+                Console.WriteLine ("GC 2:" + (GC.CollectionCount (2) - gc2).ToString());
+                
         }
-
-        static void Test2()
-        {
-            //write to json
-            GC.Collect();
-            int  gc0 = GC.CollectionCount (0);
-            int gc1 = GC.CollectionCount (1);
-            int gc2 = GC.CollectionCount (2);
-
-            System.Diagnostics.Stopwatch stopwatch = new System.Diagnostics.Stopwatch();
-            stopwatch.Start();
-
-            str = oOWXF.ToString();
-
-            Console.WriteLine ("");
-            Console.WriteLine ("write to ToString: " + stopwatch.ElapsedMilliseconds + "ms");
-            Console.WriteLine ("GC 0:" + (GC.CollectionCount (0) - gc0).ToString());
-            Console.WriteLine ("GC 1:" + (GC.CollectionCount (1) - gc1).ToString());
-            Console.WriteLine ("GC 2:" + (GC.CollectionCount (2) - gc2).ToString());
-
-            StreamWriter swer2 = new StreamWriter ("vdat2.js", false);
-            swer2.Write (str);
-            swer2.Flush();
-            swer2.Close();
-        }
-
-        static void Test3()
-        {
-            //write to ToString
-            GC.Collect();
-            int  gc0 = GC.CollectionCount (0);
-            int gc1 = GC.CollectionCount (1);
-            int gc2 = GC.CollectionCount (2);
-
-            System.Diagnostics.Stopwatch stopwatch = new System.Diagnostics.Stopwatch();
-            stopwatch.Start();
-
-
-            str = oOWXF.ToString();
-
-            Console.WriteLine ("");
-            Console.WriteLine ("write to Xml: " + stopwatch.ElapsedMilliseconds + "ms");
-            Console.WriteLine ("GC 0:" + (GC.CollectionCount (0) - gc0).ToString());
-            Console.WriteLine ("GC 1:" + (GC.CollectionCount (1) - gc1).ToString());
-            Console.WriteLine ("GC 2:" + (GC.CollectionCount (2) - gc2).ToString());
-
-
-        }
-
-        static void Test4()
-        {
-            //write to ToString
-            GC.Collect();
-            int  gc0 = GC.CollectionCount (0);
-            int gc1 = GC.CollectionCount (1);
-            int gc2 = GC.CollectionCount (2);
-
-            System.Diagnostics.Stopwatch stopwatch = new System.Diagnostics.Stopwatch();
-            stopwatch.Start();
-
-
-            stopwatch = new System.Diagnostics.Stopwatch();
-            stopwatch.Start();
-            JSONTable oOWXFxml = new JSONTable();
-            //oOWXFxml.LoadXMLString(str);
-            //oOWXFxml.Open();
-
+        
+            static void Test2()
+            {
+                //write to json
+                GC.Collect();
+                    int  gc0 = GC.CollectionCount (0);
+                    int gc1 = GC.CollectionCount (1);
+                    int gc2 = GC.CollectionCount (2);
+                    
+                    System.Diagnostics.Stopwatch stopwatch = new System.Diagnostics.Stopwatch();
+                    stopwatch.Start();
+                    
+                    str = oOWXF.ToString();
+                    
+                    Console.WriteLine ("");
+                    Console.WriteLine ("write to ToString: " + stopwatch.ElapsedMilliseconds + "ms");
+                    Console.WriteLine ("GC 0:" + (GC.CollectionCount (0) - gc0).ToString());
+                    Console.WriteLine ("GC 1:" + (GC.CollectionCount (1) - gc1).ToString());
+                    Console.WriteLine ("GC 2:" + (GC.CollectionCount (2) - gc2).ToString());
+                    
+                    StreamWriter swer2 = new StreamWriter ("vdat2.js", false);
+                    swer2.Write (str);
+                    swer2.Flush();
+                    swer2.Close();
+            }
+        
+            static void Test3()
+            {
+                //write to ToString
+                GC.Collect();
+                    int  gc0 = GC.CollectionCount (0);
+                    int gc1 = GC.CollectionCount (1);
+                    int gc2 = GC.CollectionCount (2);
+                    
+                    System.Diagnostics.Stopwatch stopwatch = new System.Diagnostics.Stopwatch();
+                    stopwatch.Start();
+                    
+                    
+                    str = oOWXF.ToString();
+                    
+                    Console.WriteLine ("");
+                    Console.WriteLine ("write to Xml: " + stopwatch.ElapsedMilliseconds + "ms");
+                    Console.WriteLine ("GC 0:" + (GC.CollectionCount (0) - gc0).ToString());
+                    Console.WriteLine ("GC 1:" + (GC.CollectionCount (1) - gc1).ToString());
+                    Console.WriteLine ("GC 2:" + (GC.CollectionCount (2) - gc2).ToString());
+                    
+                    
+            }
+        
+            static void Test4()
+            {
+                //write to ToString
+                GC.Collect();
+                    int  gc0 = GC.CollectionCount (0);
+                    int gc1 = GC.CollectionCount (1);
+                    int gc2 = GC.CollectionCount (2);
+                    
+                    System.Diagnostics.Stopwatch stopwatch = new System.Diagnostics.Stopwatch();
+                    stopwatch.Start();
+                    
+                    
+                    stopwatch = new System.Diagnostics.Stopwatch();
+                    stopwatch.Start();
+                    JSONTable oOWXFxml = new JSONTable();
+                    //oOWXFxml.LoadXMLString(str);
+                    //oOWXFxml.Open();
+                    
             Console.WriteLine ("");
             Console.WriteLine ("write to Xml: " + stopwatch.ElapsedMilliseconds + "ms");
             Console.WriteLine ("GC 0:" + (GC.CollectionCount (0) - gc0).ToString());
