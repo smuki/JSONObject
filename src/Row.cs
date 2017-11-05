@@ -252,9 +252,9 @@ namespace Volte.Data.Json
                 }
             }
 
-            public int    Index         { get { return _Index;      } set { _Index      = value; }  }
-            public JSONObject Reference { get { return _Reference;  } set { _Reference  = value; }  }
-            public Flatten Flatten      { get { return _Flatten;    } set { _Flatten    = value; }  }
+            public int    Index         { get { return _Index;     } set { _Index     = value; }  }
+            public JSONObject Reference { get { return _Reference; } set { _Reference = value; }  }
+            public Flatten Flatten      { get { return _Flatten;   } set { _Flatten   = value; }  }
 
             // Fields
             private int _Index       = -1;
