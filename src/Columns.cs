@@ -17,7 +17,7 @@ namespace Volte.Data.Json
             public void Add(Column column)
             {
                 if (column == null) {
-                    throw new ArgumentNullException("column");
+                    throw new ArgumentNullException("schema");
                 }
 
                 _Data.Add(column);
@@ -50,7 +50,7 @@ namespace Volte.Data.Json
 
             internal void Write(StringBuilder writer)
             {
-                writer.AppendLine("\"columns\":");
+                writer.AppendLine("\"schema\":");
                 writer.AppendLine("[");
 
                 for (int num1 = 0; num1 < _Data.Count; num1++) {
@@ -95,14 +95,14 @@ namespace Volte.Data.Json
             public string GetType(string name)
             {
                 if (string.IsNullOrEmpty(name)) {
-                    return "nvarchar";
+                    return "string";
                 }
 
                 int _o=Ordinal(name);
                 if (_o>=0){
                     return _Data[_o].DataType;
                 }else{
-                    return "nvarchar";
+                    return "string";
                 }
             }
             // Properties

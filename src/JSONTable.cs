@@ -37,11 +37,11 @@ namespace Volte.Data.Json
                     for (;;) {
                         string name = _Lexer.ParseName();
 
-                        if (name == "columns") {
+                        if (name == "schema") {
                             _Columns.Read(_Lexer);
                         } else if (name == "vars") {
                             _Variable.Read(_Lexer);
-                        } else if (name == "rows") {
+                        } else if (name == "data") {
                             _Lexer.SkipWhiteSpace();
 
                             if (_Lexer.Current == '[') {
@@ -89,16 +89,16 @@ namespace Volte.Data.Json
                     _Variable = new JSONObject();
                 }
 
-                int _AbsolutePage = 0;
+                int _absolutePage = 0;
                 int _PageSize     = 0;
                 int _RecordCount  = this.RecordCount;
 
-                if (_Variable.ContainsKey("ZZAbsolutePage")){
-                    _AbsolutePage = _Variable.GetInteger("ZZAbsolutePage");
+                if (_Variable.ContainsKey("absolutePage")){
+                    _absolutePage = _Variable.GetInteger("absolutePage");
                 }
 
-                if (_Variable.ContainsKey("ZZPageSize")){
-                    _PageSize = _Variable.GetInteger("ZZPageSize");
+                if (_Variable.ContainsKey("pageSize")){
+                    _PageSize = _Variable.GetInteger("pageSize");
                 }
 
 
@@ -108,7 +108,7 @@ namespace Volte.Data.Json
                 }
 
                 if (this._rows != null) {
-                    writer.AppendLine("\"rows\":");
+                    writer.AppendLine("\"data\":");
                     writer.AppendLine("[");
 
                     if (!_StructureOnly) {
@@ -125,14 +125,14 @@ namespace Volte.Data.Json
                                 if (_RecordCount > (_RecordCount / _PageSize) * _PageSize) {
                                     _TotalPages = _TotalPages + 1;
                                 }
-                                if (_AbsolutePage<=0){
-                                    _AbsolutePage=1;
+                                if (_absolutePage<=0){
+                                    _absolutePage=1;
                                 }
-                                if (_AbsolutePage>_TotalPages){
-                                    _AbsolutePage=_TotalPages;
+                                if (_absolutePage>_TotalPages){
+                                    _absolutePage=_TotalPages;
                                 }
-                                if (_AbsolutePage > 1) {
-                                    _loc = (_AbsolutePage - 1) * _PageSize;
+                                if (_absolutePage > 1) {
+                                    _loc = (_absolutePage - 1) * _PageSize;
                                 }
                             }
                         }else{
@@ -154,7 +154,7 @@ namespace Volte.Data.Json
 
                     writer.AppendLine("]");
                 }
-                _Variable.SetValue("RecordCount" , _RecordCount);
+                _Variable.SetValue("recordCount" , _RecordCount);
 
                 writer.AppendLine(",");
                 writer.AppendLine("\"vars\":");
