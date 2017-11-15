@@ -75,7 +75,7 @@ namespace Volte.Data.Json
 
                     name = _Lexer.ParseName();
 
-                    if (name == "Reference") {
+                    if (name == "reference") {
 
                         _Reference = new JSONObject();
                         _Reference.SetBoolean("a" , false);
@@ -196,7 +196,7 @@ namespace Volte.Data.Json
                         writer.AppendLine(",");
                         writer.AppendLine("");
                     }
-                    writer.Append("\"Reference\":");
+                    writer.Append("\"reference\":");
 
                     if (_Reference==null){
 
