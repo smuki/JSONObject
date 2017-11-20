@@ -102,6 +102,19 @@ namespace Volte.Data.Json
                 this.Read(oLexer);
             }
 
+            public void Merge(JSONObject obj)
+            {
+                foreach (string name in obj.Names) {
+                    if (obj.IsJSONObject(name)){
+                        this.SetValue(name , obj.GetJSONObject(name));
+                    }else if (obj.IsJSONArray(name)){
+                        this.SetValue(name , obj.GetJSONArray(name));
+                    }else{
+                        this.SetValue(name , obj.GetValue(name));
+                    }
+                }
+            }
+
             public override string ToString()
             {
                 StringBuilder s = new StringBuilder();

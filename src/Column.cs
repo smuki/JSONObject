@@ -104,7 +104,11 @@ namespace Volte.Data.Json
 
                 _Property.SetValue("name"        , this.Name);
                 _Property.SetValue("caption"     , this.Caption);
-                _Property.SetValue("dataType"    , this.DataType);
+                if (this.DataType==""){
+                    _Property.SetValue("dataType"    , "string");
+                }else{
+                    _Property.SetValue("dataType"    , this.DataType);
+                }
                 _Property.SetInteger("width"     , this.Width);
                 _Property.SetInteger("scale"     , this.Scale);
                 _Property.SetValue("enableMode"  , this.EnableMode);
