@@ -279,7 +279,7 @@ namespace Volte.Data.Json
                     JSONObjectPair variable1 = _Dictionary[name];
                     return variable1.Type;
                 } else {
-                    return "nvarchar";
+                    return "string";
                 }
             }
 
@@ -355,7 +355,7 @@ namespace Volte.Data.Json
 
             public void Add(object key, object value)
             {
-                SetValue(key.ToString(), value, "nvarchar");
+                SetValue(key.ToString(), value, "string");
             }
 
             public void Remove(object key)
@@ -434,7 +434,7 @@ namespace Volte.Data.Json
                     }else if (value is decimal) {
                         variable1.Type  = "decimal";
                     }else{
-                        variable1.Type  = "nvarchar";
+                        variable1.Type  = "string";
                     }
 
                     _Dictionary[name] = variable1;
