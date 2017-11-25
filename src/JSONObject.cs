@@ -239,10 +239,9 @@ namespace Volte.Data.Json
             public string Concat(string names , string split)
             {
                 string[] aValue = names.Split((new char[1] {','}));
+                string sReturn  = "";
+                int i           = 1;
 
-                string sReturn="";
-
-                int i=1;
                 foreach (string sName in aValue) {
                     if (sName != "") {
                         string s=this.GetValue(sName);
@@ -339,19 +338,11 @@ namespace Volte.Data.Json
 
             public void SetValue(string name, object value)
             {
-                if (_Dictionary == null) {
-                    _Dictionary = new Dictionary<string, JSONObjectPair> (StringComparer.InvariantCultureIgnoreCase);
-                }
-
                 _Dictionary[name] = new JSONObjectPair(name,value);
             }
 
             public void SetValue(string name, object value, string cType)
             {
-                if (_Dictionary == null) {
-                    _Dictionary = new Dictionary<string, JSONObjectPair> (StringComparer.InvariantCultureIgnoreCase);
-                }
-
                 _Dictionary[name] = new JSONObjectPair(name,value,cType);
             }
 
