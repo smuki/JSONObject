@@ -261,16 +261,15 @@ namespace Volte.Data.Json
 
             public string GetValue(string name)
             {
-                if (_Dictionary.ContainsKey(name)) {
-                    JSONObjectPair variable1 = _Dictionary[name];
-                    if (variable1.Value==null){
+                JSONObjectPair result = null;
+                if (_Dictionary.TryGetValue(name, out result)) {
+                    if (result.Value==null){
                         return "";
                     }else{
-                        return variable1.Value.ToString();
+                        return result.Value.ToString();
                     }
-                } else {
-                    return "";
                 }
+                return "";
             }
 
             public string GetType(string name)
@@ -285,22 +284,12 @@ namespace Volte.Data.Json
 
             public void SetValue(string name, JSONArray value)
             {
-                JSONObjectPair variable1 = new JSONObjectPair();
-
-                variable1.Name    = name;
-                variable1.Value   = value;
-                variable1.Type    = "l";
-                _Dictionary[name] = variable1;
+                _Dictionary[name] = new JSONObjectPair(name , value , "l");
             }
 
             public void SetValue(string name, JSONObject value)
             {
-                JSONObjectPair variable1 = new JSONObjectPair();
-
-                variable1.Name    = name;
-                variable1.Value   = value;
-                variable1.Type    = "v";
-                _Dictionary[name] = variable1;
+                _Dictionary[name] = new JSONObjectPair(name , value , "v");
             }
 
             public void SetValue(string name, bool value)
@@ -320,32 +309,17 @@ namespace Volte.Data.Json
 
             public void SetBoolean(string name, bool value)
             {
-                JSONObjectPair variable1 = new JSONObjectPair();
-
-                variable1.Name    = name;
-                variable1.Value   = value;
-                variable1.Type    = "boolean";
-                _Dictionary[name] = variable1;
+                _Dictionary[name] = new JSONObjectPair(name , value , "boolean");
             }
 
-            public void SetLong(string Name, long value)
+            public void SetLong(string name, long value)
             {
-                JSONObjectPair variable1 = new JSONObjectPair();
-
-                variable1.Name    = Name;
-                variable1.Value   = value;
-                variable1.Type    = "integer";
-                _Dictionary[Name] = variable1;
+                _Dictionary[name] = new JSONObjectPair(name , value , "integer");
             }
 
-            public void SetInteger(string Name, int value)
+            public void SetInteger(string name, int value)
             {
-                JSONObjectPair variable1 = new JSONObjectPair();
-
-                variable1.Name    = Name;
-                variable1.Value   = value;
-                variable1.Type    = "integer";
-                _Dictionary[Name] = variable1;
+                _Dictionary[name] = new JSONObjectPair(name , value , "integer");
             }
 
             public void SetValue(string name, string value)
@@ -369,11 +343,7 @@ namespace Volte.Data.Json
                     _Dictionary = new Dictionary<string, JSONObjectPair> (StringComparer.InvariantCultureIgnoreCase);
                 }
 
-                JSONObjectPair variable1 = new JSONObjectPair();
-
-                variable1.Name    = name;
-                variable1.Value   = value;
-                _Dictionary[name] = variable1;
+                _Dictionary[name] = new JSONObjectPair(name,value);
             }
 
             public void SetValue(string name, object value, string cType)
@@ -382,12 +352,7 @@ namespace Volte.Data.Json
                     _Dictionary = new Dictionary<string, JSONObjectPair> (StringComparer.InvariantCultureIgnoreCase);
                 }
 
-                JSONObjectPair variable1 = new JSONObjectPair();
-
-                variable1.Name    = name;
-                variable1.Value   = value;
-                variable1.Type    = cType;
-                _Dictionary[name] = variable1;
+                _Dictionary[name] = new JSONObjectPair(name,value,cType);
             }
 
             public void Clear()
@@ -419,25 +384,20 @@ namespace Volte.Data.Json
             public object this[string name]
             {
                 get {
-                    if (_Dictionary.ContainsKey(name)) {
-                        return _Dictionary[name].Value;
-                    } else {
-                        return null;
+                    JSONObjectPair result = null;
+                    if (_Dictionary.TryGetValue(name, out result)) {
+                        return result.Value;
                     }
+                    return result;
                 } set {
-                    JSONObjectPair variable1 = new JSONObjectPair();
-
-                    variable1.Name  = name;
-                    variable1.Value = value;
+                    string t="string";
                     if (value is DateTime) {
-                        variable1.Type  = "datetime";
+                        t  = "datetime";
                     }else if (value is decimal) {
-                        variable1.Type  = "decimal";
-                    }else{
-                        variable1.Type  = "string";
+                        t  = "decimal";
                     }
 
-                    _Dictionary[name] = variable1;
+                    _Dictionary[name] = new JSONObjectPair(name , value , t);
                 }
             }
 

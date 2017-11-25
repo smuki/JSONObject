@@ -14,6 +14,19 @@ namespace Volte.Data.Json
             {
             }
 
+            public JSONObjectPair(string name,object value)
+            {
+                _name  = name;
+                _value = value;
+            }
+
+            public JSONObjectPair(string name,object value,string type)
+            {
+                _type  = type;
+                _name  = name;
+                _value = value;
+            }
+
             internal void Read(Lexer _Lexer)
             {
 
@@ -83,22 +96,21 @@ namespace Volte.Data.Json
                                 Util.EscapeString(writer, this.Value.ToString());
                             } else if (this.Type == "datetime") {
 
+                                if (this.Value is DateTime) {
+                                    if ((DateTime)this.Value <= Util.DateTime_MinValue) {
+                                        writer.Append("\"");
+                                        writer.Append("\"");
+                                    } else {
+                                        writer.Append("\"");
+                                        Util.EscapeString(writer ,((DateTime)this.Value).ToString("yyyyMMddhhmmss"));
+                                        writer.Append("\"");
+                                    }
+                                }else{
+                                    writer.Append("\"");
 
-                            		if (this.Value is DateTime) {
-	                                if ((DateTime)this.Value <= Util.DateTime_MinValue) {
-	                                    writer.Append("\"");
-	                                    writer.Append("\"");
-	                                } else {
-	                                    writer.Append("\"");
-	                                    Util.EscapeString(writer ,((DateTime)this.Value).ToString("yyyyMMddhhmmss"));
-	                                    writer.Append("\"");
-	                                }
-                              	}else{
-		                                writer.Append("\"");
-
-		                                Util.EscapeString(writer ,Util.ToDateTime(this.Value).ToString("yyyyMMddhhmmss"));
-		                                writer.Append("\"");
-                              	}
+                                    Util.EscapeString(writer ,Util.ToDateTime(this.Value).ToString("yyyyMMddhhmmss"));
+                                    writer.Append("\"");
+                                }
 
                             } else if (this.Type == "boolean") {
                                 Util.EscapeString(writer, this.Value.ToString().ToLower());

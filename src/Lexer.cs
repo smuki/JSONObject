@@ -107,51 +107,51 @@ namespace Volte.Data.Json
                 }
 
                 switch (_Data[_position++]) {
-                case '"':
-                    s.Append('"');
-                    break;
-
-                case '\\':
-                    s.Append('\\');
-                    break;
-
-                case '/':
-                    s.Append('/');
-                    break;
-
-                case 'b':
-                    s.Append('\b');
-                    break;
-
-                case 'f':
-                    s.Append('\f');
-                    break;
-
-                case 'n':
-                    s.Append('\n');
-                    break;
-
-                case 'r':
-                    s.Append('\r');
-                    break;
-
-                case 't':
-                    s.Append('\t');
-                    break;
-
-                case 'u': {
-                    if (_length - _position < 4) {
+                    case '"':
+                        s.Append('"');
                         break;
-                    }
 
-                    // parse the 32 bit hex into an integer codepoint
-                    uint codePoint = ParseUnicode(_Data[_position], _Data[_position + 1], _Data[_position + 2], _Data[_position + 3]);
-                    s.Append((char) codePoint);
+                    case '\\':
+                        s.Append('\\');
+                        break;
 
-                    // skip 4 chars
-                    _position += 4;
-                }
-                break;
+                    case '/':
+                        s.Append('/');
+                        break;
+
+                    case 'b':
+                        s.Append('\b');
+                        break;
+
+                    case 'f':
+                        s.Append('\f');
+                        break;
+
+                    case 'n':
+                        s.Append('\n');
+                        break;
+
+                    case 'r':
+                        s.Append('\r');
+                        break;
+
+                    case 't':
+                        s.Append('\t');
+                        break;
+
+                    case 'u': {
+                                  if (_length - _position < 4) {
+                                      break;
+                                  }
+
+                                  // parse the 32 bit hex into an integer codepoint
+                                  uint codePoint = ParseUnicode(_Data[_position], _Data[_position + 1], _Data[_position + 2], _Data[_position + 3]);
+                                  s.Append((char) codePoint);
+
+                                  // skip 4 chars
+                                  _position += 4;
+                              }
+                              break;
                 }
             }
 
@@ -223,7 +223,7 @@ namespace Volte.Data.Json
             }
 
             _position++;
-            return s.ToString().Trim();
+            return s.ToString();
         }
 
 

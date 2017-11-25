@@ -49,11 +49,7 @@ namespace Volte.Data.Json
                                 _JSONObject.Read(_Lexer);
                                 Cell _cell;
 
-                                if (_JSONObject.ContainsKey("c")){
-                                    _cell.sCode = _JSONObject.GetValue("c");
-                                }else{
-                                    _cell.sCode="";
-                                }
+                                _cell.sCode = _JSONObject.GetValue("c");
                                 _cell.Value = _JSONObject.GetValue("v");
 
                                 _cells.Add(_cell);
@@ -96,9 +92,13 @@ namespace Volte.Data.Json
                 if (_Flatten==Flatten.Value){
 
                 }else if (_Flatten==Flatten.NameValue){
-                    writer.Append("\"" + sName + "\":");
+                    writer.Append("\"");
+                    writer.Append(sName);
+                    writer.Append("\":");
                 }else{
-                    writer.Append("\"" + sName + "\":");
+                    writer.Append("\"");
+                    writer.Append(sName);
+                    writer.Append("\":");
                 }
 
                 if (o is DateTime) {
@@ -183,7 +183,7 @@ namespace Volte.Data.Json
                             writer.Append("{");
                             this.Write(writer , "v" , _Cell.Value);
 
-                            if (_Cell.sCode!=string.Empty){
+                            if (!string.IsNullOrEmpty(_Cell.sCode)){
                                 writer.Append(",");
 
                                 this.Write(writer , "c" , _Cell.sCode);
