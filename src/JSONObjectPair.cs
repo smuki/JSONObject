@@ -7,20 +7,20 @@ namespace Volte.Data.Json
 {
 
     [Serializable]
-        internal class JSONObjectPair {
+        internal sealed class JSONObjectPair {
             // Methods
             const string ZFILE_NAME = "JSONObjectPair";
             public JSONObjectPair()
             {
             }
 
-            public JSONObjectPair(string name,object value)
+            public JSONObjectPair(string name , object value)
             {
                 _name  = name;
                 _value = value;
             }
 
-            public JSONObjectPair(string name,object value,string type)
+            public JSONObjectPair(string name , object value , string type)
             {
                 _type  = type;
                 _name  = name;
@@ -31,32 +31,28 @@ namespace Volte.Data.Json
             {
 
                 if (_Lexer.Current == '{') {
-                    JSONObject _VContexts = new JSONObject();
+                    JSONObject _obj = new JSONObject();
 
-                    _VContexts.Read(_Lexer);
-                    this.Value = _VContexts;
+                    _obj.Read(_Lexer);
+                    this.Value = _obj;
                 } else {
-                    _Lexer.SkipWhiteSpace();
-
-                    if (_Lexer.Current != '}') {
+                    if (!_Lexer.MatchChar('}')) {
                         string name = _Lexer.ParseName();
-                        _Lexer.SkipWhiteSpace();
-
-                        if (_Lexer.Current == '{') {
-                            JSONObject _VContexts = new JSONObject();
-                            _VContexts.Read(_Lexer);
+                        if (_Lexer.MatchChar('{')) {
+                            JSONObject _obj = new JSONObject();
+                            _obj.Read(_Lexer);
 
                             this.Name  = name;
                             this.Type  = "v";
-                            this.Value = _VContexts;
+                            this.Value = _obj;
 
-                        } else if (_Lexer.Current == '[') {
-                            JSONArray _VContexts = new JSONArray();
-                            _VContexts.Read(_Lexer);
+                        } else if (_Lexer.MatchChar('[')) {
+                            JSONArray _obj = new JSONArray();
+                            _obj.Read(_Lexer);
 
                             this.Name  = name;
                             this.Type  = "l";
-                            this.Value = _VContexts;
+                            this.Value = _obj;
                         } else {
 
                             this.Name  = name;

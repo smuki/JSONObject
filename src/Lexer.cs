@@ -4,11 +4,11 @@ using System.Text;
 
 namespace Volte.Data.Json
 {
-    internal class Lexer {
+    internal sealed class  Lexer {
         const  string ZFILE_NAME = "Lexer";
         public Lexer(string text)
         {
-            _position = 0;
+            _charPos = 0;
 
             if (text == null) {
                 throw new FormatException();
@@ -20,10 +20,10 @@ namespace Volte.Data.Json
 
         public bool Next()
         {
-            if (_position >= _length) {
+            if (_charPos >= _length) {
                 return false;
             } else {
-                _position++;
+                _charPos++;
                 return true;
             }
         }
@@ -43,12 +43,12 @@ namespace Volte.Data.Json
         public string ParseValue()
         {
             // string?
-            if (_Data[_position] == '"') {
+            if (_Data[_charPos] == '"') {
                 return ParseStringValue();
-            } else if (char.IsDigit(_Data[_position]) || _Data[_position] == '-') {
+            } else if (char.IsDigit(_Data[_charPos]) || _Data[_charPos] == '-') {
                 // number?
                 return ParseNumericValue();
-            } else if (_Data[_position] == 't' || _Data[_position] == 'f' || _Data[_position] == 'n') {
+            } else if (_Data[_charPos] == 't' || _Data[_charPos] == 'f' || _Data[_charPos] == 'n') {
                 // literal?
                 return ParseLiteralValue();
             } else {
@@ -59,11 +59,11 @@ namespace Volte.Data.Json
         private string ParseLiteralValue()
         {
 
-            int deb = _position;
+            int deb = _charPos;
 
-            for (; !" ,]}\n\r".Contains("" + _Data[_position]); ++_position);
+            for (; !" ,]}\n\r".Contains("" + _Data[_charPos]); ++_charPos);
 
-            string s= _Data.Substring(deb, _position - deb);
+            string s= _Data.Substring(deb, _charPos - deb);
             if (s=="null"){
                 s="";
             }
@@ -72,26 +72,26 @@ namespace Volte.Data.Json
 
         private string ParseNumericValue()
         {
-            int deb = _position;
+            int deb = _charPos;
 
-            for (; !",]}\n\r".Contains("" + _Data[_position]); ++_position);
+            for (; !",]}\n\r".Contains("" + _Data[_charPos]); ++_charPos);
 
-            return _Data.Substring(deb, _position - deb);
+            return _Data.Substring(deb, _charPos - deb);
         }
 
         private string ParseStringValue()
         {
-            if (_Data[_position] != '"') {
+            if (_Data[_charPos] != '"') {
                 throw new FormatException();
             }
 
             s.Length = 0;
 
             // skip open quote
-            _position++;
+            _charPos++;
 
-            while (_position < _length) {
-                char c = _Data[_position++];
+            while (_charPos < _length) {
+                char c = _Data[_charPos++];
 
                 if (c == '"') {
                     return s.ToString();
@@ -102,11 +102,11 @@ namespace Volte.Data.Json
                     continue;
                 }
 
-                if (_position == _length) {
+                if (_charPos == _length) {
                     break;
                 }
 
-                switch (_Data[_position++]) {
+                switch (_Data[_charPos++]) {
                     case '"':
                         s.Append('"');
                         break;
@@ -140,16 +140,16 @@ namespace Volte.Data.Json
                         break;
 
                     case 'u': {
-                                  if (_length - _position < 4) {
+                                  if (_length - _charPos < 4) {
                                       break;
                                   }
 
                                   // parse the 32 bit hex into an integer codepoint
-                                  uint codePoint = ParseUnicode(_Data[_position], _Data[_position + 1], _Data[_position + 2], _Data[_position + 3]);
+                                  uint codePoint = ParseUnicode(_Data[_charPos], _Data[_charPos + 1], _Data[_charPos + 2], _Data[_charPos + 3]);
                                   s.Append((char) codePoint);
 
                                   // skip 4 chars
-                                  _position += 4;
+                                  _charPos += 4;
                               }
                               break;
                 }
@@ -186,43 +186,43 @@ namespace Volte.Data.Json
 
         public string ParseName()
         {
-            if (_position >= _length) {
+            if (_charPos >= _length) {
                 throw new FormatException("Cannot find object item'_Data name.");
             }
 
-            if (_Data[_position] != '"') {
+            if (_Data[_charPos] != '"') {
                 throw new FormatException();
             }
 
             // skip open quote
-            _position++;
+            _charPos++;
 
             s.Length = 0;
 
-            while (_position < _length) {
-                if (_Data[_position] == '"') {
-                    if (_Data[_position - 1] != '\\') {
+            while (_charPos < _length) {
+                if (_Data[_charPos] == '"') {
+                    if (_Data[_charPos - 1] != '\\') {
                         break;
                     }
                 }
 
-                s.Append(_Data[_position]);
-                _position++;
+                s.Append(_Data[_charPos]);
+                _charPos++;
             }
 
-            _position++;
+            _charPos++;
 
             SkipWhiteSpace();
 
-            if (_position >= _length) {
+            if (_charPos >= _length) {
                 throw new FormatException();
             }
 
-            if (_Data[_position] != ':') {
+            if (_Data[_charPos] != ':') {
                 throw new FormatException();
             }
 
-            _position++;
+            _charPos++;
             return s.ToString();
         }
 
@@ -230,24 +230,24 @@ namespace Volte.Data.Json
         public char NextChar
         {
             get {
-                if (_position >= _length) {
+                if (_charPos >= _length) {
                     return ' ';
                 } else {
-                    return _Data[_position + 1];
+                    return _Data[_charPos + 1];
                 }
             }
         }
 
         public void Seek(int position)
         {
-            _position = position;
+            _charPos = position;
         }
 
         public void SkipWhiteSpace()
         {
-            while (_position < _length) {
-                if (char.IsWhiteSpace(_Data[_position])) {
-                    _position++;
+            while (_charPos < _length) {
+                if (char.IsWhiteSpace(_Data[_charPos])) {
+                    _charPos++;
                     continue;
                 } else {
                     break;
@@ -255,26 +255,36 @@ namespace Volte.Data.Json
             }
         }
 
+        public bool MatchChar(char c)
+        {
+            if (_Data[_charPos]==c){
+                return true;
+            }else{
+                this.SkipWhiteSpace();
+                return _Data[_charPos]==c;
+            }
+        }
+
         public char Current
         {
             get {
-                return _Data[_position];
+                return _Data[_charPos];
             }
         }
         public int Position
         {
             get {
-                return _position;
+                return _charPos;
             }
         }
         private bool IsEOS
         {
             get {
-                return _position >= _length;
+                return _charPos >= _length;
             }
         }
 
-        private int _position            = 0;
+        private int _charPos             = 0;
         private int _length              = -1;
         private readonly StringBuilder s = new StringBuilder();
         private readonly string _Data;

@@ -161,9 +161,10 @@ namespace Volte.Data.Json
                 _Variable.Write(writer);
                 writer.AppendLine("");
                 if (this._summary != null) {
-                    writer.AppendLine("\"summary\":");
-                    _summary.Write(writer);
-                    writer.AppendLine("");
+                    //writer.AppendLine(",");
+                    //writer.AppendLine("\"summary\":");
+                    //_summary.Write(writer);
+                    //writer.AppendLine("");
                 }
 
                 writer.AppendLine("}");
@@ -171,8 +172,7 @@ namespace Volte.Data.Json
 
             public void Parser(string _string)
             {
-                Lexer oLexer = new Lexer(_string);
-                this.Read(oLexer);
+                this.Read(new Lexer(_string));
             }
 
             public string ToString(bool xx = false)
@@ -532,6 +532,7 @@ namespace Volte.Data.Json
                 _Column.Caption      = _DataField.Caption;
                 _Column.Description  = _DataField.Description;
                 _Column.Scale        = _DataField.Scale;
+                _Column.Index        = _DataField.Index;
                 _Column.Width        = _DataField.Width;
                 _Column.Status       = _DataField.Status;
                 _Column.EnableMode   = _DataField.EnableMode;

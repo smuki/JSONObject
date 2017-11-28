@@ -38,12 +38,10 @@ namespace Volte.Data.Json
 
             internal void Read(Lexer _Lexer)
             {
-                _Lexer.SkipWhiteSpace();
 
-                if (_Lexer.Current == '{') {
+                if (_Lexer.MatchChar('{')) {
                     _Lexer.NextToken();
-                     if (_Lexer.Current == '}')
-                     {
+                     if (_Lexer.MatchChar('}')) {
                          _Lexer.NextToken();
                          return;
                      }
@@ -57,9 +55,7 @@ namespace Volte.Data.Json
                             this.SetValue(variable1.Name, variable1.Value, variable1.Type);
                         }
 
-                        _Lexer.SkipWhiteSpace();
-
-                        if (_Lexer.Current == ',') {
+                        if (_Lexer.MatchChar(',')) {
                             _Lexer.NextToken();
                         } else {
                             break;
@@ -97,9 +93,7 @@ namespace Volte.Data.Json
                     return;
                 }
 
-                Lexer oLexer = new Lexer(cString);
-
-                this.Read(oLexer);
+                this.Read(new Lexer(cString));
             }
 
             public void Merge(JSONObject obj)
@@ -187,7 +181,7 @@ namespace Volte.Data.Json
 
             public void SetDouble(string name, double value)
             {
-                this.SetValue(name, value, "");
+                this.SetValue(name, value, "decimal");
             }
 
             public double GetDouble(string name)
@@ -197,7 +191,7 @@ namespace Volte.Data.Json
 
             public void SetDecimal(string name, decimal value)
             {
-                this.SetValue(name, value, "");
+                this.SetValue(name, value, "decimal");
             }
 
             public bool IsJSONObject(string name)
@@ -386,6 +380,8 @@ namespace Volte.Data.Json
                         t  = "datetime";
                     }else if (value is decimal) {
                         t  = "decimal";
+                    }else if (value is int) {
+                        t  = "integer";
                     }
 
                     _Dictionary[name] = new JSONObjectPair(name , value , t);
@@ -398,7 +394,6 @@ namespace Volte.Data.Json
                     return _Dictionary.Count;
                 }
             }
-
 
             private Dictionary<string , JSONObjectPair> _Dictionary = new Dictionary<string , JSONObjectPair>(StringComparer.InvariantCultureIgnoreCase);
 
