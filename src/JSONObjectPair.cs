@@ -90,12 +90,13 @@ namespace Volte.Data.Json
                         } else {
                             if (this.Type == "decimal" || this.Type == "integer") {
                                 Util.EscapeString(writer, this.Value.ToString());
-                            } else if (this.Type == "datetime") {
+                            } else if (this.Type == "boolean") {
+                                Util.EscapeString(writer, this.Value.ToString().ToLower());
+                            } else if (this.Type == "datetime" || this.Value is DateTime) {
 
                                 if (this.Value is DateTime) {
                                     if ((DateTime)this.Value <= Util.DateTime_MinValue) {
-                                        writer.Append("\"");
-                                        writer.Append("\"");
+                                        writer.Append("\"\"");
                                     } else {
                                         writer.Append("\"");
                                         Util.EscapeString(writer ,((DateTime)this.Value).ToString("yyyyMMddhhmmss"));
@@ -108,17 +109,6 @@ namespace Volte.Data.Json
                                     writer.Append("\"");
                                 }
 
-                            } else if (this.Type == "boolean") {
-                                Util.EscapeString(writer, this.Value.ToString().ToLower());
-                            } else if (this.Value is DateTime) {
-                                if ((DateTime)this.Value <= Util.DateTime_MinValue) {
-                                    writer.Append("\"");
-                                    writer.Append("\"");
-                                } else {
-                                    writer.Append("\"");
-                                    Util.EscapeString(writer ,((DateTime)this.Value).ToString("yyyyMMddhhmmss"));
-                                    writer.Append("\"");
-                                }
                             } else {
                                 writer.Append("\"");
                                 Util.EscapeString(writer, this.Value.ToString());
