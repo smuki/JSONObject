@@ -64,8 +64,9 @@ namespace Volte.Data.Json
             for (; !" ,]}\n\r".Contains("" + _Data[_charPos]); ++_charPos);
 
             string s= _Data.Substring(deb, _charPos - deb);
+
             if (s=="null"){
-                s="";
+                return "";
             }
             return s;
         }

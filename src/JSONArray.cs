@@ -26,6 +26,13 @@ namespace Volte.Data.Json
                     Parser(cData);
                 }
             }
+            internal JSONArray(Lexer _Lexer)
+            {
+                _JSONObjects = new List<JSONObject>();
+                _JSONArrays  = new List<JSONArray>();
+
+                this.Read(_Lexer);
+            }
 
             internal void Read(Lexer _Lexer)
             {

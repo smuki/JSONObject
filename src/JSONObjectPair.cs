@@ -26,40 +26,38 @@ namespace Volte.Data.Json
                 _name  = name;
                 _value = value;
             }
+            internal JSONObjectPair(Lexer _Lexer)
+            {
+                this.Read(_Lexer);
+            }
 
             internal void Read(Lexer _Lexer)
             {
 
                 if (_Lexer.MatchChar('{')) {
-                    JSONObject _obj = new JSONObject();
-
-                    _obj.Read(_Lexer);
-                    this.Value = _obj;
+                    this.Value = new JSONObject(_Lexer);
                 } else {
                     if (!_Lexer.MatchChar('}')) {
                         string name = _Lexer.ParseName();
-                        if (_Lexer.MatchChar('{')) {
-                            JSONObject _obj = new JSONObject();
-                            _obj.Read(_Lexer);
+                        _Lexer.SkipWhiteSpace();
+                        char ch   = _Lexer.Current;
 
-                            this.Name  = name;
+                        this.Name = name;
+
+                        if (ch=='{') {
+
                             this.Type  = "v";
-                            this.Value = _obj;
+                            this.Value = new JSONObject(_Lexer);
 
-                        } else if (_Lexer.MatchChar('[')) {
-                            JSONArray _obj = new JSONArray();
-                            _obj.Read(_Lexer);
-
-                            this.Name  = name;
+                        } else if (ch=='[') {
                             this.Type  = "l";
-                            this.Value = _obj;
+                            this.Value =new JSONArray(_Lexer);
                         } else {
 
-                            this.Name  = name;
-                            if (char.IsDigit(_Lexer.Current) || _Lexer.Current == '-') {
+                            if (char.IsDigit(ch) || ch== '-') {
                                 this.Type  = "decimal";
                                 this.Value = _Lexer.ParseValue();
-                            }else if (_Lexer.Current == 'f' || _Lexer.Current == 't') {
+                            }else if (ch== 'f' || ch== 't') {
                                 this.Value = _Lexer.ParseValue();
                                 this.Type  = "boolean";
                             }else{
@@ -85,12 +83,10 @@ namespace Volte.Data.Json
                         } else if (this.Type == "l") {
                             writer.AppendLine();
                             ((JSONArray)this.Value).Write(writer);
-                        } else if (this.Type == "t") {
-                            //  this.Value.Write(writer);
                         } else {
-                            if (this.Value is decimal || this.Value is int || this.Type == "decimal" || this.Type == "integer") {
+                            if (this.Type == "decimal" || this.Type == "integer" || this.Value is decimal || this.Value is int ) {
                                 writer.Append(Util.ToDecimal(this.Value).ToString());
-                            } else if (this.Value is bool || this.Type == "boolean") {
+                            } else if (this.Type == "boolean" || this.Value is bool ) {
                                 writer.Append(Util.ToBoolean(this.Value).ToString().ToLower());
                             } else if (this.Type == "datetime" || this.Value is DateTime) {
 

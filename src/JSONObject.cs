@@ -36,6 +36,14 @@ namespace Volte.Data.Json
 
             }
 
+            internal JSONObject(Lexer _Lexer)
+            {
+
+                _Dictionary = new Dictionary<string, JSONObjectPair> (StringComparer.InvariantCultureIgnoreCase);
+
+                this.Read(_Lexer);
+            }
+
             internal void Read(Lexer _Lexer)
             {
 
@@ -47,13 +55,9 @@ namespace Volte.Data.Json
                      }
 
                     for (;;) {
-                        JSONObjectPair variable1 = new JSONObjectPair();
+                        JSONObjectPair variable1 = new JSONObjectPair(_Lexer);
 
-                        variable1.Read(_Lexer);
-
-                        if (variable1.Value != null) {
-                            this.SetValue(variable1.Name, variable1.Value, variable1.Type);
-                        }
+                        _Dictionary[variable1.Name] =variable1 ;
 
                         if (_Lexer.MatchChar(',')) {
                             _Lexer.NextToken();

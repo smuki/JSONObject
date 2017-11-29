@@ -45,8 +45,7 @@ namespace Volte.Data.Json
                             for (;;) {
                                 c++;
 
-                                JSONObject _JSONObject = new JSONObject();
-                                _JSONObject.Read(_Lexer);
+                                JSONObject _JSONObject = new JSONObject(_Lexer);
                                 Cell _cell;
 
                                 _cell.sCode = _JSONObject.GetValue("c");
