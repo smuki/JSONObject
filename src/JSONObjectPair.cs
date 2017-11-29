@@ -26,6 +26,7 @@ namespace Volte.Data.Json
                 _name  = name;
                 _value = value;
             }
+
             internal JSONObjectPair(Lexer _Lexer)
             {
                 this.Read(_Lexer);
