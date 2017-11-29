@@ -86,6 +86,7 @@ namespace Volte.Data.Json
             }
 
             s.Length = 0;
+            int runIndex = -1;
 
             // skip open quote
             _charPos++;
@@ -94,16 +95,30 @@ namespace Volte.Data.Json
                 char c = _Data[_charPos++];
 
                 if (c == '"') {
+                    if (runIndex != -1) {
+                        if (s.Length == 0){
+                            return _Data.Substring(runIndex, _charPos - runIndex - 1);
+                        }
+
+                        s.Append(_Data, runIndex, _charPos - runIndex - 1);
+                    }
                     return s.ToString();
                 }
 
                 if (c != '\\') {
-                    s.Append(c);
+                    if (runIndex == -1){
+                        runIndex = _charPos - 1;
+                    }
                     continue;
                 }
 
                 if (_charPos == _length) {
                     break;
+                }
+
+                if (runIndex != -1) {
+                    s.Append(_Data, runIndex, _charPos - runIndex - 1);
+                    runIndex = -1;
                 }
 
                 switch (_Data[_charPos++]) {

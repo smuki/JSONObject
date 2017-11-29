@@ -25,9 +25,8 @@ namespace Volte.Data.Json
 
             internal void Read(Lexer _Lexer)
             {
-                _Lexer.SkipWhiteSpace();
 
-                if (_Lexer.Current == '[') {
+                if (_Lexer.MatchChar('[')) {
                     _Lexer.NextToken();
 
                     for (;;) {

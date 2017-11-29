@@ -130,19 +130,19 @@ namespace Volte.Data.Json
                     writer.Append("\"" + _Name + "\":");
 
                     if (type== "decimal" || type== "integer") {
-                        Util.EscapeString(writer, _JSONTable.GetDecimal(i).ToString());
+                        writer.Append(_JSONTable.GetDecimal(i).ToString());
                     } else if (type == "datetime") {
 
                         if (_JSONTable.GetDateTime(i) <= Util.DateTime_MinValue) {
                             writer.Append("\"\"");
                         } else {
                             writer.Append("\"");
-                            Util.EscapeString(writer ,_JSONTable.GetDateTime(i).ToString("yyyyMMddhhmmss"));
+                            writer.Append(_JSONTable.GetDateTime(i).ToString("yyyyMMddhhmmss"));
                             writer.Append("\"");
                         }
 
                     } else if (type == "boolean") {
-                        Util.EscapeString(writer, _JSONTable.GetValue(i).ToLower());
+                        writer.Append(_JSONTable.GetValue(i).ToLower());
                     } else {
                         writer.Append("\"");
                         Util.EscapeString(writer, _JSONTable.GetValue(i));

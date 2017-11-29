@@ -25,15 +25,13 @@ namespace Volte.Data.Json
                 _Columns  = new Columns();
                 _Variable = new JSONObject();
 
-                _Lexer.SkipWhiteSpace();
-
-                if (_Lexer.Current != '{') {
+                if (!_Lexer.MatchChar('{')) {
                     throw new ArgumentException("Invalid element", "element");
                 }
 
                 _Lexer.NextToken();
 
-                if (_Lexer.Current != '}') {
+                if (!_Lexer.MatchChar('}')) {
                     for (;;) {
                         string name = _Lexer.ParseName();
 

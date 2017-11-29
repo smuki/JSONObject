@@ -30,7 +30,7 @@ namespace Volte.Data.Json
             internal void Read(Lexer _Lexer)
             {
 
-                if (_Lexer.Current == '{') {
+                if (_Lexer.MatchChar('{')) {
                     JSONObject _obj = new JSONObject();
 
                     _obj.Read(_Lexer);
@@ -89,9 +89,9 @@ namespace Volte.Data.Json
                             //  this.Value.Write(writer);
                         } else {
                             if (this.Value is decimal || this.Value is int || this.Type == "decimal" || this.Type == "integer") {
-                                Util.EscapeString(writer, this.Value.ToString());
+                                writer.Append(Util.ToDecimal(this.Value).ToString());
                             } else if (this.Value is bool || this.Type == "boolean") {
-                                Util.EscapeString(writer, this.Value.ToString().ToLower());
+                                writer.Append(Util.ToBoolean(this.Value).ToString().ToLower());
                             } else if (this.Type == "datetime" || this.Value is DateTime) {
 
                                 if (this.Value is DateTime) {
@@ -99,13 +99,13 @@ namespace Volte.Data.Json
                                         writer.Append("\"\"");
                                     } else {
                                         writer.Append("\"");
-                                        Util.EscapeString(writer ,((DateTime)this.Value).ToString("yyyyMMddhhmmss"));
+                                        writer.Append(((DateTime)this.Value).ToString("yyyyMMddhhmmss"));
                                         writer.Append("\"");
                                     }
                                 }else{
                                     writer.Append("\"");
 
-                                    Util.EscapeString(writer ,Util.ToDateTime(this.Value).ToString("yyyyMMddhhmmss"));
+                                    writer.Append(Util.ToDateTime(this.Value).ToString("yyyyMMddhhmmss"));
                                     writer.Append("\"");
                                 }
 
