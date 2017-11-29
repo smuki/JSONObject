@@ -145,8 +145,7 @@ namespace Volte.Data.Json
                                   }
 
                                   // parse the 32 bit hex into an integer codepoint
-                                  uint codePoint = ParseUnicode(_Data[_charPos], _Data[_charPos + 1], _Data[_charPos + 2], _Data[_charPos + 3]);
-                                  s.Append((char) codePoint);
+                                  s.Append((char)ParseUnicode(_Data[_charPos], _Data[_charPos + 1], _Data[_charPos + 2], _Data[_charPos + 3]));
 
                                   // skip 4 chars
                                   _charPos += 4;
@@ -197,7 +196,7 @@ namespace Volte.Data.Json
             // skip open quote
             _charPos++;
 
-            s.Length = 0;
+            int deb = _charPos;
 
             while (_charPos < _length) {
                 if (_Data[_charPos] == '"') {
@@ -206,10 +205,10 @@ namespace Volte.Data.Json
                     }
                 }
 
-                s.Append(_Data[_charPos]);
                 _charPos++;
             }
 
+            int end=_charPos;
             _charPos++;
 
             SkipWhiteSpace();
@@ -223,7 +222,7 @@ namespace Volte.Data.Json
             }
 
             _charPos++;
-            return s.ToString();
+            return _Data.Substring(deb, end - deb);
         }
 
 

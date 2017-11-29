@@ -103,21 +103,16 @@ namespace Volte.Data.Json
 
                 if (o is DateTime) {
                     if ((DateTime)o<= Util.DateTime_MinValue) {
-                        writer.Append("\"");
-                        writer.Append("\"");
+                        writer.Append("\"\"");
                     } else {
                         writer.Append("\"");
-                        Util.EscapeString(writer ,Util.DateTimeToMilliSecond((DateTime)o).ToString());
+                        writer.Append(Util.DateTimeToMilliSecond((DateTime)o).ToString());
                         writer.Append("\"");
                     }
                 }else if (o is decimal || o is int) {
-
-                    Util.EscapeString(writer, o.ToString());
-
+                    writer.Append(o.ToString());
                 } else if (o is bool) {
-
-                    Util.EscapeString(writer, o.ToString().ToLower());
-
+                    writer.Append(o.ToString().ToLower());
                 } else {
 
                     writer.Append("\"");

@@ -159,12 +159,11 @@ namespace Volte.Data.Json
                 writer.AppendLine(",");
                 writer.AppendLine("\"vars\":");
                 _Variable.Write(writer);
-                writer.AppendLine("");
                 if (this._summary != null) {
-                    //writer.AppendLine(",");
-                    //writer.AppendLine("\"summary\":");
-                    //_summary.Write(writer);
-                    //writer.AppendLine("");
+                    writer.AppendLine(",");
+                    writer.AppendLine("\"summary\":");
+                    _summary.Write(writer);
+                    writer.AppendLine("");
                 }
 
                 writer.AppendLine("}");

@@ -88,9 +88,9 @@ namespace Volte.Data.Json
                         } else if (this.Type == "t") {
                             //  this.Value.Write(writer);
                         } else {
-                            if (this.Type == "decimal" || this.Type == "integer") {
+                            if (this.Value is decimal || this.Value is int || this.Type == "decimal" || this.Type == "integer") {
                                 Util.EscapeString(writer, this.Value.ToString());
-                            } else if (this.Type == "boolean") {
+                            } else if (this.Value is bool || this.Type == "boolean") {
                                 Util.EscapeString(writer, this.Value.ToString().ToLower());
                             } else if (this.Type == "datetime" || this.Value is DateTime) {
 
