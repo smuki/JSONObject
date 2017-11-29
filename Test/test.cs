@@ -207,13 +207,12 @@
             str = _Read.ReadToEnd();
 
             Console.WriteLine(str.Length);
+            System.Diagnostics.Stopwatch stopwatch = new System.Diagnostics.Stopwatch();
+            stopwatch.Start();
 
             JSONTable oOWXF3 = new JSONTable();
             oOWXF3.Parser(str);
             oOWXF3.Open();
-
-            System.Diagnostics.Stopwatch stopwatch = new System.Diagnostics.Stopwatch();
-            stopwatch.Start();
 
             JSONTable oOWXF4 = new JSONTable();
 
