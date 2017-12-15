@@ -635,10 +635,10 @@ namespace Volte.Data.Json
         }
 
     [Serializable]
-    public enum Flatten
-    {
-        Complex,
-        NameValue,
-        Value
-    }
+        public enum Flatten
+        {
+            Complex,
+            NameValue,
+            Value
+        }
 }

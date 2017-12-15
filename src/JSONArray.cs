@@ -99,7 +99,7 @@ namespace Volte.Data.Json
                             writer.AppendLine("");
                         }
 
-                        if (sValue is decimal){
+                        if (sValue is decimal || sValue is int || sValue is double || sValue is float){
                             writer.Append(sValue.ToString());
                         }else{
                             writer.Append("\"");
