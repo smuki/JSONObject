@@ -78,12 +78,14 @@ namespace Volte.Data.Json
                     int i = 0;
 
                     foreach (string name in _Dictionary.Keys) {
-                        if (i > 0) {
-                            writer.AppendLine(",");
-                        }
+                        if (!string.IsNullOrEmpty(name)){
+                            if (i > 0) {
+                                writer.AppendLine(",");
+                            }
 
-                        _Dictionary[name].Write(writer);
-                        i++;
+                            _Dictionary[name].Write(writer);
+                            i++;
+                        }
                     }
                 }
 

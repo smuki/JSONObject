@@ -113,7 +113,7 @@ namespace Volte.Data.Json
                             }
                         }
                     } else {
-                        writer.Append("\"\"");
+                        writer.Append("null");
                     }
                 }
             }
