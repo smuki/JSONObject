@@ -105,9 +105,9 @@ namespace Volte.Data.Json
                 }
             }
             // Properties
-            public int Count              { get { return  _Data.Count;  }  }
-            public Column this[int index] { get { return  _Data[index]; }  }
-            public List<Column> Fields    { get { return  _Data;        }  }
+            public int Count              { get { return _Data.Count;  }  }
+            public Column this[int index] { get { return _Data[index]; }  }
+            public List<Column> Fields    { get { return _Data;        }  }
 
             // Columns
             private Dictionary<string, int> FieldDict = new Dictionary<string, int>(StringComparer.OrdinalIgnoreCase);

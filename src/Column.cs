@@ -20,79 +20,72 @@ namespace Volte.Data.Json
                 _Property = new JSONObject();
                 _Property.Read(_Lexer);
 
-                if (_Property.ContainsKey("dataType")) {
+                foreach(string s in _Property.Names){
+                    if (s.ToLower()=="datatype") {
 
-                    this.DataType = _Property.GetValue("dataType");
+                        this.DataType = _Property.GetValue("dataType");
 
-                }
-                if (_Property.ContainsKey("name")) {
+                    }else if (s.ToLower()=="name") {
 
-                    this.Name = _Property.GetValue("name");
+                        this.Name = _Property.GetValue("name");
 
+                    }else if (s.ToLower()=="caption") {
+
+                        this.Caption = _Property.GetValue("caption");
+
+                    }else if (s.ToLower()=="description") {
+
+                        this.Description = _Property.GetValue("description");
+
+                    }else if (s.ToLower()=="columnname") {
+
+                        this.ColumnName = _Property.GetValue("columnName");
+
+                    }else if (s.ToLower()=="index") {
+
+                        this.Index =  _Property.GetInteger("index");
+
+                    }else if (s.ToLower()=="width") {
+
+                        this.Width =  _Property.GetInteger("width");
+
+                    }else if (s.ToLower()=="scale") {
+
+                        this.Scale =  _Property.GetInteger("scale");
+
+                    }else if (s.ToLower()=="reference") {
+
+                        this.Reference = _Property.GetValue("reference");
+
+                    }else if (s.ToLower()=="enablemode") {
+
+                        this.EnableMode = _Property.GetValue("enableMode");
+
+                    }else if (s.ToLower()=="alignname") {
+
+                        this.AlignName = _Property.GetValue("alignName");
+
+                    }else if (s.ToLower()=="options") {
+
+                        this.Options = _Property.GetValue("options");
+
+                    }else if (s.ToLower()=="nonprintable") {
+
+                        this.NonPrintable = _Property.GetBoolean("nonPrintable");
+
+
+                    }else if (s.ToLower()=="axis") {
+
+                        this.Axis = _Property.GetValue("axis");
+                    }else{
+
+                        this.Props[s] = _Property[s];
+
+                    }
                 }
                 if (!string.IsNullOrEmpty(this.Name)) {
 
                     this.Hash = this.Name.Replace("." , "_");
-
-                }
-                if (_Property.ContainsKey("caption")) {
-
-                    this.Caption = _Property.GetValue("caption");
-
-                }
-                if (_Property.ContainsKey("description")) {
-
-                    this.Description = _Property.GetValue("description");
-
-                }
-                if (_Property.ContainsKey("columnName")) {
-
-                    this.ColumnName = _Property.GetValue("columnName");
-
-                }
-                if (_Property.ContainsKey("index")) {
-
-                    this.Index =  _Property.GetInteger("index");
-
-                }
-                if (_Property.ContainsKey("width")) {
-
-                    this.Width =  _Property.GetInteger("width");
-
-                }
-                if (_Property.ContainsKey("scale")) {
-
-                    this.Scale =  _Property.GetInteger("scale");
-
-                }
-                if (_Property.ContainsKey("reference")) {
-
-                    this.Reference = _Property.GetValue("reference");
-
-                }
-                if (_Property.ContainsKey("enableMode")) {
-
-                    this.EnableMode = _Property.GetValue("enableMode");
-
-                }
-                if (_Property.ContainsKey("alignName")) {
-
-                    this.AlignName = _Property.GetValue("alignName");
-
-                }
-                if (_Property.ContainsKey("options")) {
-
-                    this.Options = _Property.GetValue("options");
-
-                }
-                if (_Property.ContainsKey("nonPrintable")) {
-
-                    this.NonPrintable = _Property.GetBoolean("nonPrintable");
-
-                }
-                if (_Property.ContainsKey("axis")) {
-
-                    this.Axis = _Property.GetValue("axis");
 
                 }
 
@@ -132,6 +125,9 @@ namespace Volte.Data.Json
                 }
                 _Property.SetBoolean("nonPrintable" , this.NonPrintable);
                 _Property.SetInteger("index"        , this.Index);
+                foreach(string s in this.Props.Names){
+                    _Property[s] = this.Props[s];
+                }
 
                 _Property.Write(writer);
 

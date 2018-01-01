@@ -542,6 +542,8 @@ namespace Volte.Data.Json
                 _Column.AlignName    = _DataField.AlignName;
                 _Column.Options      = _DataField.Options;
                 _Column.Axis         = _DataField.Axis;
+                _Column.Props        = _DataField.Props.Clone();
+                ZZLogger.Debug(ZFILE_NAME , _Column.Props);
                 _Columns.Add(_Column);
             }
 

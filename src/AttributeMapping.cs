@@ -43,7 +43,8 @@ namespace Volte.Data.Json
         private string _enabledMode  = "";
 
         private Dictionary<string, string> _Contexts = new Dictionary<string, string> (StringComparer.InvariantCultureIgnoreCase);
-        private List<JSONObject> _Group              = new List<JSONObject>();
+        private JSONObject _Props = new JSONObject();
+        private List<JSONObject> _Group = new List<JSONObject>();
 
         // Properties
         public DbType Type            { get { return _Type;         } set { _Type         = value; }  } 
@@ -76,6 +77,7 @@ namespace Volte.Data.Json
         public string TableName       { get { return _TableName;    } set { _TableName    = value; }  } 
         public string TypeChar        { get { return _TypeChar;     } set { _TypeChar     = value; }  } 
         public string Axis            { get { return _Axis;         } set { _Axis         = value; }  } 
+        public JSONObject Props       { get { return _Props;        } set { _Props        = value; }  } 
         public List<JSONObject> Group { get { return _Group;        } set { _Group        = value; }  } 
 
         public bool CanWrite     { get { return _CanWrite && !_AutoIdentity; } set { _CanWrite     = value; }  }

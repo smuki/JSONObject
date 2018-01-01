@@ -351,6 +351,13 @@ namespace Volte.Data.Json
                 _Dictionary = new Dictionary<string, JSONObjectPair> (StringComparer.InvariantCultureIgnoreCase);
             }
 
+            public JSONObject Clone()
+            {
+                StringBuilder s = new StringBuilder();
+                this.Write(s);
+                return new JSONObject(s.ToString());
+            }
+
             public List<string> Names
             {
                 get {
