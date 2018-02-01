@@ -25,11 +25,11 @@ namespace Volte.Data.Json
         public static DataTable ToDataTable(string name , JSONTable _JSONTable , string SortBy="")
         {
 
-            bool bRec    = _JSONTable.Variable.GetBoolean("bIgnoreRec");
+            bool bRec    = _JSONTable.Variable.GetBoolean("bHasRec");
             DataTable dt = new DataTable(name);
 
             DataColumn column2 = new DataColumn("nRecNo") ;
-            column2.DataType = typeof(int);
+            column2.DataType   = typeof(int);
             if (bRec){
                 dt.Columns.Add(column2);
             }
