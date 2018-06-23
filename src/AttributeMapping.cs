@@ -41,6 +41,7 @@ namespace Volte.Data.Json
         private string _TypeChar     = "c";
         private string _Axis         = "";
         private string _enabledMode  = "";
+        private string _format       = "";
 
         private Dictionary<string, string> _Contexts = new Dictionary<string, string> (StringComparer.InvariantCultureIgnoreCase);
         private JSONObject _Props = new JSONObject();
@@ -77,6 +78,7 @@ namespace Volte.Data.Json
         public string TableName       { get { return _TableName;    } set { _TableName    = value; }  } 
         public string TypeChar        { get { return _TypeChar;     } set { _TypeChar     = value; }  } 
         public string Axis            { get { return _Axis;         } set { _Axis         = value; }  } 
+        public string Format          { get { return _format;       } set { _format       = value; }  } 
         public JSONObject Props       { get { return _Props;        } set { _Props        = value; }  } 
         public List<JSONObject> Group { get { return _Group;        } set { _Group        = value; }  } 
 

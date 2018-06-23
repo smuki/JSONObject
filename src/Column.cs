@@ -68,6 +68,9 @@ namespace Volte.Data.Json
                     }else if (s.ToLower()=="options") {
 
                         this.Options = _Property.GetValue("options");
+                    }else if (s.ToLower()=="format") {
+
+                        this.Format = _Property.GetValue("format");
 
                     }else if (s.ToLower()=="nonprintable") {
 
@@ -114,6 +117,9 @@ namespace Volte.Data.Json
                 }
                 if (this.Reference!=""){
                     _Property.SetValue("reference" , this.Reference);
+                }
+                if (this.Format!=""){
+                    _Property.SetValue("format" , this.Format);
                 }
                 if (this.AlignName!=""){
                     _Property.SetValue("alignName" , this.AlignName);
