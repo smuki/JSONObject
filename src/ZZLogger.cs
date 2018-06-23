@@ -237,7 +237,7 @@ namespace Volte.Data.Json
             sb.AppendLine(
                     "" + DateTime.Now.ToString("yyyy-MM-dd hh:mm:ss") +
                     "|" + log +
-                    "|" + AppDomain.GetCurrentThreadId() +
+                    "|" + Thread.CurrentThread.ManagedThreadId +
                     "|" + type +
                     "|" + cModules_Name +
                     "|" + meth +

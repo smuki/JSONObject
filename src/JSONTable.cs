@@ -245,7 +245,7 @@ namespace Volte.Data.Json
                 _Pointer  = -1;
             }
 
-            public string GetAttribute(int ndx , string att)
+            public object GetAttribute(int ndx , string att)
             {
 
                 if (!_Readed) {
@@ -255,12 +255,16 @@ namespace Volte.Data.Json
 
                 if (att.ToLower()=="scode"){
                     return _Row[ndx].sCode;
+                }else if (att.ToLower()=="colspan"){
+                    return _Row[ndx].nColSpan;
+                }else if (att.ToLower()=="rowspan"){
+                    return _Row[ndx].nRowSpan;
                 }else{
                     return null;
                 }
             }
 
-            public string GetAttribute(string name , string att)
+            public object GetAttribute(string name , string att)
             {
                 int _Ordinal = _Columns.Ordinal(name);
 
@@ -272,7 +276,7 @@ namespace Volte.Data.Json
                 return GetAttribute(_Ordinal , att);
             }
 
-            public void SetAttribute(int ndx , string att , string oValue)
+            public void SetAttribute(int ndx , string att , object oValue)
             {
 
                 if (!_Readed) {
@@ -281,7 +285,11 @@ namespace Volte.Data.Json
                 }
                 Cell _Cell = _Row[ndx];
                 if (att.ToLower()=="scode"){
-                    _Cell.sCode = oValue;
+                    _Cell.sCode = oValue.ToString();
+                }else if (att.ToLower()=="colspan"){
+                    _Cell.nColSpan = Convert.ToInt32(oValue);
+                }else if (att.ToLower()=="rowspan"){
+                    _Cell.nRowSpan = Convert.ToInt32(oValue);
                 }
                 _Row[ndx] = _Cell;
             }
