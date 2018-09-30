@@ -30,6 +30,7 @@ namespace Volte.Data.Json
 
         public bool NextToken()
         {
+
             this.SkipWhiteSpace();
 
             if (this.Next()) {
@@ -52,7 +53,8 @@ namespace Volte.Data.Json
                 // literal?
                 return ParseLiteralValue();
             } else {
-                return "";
+                return ParseLiteralValue();
+                //return "";
             }
         }
 
@@ -78,6 +80,54 @@ namespace Volte.Data.Json
             for (; !",]}\n\r".Contains("" + _Data[_charPos]); ++_charPos);
 
             return _Data.Substring(deb, _charPos - deb);
+        }
+
+        public char NextClean()
+        {
+            this.Back();
+            while (true)
+            {
+                char c = this.MoveNextChar;
+                Console.WriteLine(_charPos);
+                Console.WriteLine(c);
+                if (c == '/')
+                {
+                    switch (this.MoveNextChar)
+                    {
+                        case '/':
+                            do
+                            {
+                                c = this.MoveNextChar;
+                            } while (c != '\n' && c != '\r' && c != 0);
+                            break;
+                        case '*':
+                            while (true)
+                            {
+                                c = this.MoveNextChar;
+                                if (c == 0)
+                                {
+                                    throw (new Exception("Unclosed comment."));
+                                }
+                                if (c == '*')
+                                {
+                                    if (this.MoveNextChar == '/')
+                                    {
+                                        break;
+                                    }
+                                    this.Back();
+                                }
+                            }
+                            break;
+                        default:
+                            this.Back();
+                            return '/';
+                    }
+                }
+                else if (c == 0 || c > ' ')
+                {
+                    return c;
+                }
+            }
         }
 
         private string ParseStringValue()
@@ -205,17 +255,19 @@ namespace Volte.Data.Json
                 throw new FormatException("Cannot find object item'_Data name.");
             }
 
-            if (_Data[_charPos] != '"') {
-                throw new FormatException();
-            }
+            bool quote = true;
 
-            // skip open quote
-            _charPos++;
+            if (_Data[_charPos] != '"') {
+                quote = false;
+            }else{
+                // skip open quote
+                _charPos++;
+            }
 
             int deb = _charPos;
 
             while (_charPos < _length) {
-                if (_Data[_charPos] == '"') {
+                if (( _Data[_charPos] == ':' && quote==false ) || (_Data[_charPos] == '"' && quote)) {
                     if (_Data[_charPos - 1] != '\\') {
                         break;
                     }
@@ -225,14 +277,16 @@ namespace Volte.Data.Json
             }
 
             int end=_charPos;
-            _charPos++;
+            if (quote){
+                _charPos++;
 
-            SkipWhiteSpace();
+                SkipWhiteSpace();
 
-            if (_charPos >= _length) {
-                throw new FormatException();
+                if (_charPos >= _length) {
+                    throw new FormatException();
+                }
+
             }
-
             if (_Data[_charPos] != ':') {
                 throw new FormatException();
             }
@@ -241,14 +295,32 @@ namespace Volte.Data.Json
             return _Data.Substring(deb, end - deb);
         }
 
+        public void Back()
+        {
+            if (_charPos > 0){
+                _charPos -= 1;
+            }
+        }
 
-        public char NextChar
+        public char Peek
         {
             get {
                 if (_charPos >= _length) {
                     return ' ';
                 } else {
                     return _Data[_charPos + 1];
+                }
+            }
+        }
+
+        public char MoveNextChar
+        {
+            get {
+                if (_charPos >= _length) {
+                    return ' ';
+                } else {
+                    _charPos++;
+                    return _Data[_charPos];
                 }
             }
         }
@@ -264,7 +336,9 @@ namespace Volte.Data.Json
                 if (char.IsWhiteSpace(_Data[_charPos])) {
                     _charPos++;
                     continue;
-                } else {
+                } else if (_Data[_charPos]=='/' && (_charPos+1 < _length && _Data[_charPos+1]=='/')) {
+                    this.NextClean();
+                }else{
                     break;
                 }
             }
