@@ -336,7 +336,7 @@ namespace Volte.Data.Json
                 if (char.IsWhiteSpace(_Data[_charPos])) {
                     _charPos++;
                     continue;
-                } else if (_Data[_charPos]=='/' && (_charPos+1 < _length && _Data[_charPos+1]=='/')) {
+                } else if (_Data[_charPos]=='/' && (_charPos+1 < _length && (_Data[_charPos+1]=='/' || _Data[_charPos+1]=='*' ))) {
                     this.NextClean();
                 }else{
                     break;
