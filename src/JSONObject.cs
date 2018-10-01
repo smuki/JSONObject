@@ -332,7 +332,7 @@ namespace Volte.Data.Json
             }
         }
 
-        public string GetValue(string name, string sDefault = string.Empty)
+        public string GetValue(string name, string sDefault = "")
         {
             JSONObjectPair result = null;
             if (_Dictionary.TryGetValue(name, out result))
