@@ -216,9 +216,15 @@ namespace Volte.Data.Json
             return Util.ToLong(o);
         }
 
-        public decimal GetDecimal(string Name)
+        public decimal GetDecimal(string Name,decimal nDefault=0M)
         {
-            return Util.ToDecimal(GetValue(Name));
+            object o = GetValue(Name);
+
+            if (o == null || string.IsNullOrEmpty(o.ToString()))
+            {
+                return nDefault;
+            }
+            return Util.ToDecimal(o);
         }
 
         public void SetDouble(string name, double value)
@@ -226,9 +232,15 @@ namespace Volte.Data.Json
             this.SetValue(name, value, "decimal");
         }
 
-        public double GetDouble(string name)
+        public double GetDouble(string name,double nDefault)
         {
-            return Convert.ToDouble(this.GetValue(name));
+            object o = GetValue(name);
+
+            if (o == null || string.IsNullOrEmpty(o.ToString()))
+            {
+                return nDefault;
+            }
+            return Convert.ToDouble(o);
         }
 
         public void SetDecimal(string name, decimal value)
@@ -301,7 +313,6 @@ namespace Volte.Data.Json
             }
             return sReturn;
         }
-
         public string Attr(string name)
         {
             if (string.IsNullOrEmpty(name))
@@ -321,7 +332,7 @@ namespace Volte.Data.Json
             }
         }
 
-        public string GetValue(string name, string sDefault = "")
+        public string GetValue(string name, string sDefault = string.Empty)
         {
             JSONObjectPair result = null;
             if (_Dictionary.TryGetValue(name, out result))
