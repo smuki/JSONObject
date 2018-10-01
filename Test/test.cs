@@ -310,7 +310,6 @@
             //Test4();
             Test6();
             //Test7();
-            //Console.ReadLine();
             Console.WriteLine(Volte.Utils.Util.ToUnderlineName("ISOCertifiedStaff"));
             Console.WriteLine(Volte.Utils.Util.ToUnderlineName("CertifiedStaff"));
             Console.WriteLine(Volte.Utils.Util.ToUnderlineName("UserID"));
@@ -318,6 +317,7 @@
             Console.WriteLine(Volte.Utils.Util.ToCamelCase("certified_staff",1));
             Console.WriteLine(Volte.Utils.Util.ToCamelCase("user_id",1));
 
+            Console.ReadLine();
         }
     }
 }
