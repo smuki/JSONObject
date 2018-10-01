@@ -88,8 +88,8 @@ namespace Volte.Data.Json
             while (true)
             {
                 char c = this.MoveNextChar;
-                Console.WriteLine(_charPos);
-                Console.WriteLine(c);
+                //Console.WriteLine(_charPos);
+                //Console.WriteLine(c);
                 if (c == '/')
                 {
                     switch (this.MoveNextChar)
