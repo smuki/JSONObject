@@ -251,11 +251,18 @@
 
             Console.WriteLine ("Write to vdata3");
 
+            oOWXF3.Flatten = Flatten.Value;
+
             StreamWriter swer3 = new StreamWriter ("vdat3.js", false);
             swer3.Write(oOWXF3.ToString());
             swer3.Flush();
             swer3.Close();
 
+
+            swer3 = new StreamWriter ("vdat31.js", false);
+            swer3.Write(oOWXF3.ToString());
+            swer3.Flush();
+            swer3.Close();
            // StreamWriter swer4 = new StreamWriter ("vdat4.js", false);
           //  swer4.Write(oOWXF4.ToString());
           //  swer4.Flush();

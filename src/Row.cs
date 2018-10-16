@@ -50,6 +50,7 @@ namespace Volte.Data.Json
 
                                 _cell.sCode    = _JSONObject.GetValue("id");
                                 _cell.Value    = _JSONObject.GetValue("v");
+                                _cell.sFormula = _JSONObject.GetValue("f");
                                 _cell.nColSpan = _JSONObject.GetInteger("c");
                                 _cell.nRowSpan = _JSONObject.GetInteger("r");
 
@@ -183,6 +184,11 @@ namespace Volte.Data.Json
                                 writer.Append(",");
 
                                 this.Write(writer , "id" , _Cell.sCode);
+                            }
+                            if (!string.IsNullOrEmpty(_Cell.sFormula)){
+                                writer.Append(",");
+
+                                this.Write(writer , "f" , _Cell.sFormula);
                             }
                             if (_Cell.nColSpan>1){
                                 writer.Append(",");

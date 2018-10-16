@@ -11,6 +11,7 @@ namespace Volte.Data.Json
     public struct Cell
     {
         public string sCode;
+        public string sFormula;
         public int    nColSpan;
         public int    nRowSpan;
         public object Value;
