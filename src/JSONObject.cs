@@ -313,6 +313,45 @@ namespace Volte.Data.Json
             }
             return sReturn;
         }
+
+        public bool HasAttr(string name)
+        {
+            if (string.IsNullOrEmpty(name))
+            {
+                return false;
+            }
+            int p = name.IndexOf(".");
+            if (p > 0)
+            {
+                string f = name.Substring(0, p);
+                string n = name.Substring(p + 1);
+                return GetJSONObject(f).HasAttr(n);
+            }
+            else
+            {
+                return ContainsKey(name);
+            }
+        }
+
+        public string Attr(string name , string value)
+        {
+            if (string.IsNullOrEmpty(name))
+            {
+                return "";
+            }
+            int p = name.IndexOf(".");
+            if (p > 0)
+            {
+                string f = name.Substring(0, p);
+                string n = name.Substring(p + 1);
+                return GetJSONObject(f).Attr(n , value);
+            }
+            else
+            {
+                return SetValue(name , value);
+            }
+        }
+
         public string Attr(string name)
         {
             if (string.IsNullOrEmpty(name))
