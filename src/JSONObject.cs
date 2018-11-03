@@ -333,22 +333,22 @@ namespace Volte.Data.Json
             }
         }
 
-        public string Attr(string name , string value)
+        public void Attr(string name , string value)
         {
             if (string.IsNullOrEmpty(name))
             {
-                return "";
+                return;
             }
             int p = name.IndexOf(".");
             if (p > 0)
             {
                 string f = name.Substring(0, p);
                 string n = name.Substring(p + 1);
-                return GetJSONObject(f).Attr(n , value);
+                GetJSONObject(f).Attr(n , value);
             }
             else
             {
-                return SetValue(name , value);
+                SetValue(name , value);
             }
         }
 
@@ -513,7 +513,10 @@ namespace Volte.Data.Json
             set
             {
                 string t = "string";
-                if (value is DateTime)
+                if (value is string)
+                {
+                    t = "string";
+                }else if (value is DateTime)
                 {
                     t = "datetime";
                 }
