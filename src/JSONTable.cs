@@ -600,6 +600,11 @@ namespace Volte.Data.Json
                 return _Columns.Ordinal(name);
             }
 
+            public bool ContainsKey(string name)
+            {
+                return _Columns.ContainsKey(name);
+            }
+
             public string GetType(string name)
             {
                 return _Columns.GetType(name);
