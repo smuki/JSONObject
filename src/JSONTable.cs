@@ -164,6 +164,20 @@ namespace Volte.Data.Json
                     writer.AppendLine("");
                 }
 
+                if (_merge.Count>0){
+                    writer.AppendLine(",");
+                    writer.AppendLine("\"mergeCells\":");
+                    _merge.Write(writer);
+                    writer.AppendLine("");
+                }
+
+                if (_cells.Count>0){
+                    writer.AppendLine(",");
+                    writer.AppendLine("\"cell\":");
+                    _cells.Write(writer);
+                    writer.AppendLine("");
+                }
+
                 writer.AppendLine("}");
             }
 
@@ -619,6 +633,24 @@ namespace Volte.Data.Json
                 _rows.Sort(_RowComparer.Compare);
             }
 
+            public void Merge(int row , int col , int rowspan = 1 , int colspan = 1)
+            {
+                JSONObject v = new JSONObject();
+
+                v.SetLong("row"     , row);
+                v.SetLong("col"     , col);
+                v.SetLong("rowspan" , rowspan);
+                v.SetLong("colspan" , colspan);
+                _merge.Add(v);
+            }
+
+            public void Cell(int row , int col , JSONObject cell)
+            {
+                cell.SetLong("row" , row);
+                cell.SetLong("col" , col);
+                _cells.Add(cell);
+            }
+
             public JSONObject Reference
             {
                 get {
@@ -664,7 +696,6 @@ namespace Volte.Data.Json
             public JSONObject Variable     { get { return _Variable;       }  }
             public List<Column> Fields     { get { return _Columns.Fields; }  }
             public List<Row> Rows          { get { return _rows;           }  }
-            public List<string> MergeCells { get { return _mergeCells;     }  }
             public JSONArray Summary       { get { return _summary;        }  }
 
             public bool Paging      { get { return _Paging;  } set { _Paging  = value; }  }
@@ -674,16 +705,17 @@ namespace Volte.Data.Json
             private Columns _Columns;
             private readonly StringBuilder _s = new StringBuilder();
 
-            private JSONObject _Variable      = new JSONObject();
-            private JSONArray _summary        = new JSONArray();
-            private List<Row>  _rows          = new List<Row>();
-            private List<string>  _mergeCells = new List<string>();
-            private bool _Draft               = false;
-            private Flatten  _Flatten         = Flatten.Complex;
-            private bool _Readed              = false;
-            private bool _StructureOnly       = false;
-            private bool _Paging              = false;
-            private int  _Pointer             = -1;
+            private JSONObject _Variable = new JSONObject();
+            private JSONArray _summary   = new JSONArray();
+            private List<Row>  _rows     = new List<Row>();
+            private JSONArray _merge     = new JSONArray();
+            private JSONArray _cells     = new JSONArray();
+            private bool _Draft          = false;
+            private Flatten  _Flatten    = Flatten.Complex;
+            private bool _Readed         = false;
+            private bool _StructureOnly  = false;
+            private bool _Paging         = false;
+            private int  _Pointer        = -1;
         }
 
     [Serializable]

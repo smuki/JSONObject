@@ -182,7 +182,12 @@ namespace Volte.Data.Json
             }
         }
 
-        public bool GetBoolean(string Name, bool bDefault = false)
+        public bool GetBoolean(string Name)
+        {
+            return GetBoolean(Name , false);
+        }
+
+        public bool GetBoolean(string Name , bool bDefault)
         {
             object o = GetValue(Name);
 
@@ -196,7 +201,12 @@ namespace Volte.Data.Json
             }
         }
 
-        public int GetInteger(string Name, int nDefault = 0)
+        public int GetInteger(string Name)
+        {
+            return GetInteger(Name , 0);
+        }
+
+        public int GetInteger(string Name, int nDefault)
         {
             object o = GetValue(Name);
             if (o == null || string.IsNullOrEmpty(o.ToString()))
@@ -206,7 +216,12 @@ namespace Volte.Data.Json
             return Util.ToInt32(o);
         }
 
-        public long GetLong(string Name, int nDefault = 0)
+        public long GetLong(string Name)
+        {
+            return GetLong(Name , 0);
+        }
+
+        public long GetLong(string Name, int nDefault)
         {
             object o = GetValue(Name);
             if (o == null || string.IsNullOrEmpty(o.ToString()))
@@ -216,7 +231,12 @@ namespace Volte.Data.Json
             return Util.ToLong(o);
         }
 
-        public decimal GetDecimal(string Name,decimal nDefault=0M)
+        public decimal GetDecimal(string Name)
+        {
+            return GetDecimal(Name , 0M);
+        }
+
+        public decimal GetDecimal(string Name,decimal nDefault)
         {
             object o = GetValue(Name);
 
@@ -232,7 +252,11 @@ namespace Volte.Data.Json
             this.SetValue(name, value, "decimal");
         }
 
-        public double GetDouble(string name,double nDefault)
+        public double GetDouble(string name)
+        {
+            return GetDouble(name,0);
+        }
+        public double GetDouble(string name , double nDefault)
         {
             object o = GetValue(name);
 
@@ -371,7 +395,12 @@ namespace Volte.Data.Json
             }
         }
 
-        public string GetValue(string name , string sDefault = "")
+        public string GetValue(string name)
+        {
+            return GetValue(name , "");
+        }
+
+        public string GetValue(string name , string sDefault)
         {
             JSONObjectPair result = null;
             if (_Dictionary.TryGetValue(name, out result))
