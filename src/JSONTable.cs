@@ -687,16 +687,16 @@ namespace Volte.Data.Json
                     if (_rows == null) {
                         return true;
                     }
-
                     return _Pointer >= _rows.Count;
                 }
             }
 
-            public bool BOF                { get { return _Pointer < 0;    }  }
-            public JSONObject Variable     { get { return _Variable;       }  }
-            public List<Column> Fields     { get { return _Columns.Fields; }  }
-            public List<Row> Rows          { get { return _rows;           }  }
-            public JSONArray Summary       { get { return _summary;        }  }
+            public bool BOF             { get { return _Pointer < 0;    }  }
+            public JSONObject Variable  { get { return _Variable;       }  }
+            public List<Column> Fields  { get { return _Columns.Fields; }  }
+            public List<Row> Rows       { get { return _rows;           }  }
+            public JSONArray Summary    { get { return _summary;        }  }
+            public JSONArray MergeCells { get { return _merge;          }  }
 
             public bool Paging      { get { return _Paging;  } set { _Paging  = value; }  }
             public Flatten  Flatten { get { return _Flatten; } set { _Flatten = value; }  }
