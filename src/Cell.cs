@@ -12,8 +12,6 @@ namespace Volte.Data.Json
     {
         public string sCode;
         public string sFormula;
-        public int    nColSpan;
-        public int    nRowSpan;
         public object Value;
     }
 }
