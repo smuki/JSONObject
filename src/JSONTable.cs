@@ -269,10 +269,6 @@ namespace Volte.Data.Json
 
                 if (att.ToLower()=="scode"){
                     return _Row[ndx].sCode;
-                }else if (att.ToLower()=="colspan"){
-                    return _Row[ndx].nColSpan;
-                }else if (att.ToLower()=="rowspan"){
-                    return _Row[ndx].nRowSpan;
                 }else{
                     return null;
                 }
@@ -300,10 +296,6 @@ namespace Volte.Data.Json
                 Cell _Cell = _Row[ndx];
                 if (att.ToLower()=="scode"){
                     _Cell.sCode = oValue.ToString();
-                }else if (att.ToLower()=="colspan"){
-                    _Cell.nColSpan = Convert.ToInt32(oValue);
-                }else if (att.ToLower()=="rowspan"){
-                    _Cell.nRowSpan = Convert.ToInt32(oValue);
                 }
                 _Row[ndx] = _Cell;
             }
