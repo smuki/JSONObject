@@ -3,6 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Text;
 
+using Volte.Utils;
+
 namespace Volte.Data.Json
 {
 
@@ -103,7 +105,7 @@ namespace Volte.Data.Json
                             writer.Append(sValue.ToString());
                         }else{
                             writer.Append("\"");
-                            writer.Append(sValue.ToString());
+                            Util.EscapeString(writer, sValue.ToString());
                             writer.AppendLine("\"");
                         }
                         i++;

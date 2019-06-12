@@ -543,6 +543,11 @@ namespace Volte.Data.Json
             {
                 _Pointer = cPoint;
                 _Readed = false;
+                if (_Pointer < _rows.Count) {
+                    _Row = _rows[_Pointer];
+                    _Readed = true;
+                    _Draft = false;
+                }
             }
 
             public void MovePrev()
@@ -592,7 +597,6 @@ namespace Volte.Data.Json
                 _Column.Options      = _DataField.Options;
                 _Column.Axis         = _DataField.Axis;
                 _Column.Props        = _DataField.Props.Clone();
-                ZZLogger.Debug(ZFILE_NAME , _Column.Props);
                 _Columns.Add(_Column);
             }
 

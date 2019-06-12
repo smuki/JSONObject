@@ -52,6 +52,8 @@ namespace Volte.Data.Json
                     column2.DataType = typeof(DateTime);
                 } else if (type == "int32" || type == "integer") {
                     column2.DataType = typeof(int);
+                } else if (type == "boolean") {
+                    column2.DataType = typeof(bool);
                 } else {
                     column2.DataType = System.Type.GetType("System.String");
                 }
