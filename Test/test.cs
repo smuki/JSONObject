@@ -307,15 +307,50 @@
 
         }
 
+        static void TestFix()
+        {
+            JSONTable oOWXF3 = new JSONTable();
+
+            AttributeMapping _ZZFields_CONT_DATA           = new AttributeMapping();
+            _ZZFields_CONT_DATA.TableName    = "VARIABLE";
+            _ZZFields_CONT_DATA.ColumnName   = "X";
+            _ZZFields_CONT_DATA.Name         = "X";
+            _ZZFields_CONT_DATA.Caption      = "X";
+            _ZZFields_CONT_DATA.Width        = 10;
+            _ZZFields_CONT_DATA.Scale        = 2;
+            _ZZFields_CONT_DATA.NonPrintable = false;
+            _ZZFields_CONT_DATA.TypeChar     = "C";
+
+            oOWXF3.Declare(_ZZFields_CONT_DATA);
+
+
+            oOWXF3.AddNew();
+            oOWXF3.SetValue("X","\"\n");
+            oOWXF3.Update();
+
+            oOWXF3.Flatten = Flatten.Value;
+
+            StreamWriter swer3 = new StreamWriter ("TestFix.js", false);
+            swer3.Write(oOWXF3.ToString());
+            swer3.Flush();
+            swer3.Close();
+
+            oOWXF3.Close();
+
+        }
+
         static void Main()
         {
 
 
-            Test1();
+            //Test1();
+
+            TestFix();
+
             //Test2();
             //Test3();
             //Test4();
-            Test6();
+            //Test6();
             //Test7();
             Console.WriteLine(Volte.Utils.Util.ToUnderlineName("ISOCertifiedStaff"));
             Console.WriteLine(Volte.Utils.Util.ToUnderlineName("CertifiedStaff"));
