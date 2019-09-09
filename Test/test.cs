@@ -276,7 +276,7 @@
             int gc1 = GC.CollectionCount (1);
             int gc2 = GC.CollectionCount (2);
 
-            StreamReader _Read = new StreamReader("largedata.js" , Encoding.Default);
+            StreamReader _Read = new StreamReader("largedata.map" , Encoding.Default);
 
             str = _Read.ReadToEnd();
 
@@ -297,6 +297,37 @@
             swer3.Flush();
             swer3.Close();
             Console.WriteLine (i);
+            Console.WriteLine ("");
+            Console.WriteLine ("Copy To another: " + stopwatch.ElapsedMilliseconds + "ms");
+            Console.WriteLine ("GC 0:" + (GC.CollectionCount (0) - gc0).ToString());
+            Console.WriteLine ("GC 1:" + (GC.CollectionCount (1) - gc1).ToString());
+            Console.WriteLine ("GC 2:" + (GC.CollectionCount (2) - gc2).ToString());
+
+            Console.WriteLine ("Write to vdata3");
+
+        }
+        static void Test8()
+        {
+            //write to ToString
+            GC.Collect();
+            int  gc0 = GC.CollectionCount (0);
+            int gc1 = GC.CollectionCount (1);
+            int gc2 = GC.CollectionCount (2);
+
+            StreamReader _Read = new StreamReader("largedata.map", Encoding.UTF8);
+
+            str = _Read.ReadToEnd();
+
+            JSONObject tt=new JSONObject(str);
+            Console.WriteLine(str.Length);
+
+            System.Diagnostics.Stopwatch stopwatch = new System.Diagnostics.Stopwatch();
+            stopwatch.Start();
+
+            StreamWriter swer3 = new StreamWriter ("xxvdat3.js", false);
+            swer3.Write(tt.ToString());
+            swer3.Flush();
+            swer3.Close();
             Console.WriteLine ("");
             Console.WriteLine ("Copy To another: " + stopwatch.ElapsedMilliseconds + "ms");
             Console.WriteLine ("GC 0:" + (GC.CollectionCount (0) - gc0).ToString());
@@ -352,6 +383,7 @@
             //Test4();
             //Test6();
             //Test7();
+            Test8();
             Console.WriteLine(Volte.Utils.Util.ToUnderlineName("ISOCertifiedStaff"));
             Console.WriteLine(Volte.Utils.Util.ToUnderlineName("CertifiedStaff"));
             Console.WriteLine(Volte.Utils.Util.ToUnderlineName("UserID"));
