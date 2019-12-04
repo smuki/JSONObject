@@ -22,6 +22,132 @@ namespace Volte.Data.Json
 
         }
 
+        public static JSONObject ToJSONTable(DataTable table , JSONObject Def , bool bSelect)
+        {
+
+            JSONTable _JSONTable = new JSONTable();
+            _JSONTable.DeclareStart();
+
+            AttributeMapping _AttributeMapping = new AttributeMapping();
+
+            Dictionary<string, object> _dict = new Dictionary<string, object>();
+            foreach(string columnName in Def.Names){
+
+                JSONObject oDef = Def.GetJSONObject(columnName);
+
+                string str  = "varchar";
+                string str2 = "varchar";
+
+                if (table.Columns.Contains(columnName)){
+                    str2 = table.Columns[columnName].DataType.Name.ToLower();
+                }
+                if (oDef.ContainsKey("type")){
+                    str2 = oDef.GetValue("type");
+                }
+                ZZLogger.Debug(ZFILE_NAME +"_dataType" , columnName+"->"+str2);
+
+                if (str2=="boolean" || str2=="bit" || str2=="bool"){
+
+                    str = "boolean";
+
+                }else if (str2 == "float" || str2 == "double" || str2 == "int32" || str2 == "int"){
+
+                    str = "decimal";
+
+                }else if (str2 == "datetime"){
+
+                    str = "datetime";
+
+                }
+                else
+                {
+                    str = "varchar";
+                }
+
+                _AttributeMapping = new AttributeMapping();
+
+                _AttributeMapping.Name       = columnName;
+                _AttributeMapping.Caption    = oDef.GetValue("caption");
+                _AttributeMapping.ColumnName = columnName;
+                _AttributeMapping.DataType   = str;
+                _AttributeMapping.EnableMode = "";
+                _AttributeMapping.Compulsory = false;
+                _AttributeMapping.Reference  = "";
+                _AttributeMapping.Width      = oDef.GetInteger("width");
+
+                _dict[columnName] = str;
+
+                _JSONTable.Declare(_AttributeMapping);
+            }
+            /*
+            for (int i = 0; i < table.Columns.Count; i++)
+            {
+                string columnName = table.Columns[i].ColumnName;
+                string str = "varchar";
+                string str2 = table.Columns[i].DataType.Name.ToLower();
+                ZZLogger.Debug(ZFILE_NAME +"_dataType" , str2);
+                ZZLogger.Debug(ZFILE_NAME +"_dataType" , columnName+"->"+str2);
+                if (str2=="boolean"){
+                    str = "boolean";
+                }else if (((str2 != "int") && (str2 != "double")) && (str2 != "float"))
+                {
+                    if (!(str2 == "datetime"))
+                    {
+                        str = "varchar";
+                    }
+                    else
+                    {
+                        str = "datetime";
+                    }
+                }
+                else
+                {
+                    str = "int";
+                }
+
+                _AttributeMapping = new AttributeMapping();
+
+                _AttributeMapping.Name       = columnName;
+                _AttributeMapping.Caption    = columnName;
+                _AttributeMapping.ColumnName = columnName;
+                _AttributeMapping.DataType   = str;
+                _AttributeMapping.EnableMode = "";
+                _AttributeMapping.Compulsory = false;
+                _AttributeMapping.Reference  = "";
+
+                _JSONTable.Declare(_AttributeMapping);
+            }
+            */
+
+            string tableName = table.TableName;
+            JSONArray val = new JSONArray();
+            for (int i = 0; i < table.Rows.Count; i++)
+            {
+                JSONObject obj4 = new JSONObject();
+                DataRow row = table.Rows[i];
+                _JSONTable.AddNew();
+                foreach(string columnName in Def.Names){
+                    if (_dict.ContainsKey(columnName) && _dict[columnName]=="boolean"){
+                        if (row[columnName].ToString()=="0"){
+                            _JSONTable.SetValue(columnName , false);
+                        }else{
+                            _JSONTable.SetValue(columnName , true);
+                        }
+                    }else{
+                        _JSONTable.SetValue(columnName, row[columnName]);
+                    }
+                }
+                _JSONTable.Update();
+            }
+            _JSONTable.Flatten = Flatten.NameValue;
+
+            _JSONTable.Variable.SetInteger("fixedColumnsLeft" , 0);
+            _JSONTable.Variable.SetInteger("fixedRowsTop"     , 0);
+            _JSONTable.Variable.SetInteger("fixedRowsBottom"  , 1);
+            _JSONTable.Variable.SetInteger("fixedRowsBottom"  , 0);
+            return new JSONObject(_JSONTable.ToString());
+        }
+
         public static DataTable ToDataTable(string name , JSONTable _JSONTable , string SortBy="")
         {
 

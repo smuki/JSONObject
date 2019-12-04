@@ -577,6 +577,7 @@ namespace Volte.Data.Json
             public void Declare(AttributeMapping _DataField)
             {
                 Column _Column       = new Column();
+                _Column.ColumnName   = _DataField.ColumnName;
                 _Column.Name         = _DataField.Name;
                 _Column.Hash         = _DataField.Name.Replace(".", "_");
                 _Column.Caption      = _DataField.Caption;
