@@ -91,18 +91,19 @@ namespace Volte.Data.Json
                                 writer.Append(Util.ToBoolean(this.Value).ToString().ToLower());
                             } else if (this.Type == "datetime" || this.Value is DateTime) {
 
-                                if (this.Value is DateTime) {
+                                if (this.Value==null || string.IsNullOrEmpty(this.Value.ToString())) {
+                                    writer.Append("\"\"");
+                                }else if (this.Value is DateTime) {
                                     if ((DateTime)this.Value <= Util.DateTime_MinValue) {
                                         writer.Append("\"\"");
                                     } else {
                                         writer.Append("\"");
-                                        writer.Append(((DateTime)this.Value).ToString("yyyyMMddhhmmss"));
+                                        writer.Append(Util.DateTimeToMilliSecond((DateTime)this.Value));
                                         writer.Append("\"");
                                     }
                                 }else{
                                     writer.Append("\"");
-
-                                    writer.Append(Util.ToDateTime(this.Value).ToString("yyyyMMddhhmmss"));
+                                    writer.Append(Util.DateTimeToMilliSecond(Util.ToDateTime(this.Value)));
                                     writer.Append("\"");
                                 }
 
