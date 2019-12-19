@@ -9,6 +9,7 @@
     using System.Text;
     using System.Xml;
     using Newtonsoft.Json;
+using System.Security.Cryptography;
     using Volte.Data.Json;
     using Volte.Utils;
 
@@ -390,6 +391,21 @@
             Console.WriteLine(Volte.Utils.Util.ToCamelCase("iso_certified_staff",1));
             Console.WriteLine(Volte.Utils.Util.ToCamelCase("certified_staff",1));
             Console.WriteLine(Volte.Utils.Util.ToCamelCase("user_id",1));
+
+string password ="1234566wU9HUJyo40400" ;
+byte[] hashedDataBytes;
+MD5CryptoServiceProvider md5Hasher = new MD5CryptoServiceProvider();
+
+hashedDataBytes = md5Hasher.ComputeHash(Encoding.GetEncoding("gb2312").GetBytes(password)); 
+StringBuilder tmp = new StringBuilder();
+foreach (byte i in hashedDataBytes)
+{
+tmp.Append(i.ToString("x2"));
+} 
+
+Console.WriteLine(tmp .ToString());
+
+Console.WriteLine(Volte.Utils.Util.Bytes2Readable(hashedDataBytes));
 
             Console.ReadLine();
         }
