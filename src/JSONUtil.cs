@@ -21,7 +21,8 @@ namespace Volte.Data.Json
         {
 
         }
-
+		
+       
         public static JSONObject ToJSONTable(DataTable table , JSONObject Def , bool bSelect)
         {
 
@@ -209,10 +210,23 @@ namespace Volte.Data.Json
                         if (_JSONTable.GetDateTime2(i) == null || _JSONTable.GetDateTime(i)<= Util.DateTime_MinValue) {
                             _dataRow[i + offset] = DBNull.Value;
                         } else {
-                            _dataRow[i + offset] = _JSONTable.GetDateTime2(i);
+                            _dataRow[i + offset] = _JSONTable.GetDateTime(i);
                         }
+
+                    } else if (type == "int32" || type == "integer") {
+
+                            _dataRow[i + offset] = _JSONTable.GetInteger(i);
+
+                    } else if (type == "boolean") {
+
+                            _dataRow[i + offset] = _JSONTable.GetBoolean(i);
+
                     } else {
-                        _dataRow[i + offset] = _JSONTable[i];
+                        if (_JSONTable[i]==null){
+                            _dataRow[i + offset] = "";
+                        }else{
+                            _dataRow[i + offset] = _JSONTable[i];
+                        }
                     }
                 }
 
