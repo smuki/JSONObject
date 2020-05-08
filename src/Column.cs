@@ -72,14 +72,10 @@ namespace Volte.Data.Json
 
                         this.Format = _Property.GetValue("format");
 
-                    }else if (s.ToLower()=="nonprintable") {
+                    }else if (s.ToLower()=="hidden") {
 
-                        this.NonPrintable = _Property.GetBoolean("nonPrintable");
+                        this.Hidden = _Property.GetBoolean("hidden");
 
-
-                    }else if (s.ToLower()=="axis") {
-
-                        this.Axis = _Property.GetValue("axis");
                     }else{
 
                         this.Props[s] = _Property[s];
@@ -105,10 +101,14 @@ namespace Volte.Data.Json
                 }else{
                     _Property.SetValue("dataType"    , this.DataType);
                 }
-                _Property.SetInteger("width"     , this.Width);
-                _Property.SetInteger("scale"     , this.Scale);
-                _Property.SetValue("enableMode"  , this.EnableMode);
-                _Property.SetValue("options"     , this.Options);
+                _Property.SetInteger("width" , this.Width);
+                _Property.SetInteger("scale" , this.Scale);
+                if (!string.IsNullOrEmpty(this.EnableMode)){
+                    _Property.SetValue("enableMode"  , this.EnableMode);
+                }
+                if (!string.IsNullOrEmpty(this.Options)){
+                    _Property.SetValue("options"     , this.Options);
+                }
                 if (this.Description!=""){
                     _Property.SetValue("description" , this.Description);
                 }
@@ -124,13 +124,9 @@ namespace Volte.Data.Json
                 if (this.AlignName!=""){
                     _Property.SetValue("alignName" , this.AlignName);
                 }
-                _Property.SetValue("className" , this.ClassName);
 
-                if (this.Axis!=""){
-                    _Property.SetValue("axis" , this.Axis);
-                }
-                _Property.SetBoolean("nonPrintable" , this.NonPrintable);
-                _Property.SetInteger("index"        , this.Index);
+                _Property.SetBoolean("hidden" , this.Hidden);
+                _Property.SetInteger("index"  , this.Index);
                 foreach(string s in this.Props.Names){
                     _Property[s] = this.Props[s];
                 }
