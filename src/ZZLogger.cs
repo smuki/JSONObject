@@ -177,6 +177,19 @@ namespace Volte.Data.Json
             _Logger.WriteLog("TRACE", cModules_Name, "" + msg, objs);
         }
 
+        public static void Debug(string cModules_Name,string temp ,object msg, params object[] objs)
+        {
+            if (!DebugEnabled) {
+                return;
+            }
+
+            if (_Logger == null) {
+                ZZLogger.getInstance();
+            }
+
+            _Logger.WriteLog("DEBUG" , cModules_Name+temp , "" + msg , objs);
+        }
+
         public static void Debug(string cModules_Name, object msg, params object[] objs)
         {
             if (!DebugEnabled) {
