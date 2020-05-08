@@ -45,7 +45,6 @@ namespace Volte.Data.Json
                 if (oDef.ContainsKey("type")){
                     str2 = oDef.GetValue("type");
                 }
-                ZZLogger.Debug(ZFILE_NAME +"_dataType" , columnName+"->"+str2);
 
                 if (str2=="boolean" || str2=="bit" || str2=="bool"){
 
