@@ -102,35 +102,47 @@ namespace Volte.Data.Json
                 }
 
                 if (o is DateTime) {
-                    if ((DateTime)o<= Util.DateTime_MinValue) {
-                        writer.Append("\"\"");
-                    } else {
-                        writer.Append("\"");
-                        writer.Append(Util.DateTimeToMilliSecond((DateTime)o).ToString());
-                        writer.Append("\"");
+
+                    if (o==null || string.IsNullOrEmpty(o.ToString())) {
+                        writer.Append("null");
+                    }else if (o is DateTime) {
+                        if ((DateTime)o<= Util.DateTime_MinValue) {
+                            writer.Append("null");
+                        } else {
+
+                            try{
+                                writer.Append(Util.DateTimeToMilliSecond((DateTime)o));
+                            }catch (Exception ex) {
+                                ZZLogger.Debug(ZFILE_NAME , o);
+                                ZZLogger.Debug(ZFILE_NAME , ex);
+                            }
+                        }
+                    }else{
+                        writer.Append(Util.DateTimeToMilliSecond(Util.ToDateTime(o)));
                     }
+
                 }else if (o is decimal || o is int) {
                     writer.Append(o.ToString());
                 } else if (o is bool) {
                     writer.Append(o.ToString().ToLower());
                 } else {
-
-                    writer.Append("\"");
-                    if (o!=null){
-                        Util.EscapeString(writer, o.ToString());
-                    }
+                    
+                        writer.Append("\"");
+                        if (o!=null){
+                            Util.EscapeString(writer, o.ToString());
+                        }
                     writer.Append("\"");
                 }
             }
 
-            internal void Write(StringBuilder writer , Columns _columns)
-            {
-                if (_Flatten==Flatten.Value){
-
-                    writer.AppendLine("[");
-                    if (_cells != null) {
-                        bool first = true;
-
+    internal void Write(StringBuilder writer , Columns _columns)
+    {
+        if (_Flatten==Flatten.Value){
+            
+                writer.AppendLine("[");
+                if (_cells != null) {
+                    bool first = true;
+                        
                         foreach (Cell _Cell in _cells) {
                             if (!first) {
                                 writer.AppendLine(",");
@@ -139,15 +151,15 @@ namespace Volte.Data.Json
                             }
                             this.Write(writer , "v" , _Cell.Value);
                         }
-                    }
-                    writer.Append("]");
-
-                }else if (_Flatten==Flatten.NameValue){
-
-                    writer.AppendLine("{");
-                    if (_cells != null) {
-                        bool first = true;
-
+                }
+            writer.Append("]");
+                
+        }else if (_Flatten==Flatten.NameValue){
+            
+                writer.AppendLine("{");
+                if (_cells != null) {
+                    bool first = true;
+                        
                         int i=0;
                         foreach (Cell _Cell in _cells) {
                             if (!first) {
@@ -156,18 +168,18 @@ namespace Volte.Data.Json
                                 first = false;
                             }
                             this.Write(writer , _columns.Fields[i].Name , _Cell.Value);
-                            i++;
+                                i++;
                         }
-                    }
-                    writer.Append("}");
-                }else{
-
-                    writer.AppendLine("{");
-                    if (_cells != null) {
-                        writer.Append("\"cells\":");
+                }
+            writer.Append("}");
+        }else{
+            
+                writer.AppendLine("{");
+                if (_cells != null) {
+                    writer.Append("\"cells\":");
                         writer.Append("[");
                         bool first = true;
-
+                        
                         foreach (Cell _Cell in _cells) {
                             if (!first) {
                                 writer.AppendLine(",");
