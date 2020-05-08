@@ -120,7 +120,7 @@ namespace Volte.Data.Json
             if (ndx >= 0) {
                 string _column_type = _Columns[ndx].DataType;
 
-                    ZZLogger.Debug(ZFILE_NAME , ndx);
+                    //ZZLogger.Debug(ZFILE_NAME , ndx);
 
                 if (_column_type == "datetime") {
 
@@ -134,12 +134,12 @@ namespace Volte.Data.Json
                     decimal d1 = r1.GetDecimal(ndx);
                     decimal d2 = r2.GetDecimal(ndx);
 
-                    ZZLogger.Debug(ZFILE_NAME , d1);
-                    ZZLogger.Debug(ZFILE_NAME , d2);
+                    //ZZLogger.Debug(ZFILE_NAME , d1);
+                    //ZZLogger.Debug(ZFILE_NAME , d2);
 
                     _Compare = d1.CompareTo(d2);
 
-                    ZZLogger.Debug(ZFILE_NAME , _Compare);
+                    //ZZLogger.Debug(ZFILE_NAME , _Compare);
 
                 } else {
 
