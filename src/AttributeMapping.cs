@@ -15,7 +15,7 @@ namespace Volte.Data.Json
         private bool   _CanWrite     = true;
         private bool   _Compulsory   = false;
         private bool   _Ignore       = false;
-        private bool   _NonPrintable = false;
+        private bool   _NonPrintable = true;
         private bool   _Nullable     = false;
         private bool   _PrimaryKey   = false;
         private bool   _Readonly     = true;
@@ -39,7 +39,6 @@ namespace Volte.Data.Json
         private string _Status       = "";
         private string _TableName    = "";
         private string _TypeChar     = "c";
-        private string _Axis         = "";
         private string _enabledMode  = "";
         private string _format       = "";
 
@@ -52,7 +51,7 @@ namespace Volte.Data.Json
         public bool AutoIdentity      { get { return _AutoIdentity; } set { _AutoIdentity = value; }  } 
         public bool Compulsory        { get { return _Compulsory;   } set { _Compulsory   = value; }  } 
         public bool Ignore            { get { return _Ignore;       } set { _Ignore       = value; }  } 
-        public bool NonPrintable      { get { return _NonPrintable; } set { _NonPrintable = value; }  } 
+        public bool Hidden            { get { return _NonPrintable; } set { _NonPrintable = value; }  } 
         public bool Nullable          { get { return _Nullable;     } set { _Nullable     = value; }  } 
         public bool PrimaryKey        { get { return _PrimaryKey;   } set { _PrimaryKey   = value; }  } 
         public bool Readonly          { get { return _Readonly;     } set { _Readonly     = value; }  } 
@@ -77,33 +76,11 @@ namespace Volte.Data.Json
         public string Status          { get { return _Status;       } set { _Status       = value; }  } 
         public string TableName       { get { return _TableName;    } set { _TableName    = value; }  } 
         public string TypeChar        { get { return _TypeChar;     } set { _TypeChar     = value; }  } 
-        public string Axis            { get { return _Axis;         } set { _Axis         = value; }  } 
         public string Format          { get { return _format;       } set { _format       = value; }  } 
         public JSONObject Props       { get { return _Props;        } set { _Props        = value; }  } 
         public List<JSONObject> Group { get { return _Group;        } set { _Group        = value; }  } 
 
         public bool CanWrite     { get { return _CanWrite && !_AutoIdentity; } set { _CanWrite     = value; }  }
-
-        public string ClassName
-        {
-            get {
-                string _ccss = "";
-
-                if (this.Compulsory) {
-                    _ccss = _ccss + "r";
-                } else {
-                    _ccss = _ccss + "n";
-                }
-
-                if (this.Readonly) {
-                    _ccss = _ccss + "v";
-                } else {
-                    _ccss = _ccss + "e";
-                }
-
-                return "c" + this.TypeChar + _ccss;
-            }
-        }
 
         public string this[string name]
         {
