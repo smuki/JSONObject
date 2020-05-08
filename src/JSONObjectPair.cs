@@ -92,19 +92,23 @@ namespace Volte.Data.Json
                             } else if (this.Type == "datetime" || this.Value is DateTime) {
 
                                 if (this.Value==null || string.IsNullOrEmpty(this.Value.ToString())) {
-                                    writer.Append("\"\"");
+                                    writer.Append("null");
                                 }else if (this.Value is DateTime) {
                                     if ((DateTime)this.Value <= Util.DateTime_MinValue) {
-                                        writer.Append("\"\"");
+                                        writer.Append("null");
                                     } else {
-                                        writer.Append("\"");
-                                        writer.Append(Util.DateTimeToMilliSecond((DateTime)this.Value));
-                                        writer.Append("\"");
+
+                                        try{
+                                            writer.Append(Util.DateTimeToMilliSecond((DateTime)this.Value));
+                                        }catch (Exception ex) {
+                                            ZZLogger.Debug(ZFILE_NAME , this.Value);
+                                            ZZLogger.Debug(ZFILE_NAME , ex);
+                                        }
                                     }
                                 }else{
-                                    writer.Append("\"");
+                                    //writer.Append("\"");
                                     writer.Append(Util.DateTimeToMilliSecond(Util.ToDateTime(this.Value)));
-                                    writer.Append("\"");
+                                    //writer.Append("\"");
                                 }
 
                             } else {
