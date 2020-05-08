@@ -576,28 +576,27 @@ namespace Volte.Data.Json
 
             public void Declare(AttributeMapping _DataField)
             {
-                Column _Column       = new Column();
-                _Column.ColumnName   = _DataField.ColumnName;
-                _Column.Name         = _DataField.Name;
-                _Column.Hash         = _DataField.Name.Replace(".", "_");
-                _Column.Caption      = _DataField.Caption;
-                _Column.Description  = _DataField.Description;
-                _Column.Scale        = _DataField.Scale;
-                _Column.Index        = _DataField.Index;
-                _Column.Width        = _DataField.Width;
-                _Column.Format       = _DataField.Format;
-                _Column.Status       = _DataField.Status;
-                _Column.EnableMode   = _DataField.EnableMode;
-                _Column.Reference    = _DataField.Reference;
-                _Column.TypeChar     = _DataField.TypeChar;
-                _Column.Compulsory   = _DataField.Compulsory;
-                _Column.NonPrintable = _DataField.NonPrintable;
-                _Column.DataType     = _DataField.DataType;
-                _Column.DataBand     = _DataField.DataBand;
-                _Column.AlignName    = _DataField.AlignName;
-                _Column.Options      = _DataField.Options;
-                _Column.Axis         = _DataField.Axis;
-                _Column.Props        = _DataField.Props.Clone();
+                Column _Column      = new Column();
+                _Column.ColumnName  = _DataField.ColumnName;
+                _Column.Name        = _DataField.Name;
+                _Column.Hash        = _DataField.Name.Replace(".", "_");
+                _Column.Caption     = _DataField.Caption;
+                _Column.Description = _DataField.Description;
+                _Column.Scale       = _DataField.Scale;
+                _Column.Index       = _DataField.Index;
+                _Column.Width       = _DataField.Width;
+                _Column.Format      = _DataField.Format;
+                _Column.Status      = _DataField.Status;
+                _Column.EnableMode  = _DataField.EnableMode;
+                _Column.Reference   = _DataField.Reference;
+                _Column.TypeChar    = _DataField.TypeChar;
+                _Column.Compulsory  = _DataField.Compulsory;
+                _Column.Hidden      = _DataField.Hidden;
+                _Column.DataType    = _DataField.DataType;
+                _Column.DataBand    = _DataField.DataBand;
+                _Column.AlignName   = _DataField.AlignName;
+                _Column.Options     = _DataField.Options;
+                _Column.Props       = _DataField.Props.Clone();
                 _Columns.Add(_Column);
             }
 
