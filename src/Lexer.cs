@@ -247,7 +247,6 @@ namespace Volte.Data.Json
             }
 
             int deb = _charPos;
-            bool hasUnicode= false;
 
             while (_charPos < _length)
             {
@@ -256,13 +255,6 @@ namespace Volte.Data.Json
                     if (_Data[_charPos - 1] != '\\')
                     {
                         break;
-                    }
-                }
-                else if (_Data[_charPos] == '\\')
-                {
-                    if (_charPos < _length && _Data[_charPos++] == 'u')
-                    {
-                        hasUnicode = true;
                     }
                 }
                 _charPos++;
@@ -286,14 +278,7 @@ namespace Volte.Data.Json
             }
 
             _charPos++;
-             if (hasUnicode)
-            {
-                return Util.DeUnicode(_Data.Substring(deb, end - deb));
-            }
-            else
-            {
-                return _Data.Substring(deb, end - deb);
-            }
+            return Util.DeUnicode(_Data.Substring(deb, end - deb));
         }
 
         public void Back()
