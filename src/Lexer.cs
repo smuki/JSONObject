@@ -1,6 +1,7 @@
 using System;
 using System.Xml;
 using System.Text;
+using Volte.Utils;
 
 namespace Volte.Data.Json
 {
@@ -205,13 +206,15 @@ namespace Volte.Data.Json
                         s.Append('\t');
                         break;
 
-                    case 'u': {
-                                  if (_length - _charPos < 4) {
+                    case 'u':
+                        {
+                            if (_length - _charPos < 4)
+                            {
                                       break;
                                   }
 
                                   // parse the 32 bit hex into an integer codepoint
-                                  s.Append((char)ParseUnicode(_Data[_charPos], _Data[_charPos + 1], _Data[_charPos + 2], _Data[_charPos + 3]));
+                            s.Append((char)Util.ParseUnicode(_Data[_charPos], _Data[_charPos + 1], _Data[_charPos + 2], _Data[_charPos + 3]));
 
                                   // skip 4 chars
                                   _charPos += 4;
@@ -223,102 +226,108 @@ namespace Volte.Data.Json
             throw new Exception("Unexpectedly reached end of string");
 
         }
-
-        private uint ParseSingleChar(char c1, uint multipliyer)
-        {
-            uint p1 = 0;
-
-            if (c1 >= '0' && c1 <= '9') {
-                p1 = (uint)(c1 - '0') * multipliyer;
-            } else if (c1 >= 'A' && c1 <= 'F') {
-                p1 = (uint)((c1 - 'A') + 10) * multipliyer;
-            } else if (c1 >= 'a' && c1 <= 'f') {
-                p1 = (uint)((c1 - 'a') + 10) * multipliyer;
-            }
-
-            return p1;
-        }
-
-        private uint ParseUnicode(char c1, char c2, char c3, char c4)
-        {
-            uint p1 = ParseSingleChar(c1 , 0x1000);
-            uint p2 = ParseSingleChar(c2 , 0x100);
-            uint p3 = ParseSingleChar(c3 , 0x10);
-            uint p4 = ParseSingleChar(c4 , 1);
-
-            return p1 + p2 + p3 + p4;
-        }
-
+       
         public string ParseName()
         {
-            if (_charPos >= _length) {
+            if (_charPos >= _length)
+            {
                 throw new FormatException("Cannot find object item'_Data name.");
             }
 
             bool quote = true;
 
-            if (_Data[_charPos] != '"') {
+            if (_Data[_charPos] != '"')
+            {
                 quote = false;
-            }else{
+            }
+            else
+            {
                 // skip open quote
                 _charPos++;
             }
 
             int deb = _charPos;
+            bool hasUnicode= false;
 
-            while (_charPos < _length) {
-                if (( _Data[_charPos] == ':' && quote==false ) || (_Data[_charPos] == '"' && quote)) {
-                    if (_Data[_charPos - 1] != '\\') {
+            while (_charPos < _length)
+            {
+                if ((_Data[_charPos] == ':' && quote == false) || (_Data[_charPos] == '"' && quote))
+                {
+                    if (_Data[_charPos - 1] != '\\')
+                    {
                         break;
                     }
                 }
-
+                else if (_Data[_charPos] == '\\')
+                {
+                    if (_charPos < _length && _Data[_charPos++] == 'u')
+                    {
+                        hasUnicode = true;
+                    }
+                }
                 _charPos++;
             }
 
             int end=_charPos;
-            if (quote){
+            if (quote)
+            {
                 _charPos++;
 
                 SkipWhiteSpace();
 
-                if (_charPos >= _length) {
+                if (_charPos >= _length)
+                {
                     throw new FormatException();
                 }
-
             }
-            if (_Data[_charPos] != ':') {
+            if (_Data[_charPos] != ':')
+            {
                 throw new FormatException();
             }
 
             _charPos++;
-            return _Data.Substring(deb, end - deb);
+             if (hasUnicode)
+            {
+                return Util.DeUnicode(_Data.Substring(deb, end - deb));
+            }
+            else
+            {
+                return _Data.Substring(deb, end - deb);
+            }
         }
 
         public void Back()
         {
-            if (_charPos > 0){
+            if (_charPos > 0)
+            {
                 _charPos -= 1;
             }
         }
 
         public char Peek
         {
-            get {
-                if (_charPos >= _length) {
+            get
+            {
+                if (_charPos >= _length)
+                {
                     return ' ';
-                } else {
+                }
+                else
+                {
                     return _Data[_charPos + 1];
                 }
             }
         }
-
         public char MoveNextChar
         {
-            get {
-                if (_charPos >= _length) {
+            get
+            {
+                if (_charPos >= _length)
+                {
                     return ' ';
-                } else {
+                }
+                else
+                {
                     _charPos++;
                     return _Data[_charPos];
                 }
@@ -332,23 +341,31 @@ namespace Volte.Data.Json
 
         public void SkipWhiteSpace()
         {
-            while (_charPos < _length) {
-                if (char.IsWhiteSpace(_Data[_charPos])) {
+            while (_charPos < _length)
+            {
+                if (char.IsWhiteSpace(_Data[_charPos]))
+                {
                     _charPos++;
                     continue;
-                } else if (_Data[_charPos]=='/' && (_charPos+1 < _length && (_Data[_charPos+1]=='/' || _Data[_charPos+1]=='*' ))) {
+                }
+                else if (_Data[_charPos] == '/' && (_charPos + 1 < _length && (_Data[_charPos + 1] == '/' || _Data[_charPos + 1] == '*')))
+                {
                     this.NextClean();
-                }else{
+                }
+                else
+                {
                     break;
                 }
             }
         }
-
         public bool MatchChar(char c)
         {
-            if (_Data[_charPos]==c){
+            if (_Data[_charPos] == c)
+            {
                 return true;
-            }else{
+            }
+            else
+            {
                 this.SkipWhiteSpace();
                 return _Data[_charPos]==c;
             }
@@ -356,7 +373,8 @@ namespace Volte.Data.Json
 
         public char Current
         {
-            get {
+            get
+            {
                 return _Data[_charPos];
             }
         }
